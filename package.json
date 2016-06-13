@@ -12,5 +12,9 @@
   },
   "author": "128bit",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/x128/hostelpeb#readme"
+  "homepage": "https://bitbucket.org/x128/hostelpeb#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.6"
+  }
 }
