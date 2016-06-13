@@ -1,0 +1,16 @@
+{
+  "name": "hostel",
+  "version": "1.0.0",
+  "description": "Room allotment software for PEB's",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://-tara@bitbucket.org/x128/hostelpeb.git"
+  },
+  "author": "128bit",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/x128/hostelpeb#readme"
+}
