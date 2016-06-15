@@ -1,0 +1,47 @@
+extends home
+
+block content	
+ .container(style="margin-top:5%;margin-bottom:7%;")
+  .row
+   .col.s12.m8.offset-m2.l8.offset-l2
+    .card.white
+     .card-content.black-text
+      span.card-title Registration
+
+      form
+       .row
+        div.input-field.col.s12.m6
+         input.validate(id="first_name" type="text")
+         label(for="first_name") First Name
+
+        div.input-field.col.s12.m6
+         input.validate(id="last_name" type="text")
+         label(for="last_name") Last Name
+
+       .row
+        div.input-field.col.s12
+         input.validate(id="pass_key" type="text")
+         label(for="pass_key") Passkey
+
+       .row
+        div.input-field.col.s12
+         input.validate(id="roll_num" type="text")
+         label(for="roll_num") Roll Number
+
+       .row
+        div.input-field.col.s12
+        label DOB
+         input(id="dob" placeholder="Date of Birth" class="datepicker" type="date")
+
+         
+       .row
+        div.input-field.col.s12
+         input.validate(id="mob_num" type="tel" )
+         label(for="mob_num") Mobile Number
+
+script.
+ $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15 // Creates a dropdown of 15 years to control year
+  });
+
