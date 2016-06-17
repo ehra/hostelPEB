@@ -1,20 +1,22 @@
 //Mongoose setup for database connections
-
+//need to add property autoIndex as false for better performance
+//Create database with name hostelpeb 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-//Creating a schema
+//Creating a schema with basic validation(Inbuilt in mongoose)
 var studentSchema = new Schema({
 	name: {
 		first: String,
 		last : String
 	},
 	
-	roll_number: Number,
+	roll_number: { type:Number, required: true, unique:true },
 	
-	pass_key: String,
+	pass_key: { type: String, required: true, unique:true, /*minlength: x*/ },
 	
-	pass_word: String,
+	pass_word: { type: String, required: true, unique:true, /*minlength: y*/ },
+//Note: Add password hashing here or in register.js using pre function before saving to database
 
 	branch: String,
 	

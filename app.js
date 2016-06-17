@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
 
-var db = require('./configDB');
+var db = require('./model/configDB');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
