@@ -23,8 +23,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Tells Express what files to use for routing
-app.use('/', routes);
-app.use('/users', users);
+app.get('/', routes);
+app.get('/users', users);
+app.get('/register',register);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,6 +58,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+//-tara
 
 
 module.exports = app;
