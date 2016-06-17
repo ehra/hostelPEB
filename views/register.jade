@@ -8,7 +8,7 @@ block content
      .card-content.black-text
       span.card-title Registration
 
-      form
+      form(action="/register",method="post")
        .row
         div.input-field.col.s12.m6
          input.validate(id="first_name" type="text")
@@ -38,6 +38,10 @@ block content
         div.input-field.col.s12
          input.validate(id="mob_num" type="tel" )
          label(for="mob_num") Mobile Number
+         
+         .row
+          div.actions
+           input(type="submit", value="add")
 
 script.
  $('.datepicker').pickadate({

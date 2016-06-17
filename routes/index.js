@@ -6,7 +6,6 @@ router.get('/', function(req, res, next) {
   res.render('home');
 });
 
-router.get('/register', function(req, res, next) {
-  res.render('register');
-});
+
+
 module.exports = router;
