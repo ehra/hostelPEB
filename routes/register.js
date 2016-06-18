@@ -17,7 +17,7 @@ router.post('/register',function(req,res){
     req.checkBody('roll_num','Roll Number error').notEmpty().isNumeric().isLength(9);
     req.checkBody('dob','Date of Birth error').notEmpty().isDate();
     req.checkBody('mob_num','Mobile number error').notEmpty().isNumeric().isMobilePhone("en-IN");
-
+    req.checkBody('last_name','Last Name error').notEmpty().isAlpha();
 var errors = req.validationErrors();
 
 
@@ -35,8 +35,10 @@ var errors = req.validationErrors();
     var mobnum = req.body.mob_num;
     
    var student = new db({
-                           first_name:firstname,
-                           last_name :lastname,
+                           name:{
+                                first_name: firstname,
+                                last_name :lastname 
+                            },
                            pass_key  :passkey,
                            roll_num  :rollnum,
                            dob       :dateofbirth,
