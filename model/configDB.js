@@ -1,6 +1,6 @@
 //Mongoose setup for database connections
 //need to add property autoIndex as false for better performance
-//Create database with name hostelpeb 
+//Create database with name hostelPEB*** 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -18,7 +18,10 @@ var studentSchema = new Schema({
 	pass_word: { type: String, required: true, unique:true, /*minlength: y*/ },
 //Note: Add password hashing here or in register.js using pre function before saving to database
 
-	branch: String,
+	branch: {
+				type:string,
+				enum : ['COE','ECE',''],//to add all branches of 2nd year
+	},
 	
 	birth_date: { type: Date, min: Date('1990-01-01') },
 	
@@ -31,8 +34,6 @@ var studentSchema = new Schema({
 
 	address: {
 		permanent: String,
-
-		alternate: String
 	},
 
 	parent_detail:{
@@ -47,8 +48,16 @@ var studentSchema = new Schema({
 	},
 
 	share_choice: Boolean,   //true for twin-sharing basis 
-	});
+	
+	room_num: {
+		type: string,
+		required: true
+	}	
+
+});
 
 student = mongoose.model('student',studentSchema);
 mongoose.connect('mongodb://localhost/hostelpeb');
+
+
 

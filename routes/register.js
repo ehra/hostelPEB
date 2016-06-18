@@ -1,7 +1,7 @@
 var express = require('express');
 var validator = require('express-validator');
 var router = express.Router();
-
+var db = require('../model/configDB');
 
 router.get('/register', function(req, res, next) {
   res.render('register');
@@ -26,9 +26,31 @@ var errors = req.validationErrors();
    // handling error messages***
   }
   else {
-   // res.render('register', { flash: { type: 'alert-success', messages: [ { msg: 'No errors!' }]}});
-   //1. validation through database no repitions of pass_keys*** and rollnumbers***
-   //2. insert into database
+   
+    var firstname = req.body.first_name;
+    var lastname = req.body.last_name;
+    var passkey = req.body.pass_key;
+    var rollnum = req.body.roll_num;
+    var dateofbirth = req.body.dob;
+    var mobnum = req.body.mob_num;
+    
+   var student = new db({
+                           first_name:firstname,
+                           last_name :lastname,
+                           pass_key  :passkey,
+                           roll_num  :rollnum,
+                           dob       :dateofbirth,
+                           mob_num   :mobnum
+                       }); 
+    
+  student.save(function (err) {
+  if (err) {
+		return err;
+  }
+  else {
+  	console.log("Student saved");
+  }
+});
   }
 });
 
