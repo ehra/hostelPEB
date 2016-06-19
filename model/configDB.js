@@ -9,7 +9,7 @@ var studentSchema = new Schema({
 	name: {
 		first: String,
 		last : String,
-		required: true
+		//required: true
 	},
 	
 	roll_number: { type:Number, required: true, unique:true },
@@ -20,7 +20,7 @@ var studentSchema = new Schema({
 //Note: Add password hashing here or in register.js using pre function before saving to database
 
 	branch: {
-				type:string,
+				type:String,
 				enum : ['COE','ECE','MEE','EIC','CIE','CHE','MTX','ELE','NONE'],
 				default : 'NONE'
 	},
@@ -31,8 +31,7 @@ var studentSchema = new Schema({
 	},
 	
 	email: {
-		type: email,
-		required: true
+	//	required: true
 	},
 	
 	phone:{
@@ -58,14 +57,14 @@ var studentSchema = new Schema({
 
 	blood_group:{
 		enum: ['A+','A-','B+','B-','O+','O-','AB+','AB-','DONT_KNOW'],
-		default: "DONT_KNOW"
+		//default: 'DONT_KNOW'
 	},
 	
-	photo:string,
+	photo:String,
 
 	share_choice: Boolean,   //true for twin-sharing basis 
 
-	room_num: string
+	room_num: String
 
 });
 

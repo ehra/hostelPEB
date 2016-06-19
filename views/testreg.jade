@@ -1,0 +1,26 @@
+extends home
+
+block content	
+ .container(style="margin-top:5%;margin-bottom:7%;")
+  .row
+   .col.s12.m8.offset-m2.l8.offset-l2
+    .card.white
+     .card-content.black-text
+      span.card-title Registration
+
+     form(action="/register",method="post")
+      .row
+        div.input-field.col.s12
+         input.validate(id="first_name" name="first_name" type="text")
+         label(for="first_name") First Name
+
+          .row
+          div.actions
+           input(type="submit", value="add")
+
+
+script.
+ $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15 // Creates a dropdown of 15 years to control year
+  });
