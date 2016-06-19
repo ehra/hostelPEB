@@ -68,8 +68,8 @@ var studentSchema = new Schema({
 
 });
 
-student = mongoose.model('student',studentSchema);
-mongoose.connect('mongodb://localhost/hostelpeb');
 
+mongoose.connect('mongodb://localhost/hostelpeb');
+module.exports = mongoose.model('student',studentSchema);
 
 

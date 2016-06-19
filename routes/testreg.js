@@ -1,7 +1,7 @@
 var express = require('express');
 var validator = require('express-validator');
 var router = express.Router();
-var db = require('../model/testDB');
+var db2= require('../model/testDB');
 
 router.get('/testreg', function(req, res, next) {
   res.render('testreg');
@@ -10,26 +10,23 @@ router.get('/testreg', function(req, res, next) {
 
 router.post('/testreg',function(req,res){
 
-    //validating the input by user->laugh with everyone trust no one.
-    req.checkBody('first','First Name error').notEmpty();
+    req.checkBody('first_name','First Name error').notEmpty();
     
-
 var errors = req.validationErrors();
 
 
   if (errors) {
    // res.render('testreg', { flash: { type: 'alert-danger', messages: errors }});
-   // handling error messages***
   }
   else {
-   
+
     var first_name = req.body.first_name;
         
-    var student = new db({
-                                first: first_name
+    var test = new db2({
+                                first_name: first_name
                          }); 
     
-  student.save(function (err) {
+  test.save(function (err) {
   if (err) {
 		return err;
   }
@@ -39,5 +36,6 @@ var errors = req.validationErrors();
 });
   }
 });
+
 
 module.exports = router;

@@ -7,12 +7,12 @@ var Schema = mongoose.Schema;
 //Creating a schema with basic validation(Inbuilt in mongoose)
 var testSchema = new Schema({
 
-		first: String
+		first_name: String
 
 });
 
-var test = mongoose.model('test',testSchema);
-mongoose.createConnection('mongodb://localhost/hostelPEB');
 
+mongoose.createConnection('mongodb://localhost/hostelpeb');
+module.exports = mongoose.model('test',testSchema);	
 
 
