@@ -42,7 +42,7 @@ var studentSchema = new Schema({
 	address: {
 		type: String,
 		required: true
-	} ,
+	},
 
 	parent_detail:{
 		father: {
