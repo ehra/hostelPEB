@@ -6,7 +6,7 @@ var multer = require('multer');
 
 
 
-router.post('/register',multer({ dest: '../photos/'}).single('photo'),function(req,res){
+router.post('/register',function(req,res){
 
     req.checkBody('first_name','First Name error').notEmpty().isAlpha();
     req.checkBody('last_name','Last Name error').notEmpty().isAlpha();
@@ -14,7 +14,7 @@ router.post('/register',multer({ dest: '../photos/'}).single('photo'),function(r
     req.checkBody('roll_number','Roll Number error').notEmpty().isNumeric().isLength(9);
     req.checkBody('birth_date','Date of Birth error').notEmpty().isDate();
     req.checkBody('mobile','Mobile number error').notEmpty().isMobilePhone("en-IN");
-   // req.checkBody('photo','Photo error').notEmpty();
+    //req.checkBody('photo','Photo error').notEmpty();
     req.checkBody('branch','Branch error').notEmpty();
     req.checkBody('blood','Blood group error').notEmpty();
     req.checkBody('email','E-mail error').notEmpty().isEmail(); 
@@ -38,7 +38,8 @@ var errors = req.validationErrors();
   }
 
   else {
-   
+      console.log(req.file['path']);
+      
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var pass_key = req.body.pass_key;
@@ -46,7 +47,7 @@ var errors = req.validationErrors();
     var birth_date = req.body.birth_date;
 
     var mobile = req.body.mobile;
-    var photo =   req.file.path;
+    var photo =   req.file['path'];
     var branch = req.body.branch;
     var blood = req.body.blood;
     var email = req.body.email;
@@ -57,7 +58,11 @@ var errors = req.validationErrors();
     var address = req.body.address;
     var landline = req.body.landline;
     var share_choice = req.body.share_choice;
-    var password = req.body.password;
+    var password_temp = req.body.password;
+
+    var bcrypt = require('bcrypt');
+    var salt = bcrypt.genSaltSync(10);
+    var password = bcrypt.hashSync(password_temp, salt);    
     
    var student = new db({
                            name      :{
@@ -74,6 +79,7 @@ var errors = req.validationErrors();
                            branch:branch,
                            blood_group:blood,
                            email:email,
+                           photo:photo,
                            parent_detail:{
                             father:{
                                name: father_name,
