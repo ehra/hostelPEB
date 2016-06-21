@@ -18,10 +18,13 @@ block content
          input.validate(id="last_name" name="last_name" type="text")
          label(for="last_name") Last Name
 
-       .row
-        div.input-field.col.s12
-         input.validate(id="pass_key" name="pass_key" type="text")
-         label(for="pass_key") Passkey
+       .row.col.s12
+        .file-field.input-field
+         .btn.blue 
+          span File
+          input(type="file")
+        .file-path-wrapper
+         input(class="file-path validate" type="text") 
 
        .row
         div.input-field.col.s12
@@ -30,29 +33,104 @@ block content
 
        .row
         div.input-field.col.s12
-        label DOB
+         input.validate(id="pass_word" name="password" type="password")
+         label(for="roll_num") Roll Number
+
+       .row
+        div.input-field.col.s12
+         input.validate(id="pass_key" name="pass_key" type="text")
+         label(for="pass_key") Passkey
+
+       .row
+        label Select Your Branch
+        div.input-field.col.s12
+         select
+          option(value="" disabled) Choose Your Branch
+          option(value="1") COE
+          option(value="2") ECE
+          option(value="3") MEE
+          option(value="4") EIC
+          option(value="5") CIE
+          option(value="6") CHE
+          option(value="7") MTX
+          option(value="8") ELE
+         
+
+       .row.s12
+        div.input-field.col.s12
+        label Date Of Birth
          input(id="dob" placeholder="Date of Birth" class="datepicker" name="birth_date" type="date")
 
-         
        .row
         div.input-field.col.s12
+         input.validate(id="email_id" name="email" type="email" )
+         label(for="email_id") Email-ID
+          
+       .row
+        div.input-field.col.s6
          input.validate(id="mob_num" name="mobile" type="tel" )
          label(for="mob_num") Mobile Number
-  
+        div.input-field.col.s6
+         input.validate(id="land_num" name="mobile_l" type="tel" )
+         label(for="land_num") Landline
+       
        .row
         div.input-field.col.s12
-         input.validate(id="branch" name="branch" type="text")
-         label(for="branch") branch
-         
-        
-             
-         .row
+          textarea(id="p_address" class="materialize-textarea")
+          label(for="p_address") Permanent Address 
+        div.input-field.col.s12
+          textarea(id="a_address" class="materialize-textarea")
+          label(for="a_address") Alternate Address      
+       
+       .row
+        label Blood Group
+        div.input-field.col.s12
+         select
+          option(value="" disabled) Choose Your Blood Group
+          option(value="1") A+
+          option(value="2") A-
+          option(value="3") B+
+          option(value="4") B-
+          option(value="5") O+
+          option(value="6") O-
+          option(value="7") AB+
+          option(value="8") AB-
+          option(value="9") DON'T KNOW
+       .row
+        label.col.s12 Father's Details
+        div.input-field.col.s6
+          input.validate(id="father_name" type="text")
+          label(for="father_name") Name
+        div.input-field.col.s6
+          input.validate(id="father_num" type="text")
+          label(for="father_num")  Mobile 
+
+        .row
+        label.col.s12 Mother's Details
+        div.input-field.col.s6
+          input.validate(id="mother_name" type="text")
+          label(for="father_name") Name
+        div.input-field.col.s6
+          input.validate(id="mother_num" type="text")
+          label(for="father_num")  Mobile   
+
+        .row.col.s12
+         label Enter choice for accomodation type
+         p
+          input(class="filled-in" type="checkbox" id="filled-in-box" ) 
+          label(for="filled-in-box") Check for Group Allotment
+
+       .row
           div.actions
            input(type="submit", value="add")
+
+script. 
+ $(document).ready(function() {
+    $('select').material_select();
+  });
 
 script.
  $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15 // Creates a dropdown of 15 years to control year
   });
-
