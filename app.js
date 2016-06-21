@@ -9,7 +9,7 @@ var validator = require('express-validator');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var register = require('./routes/register');
-var testreg = require('./routes/testreg');
+//var testreg = require('./routes/testreg');
 
 var app = express();
 
@@ -22,9 +22,10 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(validator());
+
 
 //Tells Express what files to use for routing
 app.get('/', routes);
@@ -32,8 +33,8 @@ app.get('/users', users);
 app.get('/register',register);
 app.post('/register',register);
 
-app.get('/testreg',testreg);
-app.post('/testreg',testreg);
+//app.get('/testreg',testreg);
+//app.post('/testreg',testreg);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -3,13 +3,12 @@
 //Create database with name hostelPEB*** 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
+require('mongoose-type-email');
 //Creating a schema with basic validation(Inbuilt in mongoose)
 var studentSchema = new Schema({
 	name: {
-		first: String,
-		last : String,
-		//required: true
+		first: {type:String,required:true},
+		last : {type:String,required:true}
 	},
 	
 	roll_number: { type:Number, required: true, unique:true },
@@ -26,12 +25,14 @@ var studentSchema = new Schema({
 	},
 	
 	birth_date: { 
-		type: Date, min: Date('1990-01-01'),
+		type: Date, 
+		min: Date('1990-01-01'),
 		required: true	
 	},
 	
 	email: {
-	//	required: true
+		 type:mongoose.SchemaTypes.Email,
+		 required: true
 	},
 	
 	phone:{
@@ -56,15 +57,14 @@ var studentSchema = new Schema({
 	},
 
 	blood_group:{
-		enum: ['A+','A-','B+','B-','O+','O-','AB+','AB-','DONT_KNOW'],
-		//default: 'DONT_KNOW'
+		enum: ['DONTKNOW','A+','A-','B+','B-','O+','O-','AB+','AB-']
 	},
 	
 	photo:String,
 
 	share_choice: Boolean,   //true for twin-sharing basis 
 
-	room_num: String
+	room_number: String
 
 });
 

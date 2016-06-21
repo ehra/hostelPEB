@@ -3,10 +3,8 @@ var validator = require('express-validator');
 var router = express.Router();
 var db = require('../model/configDB');
 
-router.get('/register', function(req, res, next) {
-  res.render('register');
-  next();
-});
+
+
 
 router.post('/register',function(req,res){
 
@@ -16,14 +14,14 @@ router.post('/register',function(req,res){
     req.checkBody('pass_key','Pass Key error').notEmpty().isAlphanumeric();
     req.checkBody('roll_number','Roll Number error').notEmpty().isNumeric().isLength(9);
     req.checkBody('birth_date','Date of Birth error').notEmpty().isDate();
-    req.checkBody('mobile','Mobile number error').notEmpty().isNumeric().isMobilePhone("en-IN");
+    req.checkBody('mobile','Mobile number error').notEmpty().isMobilePhone("en-IN");
     req.checkBody('photo','Photo error').notEmpty();
-    req.checkBody('branch','Branch error').notEmpty().regex([A-Z]);
+    req.checkBody('branch','Branch error').notEmpty().isAlpha();
     req.checkBody('blood','Blood group error').notEmpty();
     req.checkBody('email','E-mail error').notEmpty().isEmail(); 
-    req.checkBody('father_name','Father name error').notEmpty().isString();    
+    req.checkBody('father_name','Father name error').notEmpty().isAlpha();    
     req.checkBody('father_num','Father mobile error').notEmpty().isMobilePhone("en-IN");       
-    req.checkBody('mother_name','Mother name error').notEmpty().isString();
+    req.checkBody('mother_name','Mother name error').notEmpty().isAlpha();
     req.checkBody('mother_num','Mother mobile error').notEmpty().isMobilePhone("en-IN");
     req.checkBody('address','Address error').notEmpty().isString(); 
     req.checkBody('landline','Landline error').isNumber();    
@@ -102,5 +100,8 @@ var errors = req.validationErrors();
 });
   }
 });
-
+router.get('/register', function(req, res) {
+  res.render('register');
+  //next();
+});
 module.exports = router;
