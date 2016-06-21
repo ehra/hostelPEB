@@ -26,7 +26,7 @@ var studentSchema = new Schema({
 	
 	birth_date: { 
 		type: Date, 
-		min: Date('1990-01-01'),
+		//min: Date('1990-01-01'),
 		required: true	
 	},
 	

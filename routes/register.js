@@ -29,14 +29,14 @@ router.post('/register',multer({ dest: '../photos/'}).single('photo'),function(r
 
 
 var errors = req.validationErrors();
-
+//var errors = '';
 
   if (errors) {
    //error messages graveyard † 
-   console.log(errors);
-   // res.render('register', { flash: { type: 'alert-danger', messages: errors }});
-   
+  console.log(errors);
+  res.render('register', { flash: { messages: errors }});
   }
+
   else {
    
     var first_name = req.body.first_name;
@@ -96,6 +96,7 @@ var errors = req.validationErrors();
   }
   else {
   	console.log("Student saved");
+    res.send('Done!');
   }
 });
   }

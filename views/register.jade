@@ -1,6 +1,9 @@
 extends home
 
 block content	
+ 
+ include messages
+ 
  .container(style="margin-top:5%;margin-bottom:7%;")
   .row
    .col.s12.m8.offset-m2.l8.offset-l2
@@ -11,11 +14,11 @@ block content
       form(action="/register",method="post",enctype="multipart/form-data")
        .row
         div.input-field.col.s12.m6
-         input.validate(id="first_name" name="first_name" type="text")
+         input.validate(id="first_name" name="first_name" type="text" required)
          label(for="first_name") First Name
 
         div.input-field.col.s12.m6
-         input.validate(id="last_name" name="last_name" type="text")
+         input.validate(id="last_name" name="last_name" type="text" required)
          label(for="last_name") Last Name
 
        .row.col.s12
@@ -23,24 +26,24 @@ block content
           
        .row
         div.input-field.col.s12
-         input.validate(id="roll_num" name="roll_number" type="text")
+         input.validate(id="roll_num" name="roll_number" type="text" required)
          label(for="roll_num") Roll Number
 
        .row
         div.input-field.col.s12
-         input.validate(id="pass_word" name="password" type="password")
+         input.validate(id="pass_word" name="password" type="password" required)
          label(for="pass_word") Password
 
        .row
         div.input-field.col.s12
-         input.validate(id="pass_key" name="pass_key" type="text")
+         input.validate(id="pass_key" name="pass_key" type="text" required)
          label(for="pass_key") Passkey
 
        .row
         label Select Your Branch
         div.input-field.col.s12
          select.validate(name="branch")
-          option(value="" disabled) Choose Your Branch
+          option(value="" disabled selected) Choose Your Branch
           option(value="COE") COE
           option(value="ECE") ECE
           option(value="MEE") MEE
@@ -54,24 +57,24 @@ block content
        .row.s12
         div.input-field.col.s12
         label Date Of Birth
-         input(id="dob" placeholder="Date of Birth" class="datepicker" name="birth_date" type="date")
+         input(id="dob" placeholder="Date of Birth" class="datepicker" name="birth_date" type="date" required)
 
        .row
         div.input-field.col.s12
-         input.validate(id="email_id" name="email" type="email" )
+         input.validate(id="email_id" name="email" type="email" required)
          label(for="email_id") Email-ID
           
        .row
-        div.input-field.col.s6
-         input.validate(id="mob_num" name="mobile" type="tel" )
+        div.input-field.col.s12.m6
+         input.validate(id="mob_num" name="mobile" type="tel" required)
          label(for="mob_num") Mobile Number
-        div.input-field.col.s6
-         input.validate(id="land_num" name="landline" type="tel" )
+        div.input-field.col.s12.m6
+         input.validate(id="land_num" name="landline" type="tel" required )
          label(for="land_num") Landline
        
        .row
         div.input-field.col.s12
-          textarea(id="p_address" name="address" class="materialize-textarea")
+          textarea(id="p_address" name="address" class="materialize-textarea" required)
           label(for="p_address") Permanent Address 
        
        .row
@@ -87,23 +90,23 @@ block content
           option(value="O-") O-
           option(value="AB+") AB+
           option(value="AB-") AB-
-          option(value="DONT KNOW") DON'T KNOW
+          option(value="DONT KNOW" selected) DON'T KNOW
        .row
         label.col.s12 Father's Details
-        div.input-field.col.s6
-          input.validate(id="father_name" name="father_name" type="text")
+        div.input-field.col.s12.m6
+          input.validate(id="father_name" name="father_name" type="text" required data-required-msg="First Name Is Required")
           label(for="father_name") Name
-        div.input-field.col.s6
-          input.validate(id="father_num" name="father_number" type="text")
+        div.input-field.col.s12.m6
+          input.validate(id="father_num" name="father_number" type="text" required)
           label(for="father_num")  Mobile 
 
         .row
         label.col.s12 Mother's Details
-        div.input-field.col.s6
-          input.validate(id="mother_name" name="mother_name" type="text")
+        div.input-field.col.s12.m6
+          input.validate(id="mother_name" name="mother_name" type="text" required)
           label(for="father_name") Name
-        div.input-field.col.s6
-          input.validate(id="mother_num" name="mother_number" type="text")
+        div.input-field.col.s12.m6
+          input.validate(id="mother_num" name="mother_number" type="text" required)
           label(for="father_num")  Mobile   
 
         .row
