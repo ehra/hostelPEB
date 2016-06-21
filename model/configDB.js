@@ -26,7 +26,11 @@ var studentSchema = new Schema({
 	
 	birth_date: { 
 		type: Date, 
+<<<<<<< HEAD
 	//	min: Date('1990-01-01'),
+=======
+		//min: Date('1990-01-01'),
+>>>>>>> bd9a5e40c472975a0f0ce75124bbbca92a14bdef
 		required: true	
 	},
 	

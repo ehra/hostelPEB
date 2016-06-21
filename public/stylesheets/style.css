@@ -12,3 +12,11 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+.error{
+	height: auto;
+	padding: 0.8em;
+	background-color: #333;
+	color: #fff;
+	margin-bottom: 1.5%;
+	border-radius: 2px;
+}

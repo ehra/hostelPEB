@@ -1,0 +1,14 @@
+if flash
+ .container
+  .row
+   div(id="error").col.s12.offset-m3.m6
+    ul()
+    - for (var i = 0; i < flash.messages.length; i++) {
+        li(class="error z-depth-1"  style="list-style-type: none;") #{flash.messages[i].msg}
+    -}
+
+script(src='https://code.jquery.com/jquery-2.1.1.min.js')
+script.
+  $(document).ready(function() {
+     $("#error").delay(3000).fadeOut();
+   });     
