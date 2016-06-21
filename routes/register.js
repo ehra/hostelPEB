@@ -92,7 +92,7 @@ var errors = req.validationErrors();
     
   student.save(function (err) {
   if (err) {
-		return err;
+	    console.log(err);
   }
   else {
   	console.log("Student saved");
@@ -100,6 +100,7 @@ var errors = req.validationErrors();
 });
   }
 });
+
 router.get('/register', function(req, res) {
   res.render('register');
   //next();

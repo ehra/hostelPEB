@@ -1,10 +1,10 @@
 //Mongoose setup for database connections
 //need to add property autoIndex as false for better performance
-//Create database with name hostelPEB*** 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 require('mongoose-type-email');
-//Creating a schema with basic validation(Inbuilt in mongoose)
+
+
 var studentSchema = new Schema({
 	name: {
 		first: {type:String,required:true},
@@ -15,7 +15,7 @@ var studentSchema = new Schema({
 	
 	pass_key: { type: String, required: true, unique:true, /*minlength: x*/ },
 	
-	pass_word: { type: String,/* required: true, */  unique:true, /*minlength: y*/ },
+	pass_word: { type: String, required: true,  /*minlength: y*/ },
 //Note: Add password hashing here or in register.js using pre function before saving to database
 
 	branch: {
@@ -26,7 +26,7 @@ var studentSchema = new Schema({
 	
 	birth_date: { 
 		type: Date, 
-		min: Date('1990-01-01'),
+	//	min: Date('1990-01-01'),
 		required: true	
 	},
 	
@@ -57,14 +57,18 @@ var studentSchema = new Schema({
 	},
 
 	blood_group:{
-		enum: ['DONTKNOW','A+','A-','B+','B-','O+','O-','AB+','AB-']
+		type: String,
+		enum: ['DONTKNOW','A+','A-','B+','B-','O+','O-','AB+','AB-'],
+		default: 'DONTKNOW'
 	},
 	
 	photo:String,
 
 	share_choice: {
-		enum:['YES','NO']
-	},   //true for twin-sharing basis 
+		type: String,
+		enum : ['YES','NO'],
+		default : 'NO'
+	},   
 
 	room_number: String
 
