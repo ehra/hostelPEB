@@ -2,11 +2,11 @@ var express = require('express');
 var validator = require('express-validator');
 var router = express.Router();
 var db = require('../model/configDB');
+var multer = require('multer');
 
 
 
-
-router.post('/register',function(req,res){
+router.post('/register',multer({ dest: '../photos/'}).single('photo'),function(req,res){
 
     req.checkBody('first_name','First Name error').notEmpty().isAlpha();
     req.checkBody('last_name','Last Name error').notEmpty().isAlpha();
@@ -14,8 +14,8 @@ router.post('/register',function(req,res){
     req.checkBody('roll_number','Roll Number error').notEmpty().isNumeric().isLength(9);
     req.checkBody('birth_date','Date of Birth error').notEmpty().isDate();
     req.checkBody('mobile','Mobile number error').notEmpty().isMobilePhone("en-IN");
-    req.checkBody('photo','Photo error').notEmpty();
-    req.checkBody('branch','Branch error').notEmpty().isAlpha();
+   // req.checkBody('photo','Photo error').notEmpty();
+    req.checkBody('branch','Branch error').notEmpty();
     req.checkBody('blood','Blood group error').notEmpty();
     req.checkBody('email','E-mail error').notEmpty().isEmail(); 
     req.checkBody('father_name','Father name error').notEmpty().isAlpha();    
@@ -24,7 +24,7 @@ router.post('/register',function(req,res){
     req.checkBody('mother_number','Mother mobile error').notEmpty().isMobilePhone("en-IN");
     req.checkBody('address','Address error').notEmpty(); 
     req.checkBody('landline','Landline error').isNumeric();    
-    req.checkBody('share_choice','Share choice error').notEmpty().isBoolean(); 
+    req.checkBody('share_choice','Share choice error').notEmpty().isAlpha(); 
     req.checkBody('password','Password error');      
 
 
@@ -32,8 +32,9 @@ var errors = req.validationErrors();
 
 
   if (errors) {
-   //error messages grave † 
-    res.render('register', { flash: { type: 'alert-danger', messages: errors }});
+   //error messages graveyard † 
+   console.log(errors);
+   // res.render('register', { flash: { type: 'alert-danger', messages: errors }});
    
   }
   else {
@@ -45,7 +46,7 @@ var errors = req.validationErrors();
     var birth_date = req.body.birth_date;
 
     var mobile = req.body.mobile;
-    var photo = req.body.photo;
+    var photo =   req.file.path;
     var branch = req.body.branch;
     var blood = req.body.blood;
     var email = req.body.email;

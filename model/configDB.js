@@ -62,7 +62,9 @@ var studentSchema = new Schema({
 	
 	photo:String,
 
-	share_choice: Boolean,   //true for twin-sharing basis 
+	share_choice: {
+		enum:['YES','NO']
+	},   //true for twin-sharing basis 
 
 	room_number: String
 

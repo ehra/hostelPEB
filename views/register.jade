@@ -8,7 +8,7 @@ block content
      .card-content.black-text
       span.card-title Registration
 
-      form(action="/register",method="post")
+      form(action="/register",method="post",enctype="multipart/form-data")
        .row
         div.input-field.col.s12.m6
          input.validate(id="first_name" name="first_name" type="text")
@@ -19,13 +19,8 @@ block content
          label(for="last_name") Last Name
 
        .row.col.s12
-        .file-field.input-field
-         .btn.blue 
-          span File
-          input.validate(type="file" name="photo")
-        .file-path-wrapper
-         input(class="file-path validate" type="text") 
-
+          input.validate.btn.blue(type="file" name="photo")
+          
        .row
         div.input-field.col.s12
          input.validate(id="roll_num" name="roll_number" type="text")
@@ -34,7 +29,7 @@ block content
        .row
         div.input-field.col.s12
          input.validate(id="pass_word" name="password" type="password")
-         label(for="roll_num") Roll Number
+         label(for="pass_word") Password
 
        .row
         div.input-field.col.s12
@@ -46,14 +41,14 @@ block content
         div.input-field.col.s12
          select.validate(name="branch")
           option(value="" disabled) Choose Your Branch
-          option(value="1") COE
-          option(value="2") ECE
-          option(value="3") MEE
-          option(value="4") EIC
-          option(value="5") CIE
-          option(value="6") CHE
-          option(value="7") MTX
-          option(value="8") ELE
+          option(value="COE") COE
+          option(value="ECE") ECE
+          option(value="MEE") MEE
+          option(value="EIC") EIC
+          option(value="CIE") CIE
+          option(value="CHE") CHE
+          option(value="MTX") MTX
+          option(value="ELE") ELE
          
 
        .row.s12
@@ -84,15 +79,15 @@ block content
         div.input-field.col.s12
          select.validate(name="blood")
           option(value="" disabled) Choose Your Blood Group
-          option(value="1") A+
-          option(value="2") A-
-          option(value="3") B+
-          option(value="4") B-
-          option(value="5") O+
-          option(value="6") O-
-          option(value="7") AB+
-          option(value="8") AB-
-          option(value="9") DON'T KNOW
+          option(value="A+") A+
+          option(value="A-") A-
+          option(value="B+") B+
+          option(value="B-") B-
+          option(value="O+") O+
+          option(value="O-") O-
+          option(value="AB+") AB+
+          option(value="AB-") AB-
+          option(value="DONT KNOW") DON'T KNOW
        .row
         label.col.s12 Father's Details
         div.input-field.col.s6
@@ -111,12 +106,14 @@ block content
           input.validate(id="mother_num" name="mother_number" type="text")
           label(for="father_num")  Mobile   
 
-        .row.col.s12
-         label Enter choice for accomodation type
-         p
-          input(class="filled-in" type="checkbox" name="share_choice" id="filled-in-box" ) 
-          label(for="filled-in-box") Check for Group Allotment
-
+        .row
+        label Want to make a group of 2?
+        div.input-field.col.s12
+         select.validate(name="share_choice")
+          option(value= "YES") YES
+          option(value= "NO") NO
+          
+          
        .row
           div.actions
            input(type="submit", value="add")
