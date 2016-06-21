@@ -8,7 +8,6 @@ var db = require('../model/configDB');
 
 router.post('/register',function(req,res){
 
-    //validating the input by user->laugh with everyone trust no one.
     req.checkBody('first_name','First Name error').notEmpty().isAlpha();
     req.checkBody('last_name','Last Name error').notEmpty().isAlpha();
     req.checkBody('pass_key','Pass Key error').notEmpty().isAlphanumeric();
@@ -20,40 +19,40 @@ router.post('/register',function(req,res){
     req.checkBody('blood','Blood group error').notEmpty();
     req.checkBody('email','E-mail error').notEmpty().isEmail(); 
     req.checkBody('father_name','Father name error').notEmpty().isAlpha();    
-    req.checkBody('father_num','Father mobile error').notEmpty().isMobilePhone("en-IN");       
+    req.checkBody('father_number','Father mobile error').notEmpty().isMobilePhone("en-IN");       
     req.checkBody('mother_name','Mother name error').notEmpty().isAlpha();
-    req.checkBody('mother_num','Mother mobile error').notEmpty().isMobilePhone("en-IN");
-    req.checkBody('address','Address error').notEmpty().isString(); 
-    req.checkBody('landline','Landline error').isNumber();    
+    req.checkBody('mother_number','Mother mobile error').notEmpty().isMobilePhone("en-IN");
+    req.checkBody('address','Address error').notEmpty(); 
+    req.checkBody('landline','Landline error').isNumeric();    
     req.checkBody('share_choice','Share choice error').notEmpty().isBoolean(); 
     req.checkBody('password','Password error');      
-
 
 
 var errors = req.validationErrors();
 
 
   if (errors) {
-   // res.render('register', { flash: { type: 'alert-danger', messages: errors }});
-   // handling error messages***
+   //error messages grave † 
+    res.render('register', { flash: { type: 'alert-danger', messages: errors }});
+   
   }
   else {
    
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var pass_key = req.body.pass_key;
-    var roll_number = req.body.roll_num;
-    var birth_date = req.body.dob;
+    var roll_number = req.body.roll_number;
+    var birth_date = req.body.birth_date;
 
-    var mobile = req.body.mob_num;
+    var mobile = req.body.mobile;
     var photo = req.body.photo;
     var branch = req.body.branch;
     var blood = req.body.blood;
     var email = req.body.email;
     var father_name = req.body.father_name;
-    var father_num = req.body.father_num;
+    var father_num = req.body.father_number;
     var mother_name = req.body.mother_name;
-    var mother_num = req.body.mother_num;
+    var mother_num = req.body.mother_number;
     var address = req.body.address;
     var landline = req.body.landline;
     var share_choice = req.body.share_choice;

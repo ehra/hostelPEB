@@ -22,7 +22,7 @@ block content
         .file-field.input-field
          .btn.blue 
           span File
-          input(type="file")
+          input.validate(type="file" name="photo")
         .file-path-wrapper
          input(class="file-path validate" type="text") 
 
@@ -44,7 +44,7 @@ block content
        .row
         label Select Your Branch
         div.input-field.col.s12
-         select
+         select.validate(name="branch")
           option(value="" disabled) Choose Your Branch
           option(value="1") COE
           option(value="2") ECE
@@ -71,21 +71,18 @@ block content
          input.validate(id="mob_num" name="mobile" type="tel" )
          label(for="mob_num") Mobile Number
         div.input-field.col.s6
-         input.validate(id="land_num" name="mobile_l" type="tel" )
+         input.validate(id="land_num" name="landline" type="tel" )
          label(for="land_num") Landline
        
        .row
         div.input-field.col.s12
-          textarea(id="p_address" class="materialize-textarea")
+          textarea(id="p_address" name="address" class="materialize-textarea")
           label(for="p_address") Permanent Address 
-        div.input-field.col.s12
-          textarea(id="a_address" class="materialize-textarea")
-          label(for="a_address") Alternate Address      
        
        .row
         label Blood Group
         div.input-field.col.s12
-         select
+         select.validate(name="blood")
           option(value="" disabled) Choose Your Blood Group
           option(value="1") A+
           option(value="2") A-
@@ -99,25 +96,25 @@ block content
        .row
         label.col.s12 Father's Details
         div.input-field.col.s6
-          input.validate(id="father_name" type="text")
+          input.validate(id="father_name" name="father_name" type="text")
           label(for="father_name") Name
         div.input-field.col.s6
-          input.validate(id="father_num" type="text")
+          input.validate(id="father_num" name="father_number" type="text")
           label(for="father_num")  Mobile 
 
         .row
         label.col.s12 Mother's Details
         div.input-field.col.s6
-          input.validate(id="mother_name" type="text")
+          input.validate(id="mother_name" name="mother_name" type="text")
           label(for="father_name") Name
         div.input-field.col.s6
-          input.validate(id="mother_num" type="text")
+          input.validate(id="mother_num" name="mother_number" type="text")
           label(for="father_num")  Mobile   
 
         .row.col.s12
          label Enter choice for accomodation type
          p
-          input(class="filled-in" type="checkbox" id="filled-in-box" ) 
+          input(class="filled-in" type="checkbox" name="share_choice" id="filled-in-box" ) 
           label(for="filled-in-box") Check for Group Allotment
 
        .row
