@@ -76,7 +76,9 @@ var studentSchema = new Schema({
 		enum : ['YES','NO'],
 		default : 'NO'
 	},   
-
+	
+	comp_pass_key: String,
+	
 	room_number: String
 
 });

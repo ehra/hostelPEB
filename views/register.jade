@@ -29,10 +29,6 @@ block content
          input.validate(id="roll_num" name="roll_number" type="text" required)
          label(for="roll_num") Roll Number
 
-       .row
-        div.input-field.col.s12
-         input.validate(id="pass_word" name="password" type="password" required)
-         label(for="pass_word") Password
 
        .row
         div.input-field.col.s12
@@ -112,10 +108,21 @@ block content
         .row
         label Want to make a group of 2?
         div.input-field.col.s12
-         select.validate(name="share_choice")
-          option(value= "YES") YES
+         select.validate(id="choice"  name="share_choice")
+          option(value= "YES") YES 
           option(value= "NO") NO
           
+     
+       .row
+        div.input-field.col.s12
+         input.validate(id="pass_word" name="password" type="password" required)
+         label(for="pass_word") Password
+
+       .row
+        div.input-field.col.s12
+         input.validate(id="pass_word2" name="conf_password" type="password" required)
+         label(for="pass_word") Confirm Password
+            
           
        .row
           div.actions
@@ -126,8 +133,22 @@ script.
     $('select').material_select();
   });
 
-script.
  $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
+    selectMonths: true, 
+    selectYears: 15 
   });
+
+$(function(){
+  var choice = $("#share_choice");
+  var pass1 = $("#pass_word");
+  var pass2 = $("#pass_word2");
+  
+  if(choice.value=="YES"){
+      pass1.hide();
+      pass2.hide();
+  }else{
+    pass1.show();
+    pass2.show();
+  }  
+});
+ 

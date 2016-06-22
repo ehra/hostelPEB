@@ -29,7 +29,10 @@ app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('phot
 
 //Tells Express what files to use for routing
 app.get('/', routes);
+app.post('/',routes);
+
 app.get('/users', users);
+
 app.get('/register',register);
 app.post('/register',register);
 

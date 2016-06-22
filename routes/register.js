@@ -14,7 +14,7 @@ router.post('/register',function(req,res){
     req.checkBody('roll_number','Roll Number error').notEmpty().isNumeric().isLength(9);
     req.checkBody('birth_date','Date of Birth error').notEmpty().isDate();
     req.checkBody('mobile','Mobile number error').notEmpty().isMobilePhone("en-IN");
-    //req.checkBody('photo','Photo error').notEmpty();
+    req.file('photo','Photo error').notEmpty();
     req.checkBody('branch','Branch error').notEmpty();
     req.checkBody('blood','Blood group error').notEmpty();
     req.checkBody('email','E-mail error').notEmpty().isEmail(); 
@@ -25,8 +25,8 @@ router.post('/register',function(req,res){
     req.checkBody('address','Address error').notEmpty(); 
     req.checkBody('landline','Landline error').isNumeric();    
     req.checkBody('share_choice','Share choice error').notEmpty().isAlpha(); 
-    req.checkBody('password','Password error');      
-
+    req.checkBody('password','Password error').notEmpty();      
+    req.checkBody('conf_password','Password not same').notEmpty().equals(req.body.password);
 
 var errors = req.validationErrors();
 //var errors = '';
@@ -38,6 +38,27 @@ var errors = req.validationErrors();
   }
 
   else {
+    req.sanitizeBody('first_name').escape().trim();
+    req.sanitizeBody('last_name').escape().trim();
+    req.sanitizeBody('pass_key').escape();
+    req.sanitizeBody('roll_number' ).escape();
+    req.sanitizeBody('birth_date').escape();
+    req.sanitizeBody('mobile' ).escape();
+   // req.file('photo' ).escape();
+    req.sanitizeBody('branch').escape();
+    req.sanitizeBody('blood' ).escape();
+    req.sanitizeBody('email').escape(); 
+    req.sanitizeBody('father_name').escape();    
+    req.sanitizeBody('father_number').escape();       
+    req.sanitizeBody('mother_name').escape();
+    req.sanitizeBody('mother_number').escape();
+    req.sanitizeBody('address').escape(); 
+    req.sanitizeBody('landline').escape();    
+    req.sanitizeBody('share_choice').escape(); 
+    req.sanitizeBody('password').escape();      
+    req.sanitizeBody('conf_password').escape();
+
+    
       console.log(req.file['path']);
       
     var first_name = req.body.first_name;
@@ -61,8 +82,8 @@ var errors = req.validationErrors();
     var password_temp = req.body.password;
 
     var bcrypt = require('bcrypt');
-    var salt = bcrypt.genSaltSync(10);
-    var password = bcrypt.hashSync(password_temp, salt);    
+   // var salt = bcrypt.genSaltSync(10);
+    var password = bcrypt.hashSync(password_temp /*, salt*/);    
     
    var student = new db({
                            name      :{

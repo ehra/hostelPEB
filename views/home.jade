@@ -8,6 +8,7 @@ html(lang='en')
     //link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
     link(href='stylesheets/materialize.min.css', type='text/css', rel='stylesheet', media='screen,projection')
     link(href='stylesheets/style.css', type='text/css', rel='stylesheet', media='screen,projection')
+
   body.grey.lighten-5
    nav.red.lighten-1(role='navigation')
      .nav-wrapper.container
@@ -31,12 +32,12 @@ html(lang='en')
           form.s12.m4.offset-m4.l4.offset-l4(action="/",method="post")
             .row
              .input-field.container
-              input(id="roll_num" type="text")
+              input(id="roll_num" type="text" name="roll_number")
               label(for="roll_num") Roll Number
 
             .row
              .input-field.container
-              input(id="pass_word" class="validate" type="password") 
+              input(id="pass_word" class="validate" type="password" name="pass_word") 
               label(for="pass_word") Password
 
             br

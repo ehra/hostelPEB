@@ -1,0 +1,21 @@
+extends home
+
+ form(action="/friends",method="post")
+       .row
+        div.input-field.col.s12.m6
+         input.validate(id="passkey" name="passkey" type="text" required)
+         label(for="passkey") Your Passkey
+
+        div.input-field.col.s12.m6
+         input.validate(id="comp_passkey" name="comp_passkey" type="text" required)
+         label(for="comp_passkey") Friend's Passkey
+
+       .row
+        div.input-field.col.s12
+         input.validate(id="pass_word" name="password" type="password" required)
+         label(for="pass_word") Password
+
+       .row
+        div.input-field.col.s12
+         input.validate(id="pass_word2" name="conf_password" type="password" required)
+         label(for="pass_word") Confirm Password
