@@ -15,7 +15,7 @@ var studentSchema = new Schema({
 	
 	pass_key: { type: String, required: true, unique:true /*,minlength: x*/ },
 	
-	pass_word: { type: String, required: true /*,minlength: y*/ },
+	pass_word: String,
 //Note: Add password hashing here or in register.js using pre function before saving to database
 
 	branch: {

@@ -10,6 +10,7 @@ var multer = require('multer');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var register = require('./routes/register');
+var friends = require('./routes/friends');
 
 var app = express();
 
@@ -36,6 +37,8 @@ app.get('/users', users);
 app.get('/register',register);
 app.post('/register',register);
 
+app.get('/friends',friends);
+app.post('/friends',friends);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

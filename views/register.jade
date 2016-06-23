@@ -115,12 +115,12 @@ block content
      
        .row
         div.input-field.col.s12
-         input.validate(id="pass_word" name="password" type="password" required)
+         input.validate(id="pass_word" name="password" type="password")
          label(for="pass_word") Password
 
        .row
         div.input-field.col.s12
-         input.validate(id="pass_word2" name="conf_password" type="password" required)
+         input.validate(id="pass_word2" name="conf_password" type="password")
          label(for="pass_word") Confirm Password
             
           
@@ -138,17 +138,3 @@ script.
     selectYears: 15 
   });
 
-$(function(){
-  var choice = $("#share_choice");
-  var pass1 = $("#pass_word");
-  var pass2 = $("#pass_word2");
-  
-  if(choice.value=="YES"){
-      pass1.hide();
-      pass2.hide();
-  }else{
-    pass1.show();
-    pass2.show();
-  }  
-});
- 

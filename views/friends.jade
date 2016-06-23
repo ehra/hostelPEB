@@ -1,6 +1,17 @@
 extends home
 
- form(action="/friends",method="post")
+block content	
+ 
+ include messages
+ 
+ .container(style="margin-top:5%;margin-bottom:7%;")
+  .row
+   .col.s12.m8.offset-m2.l8.offset-l2
+    .card.white
+     .card-content.black-text
+      span.card-title Registration
+
+      form(action="/friends",method="post")
        .row
         div.input-field.col.s12.m6
          input.validate(id="passkey" name="passkey" type="text" required)
@@ -19,3 +30,7 @@ extends home
         div.input-field.col.s12
          input.validate(id="pass_word2" name="conf_password" type="password" required)
          label(for="pass_word") Confirm Password
+         
+       .row
+        div.actions.col.s12
+        input(type="submit", value="add")

@@ -3,7 +3,12 @@ var validator = require('express-validator');
 var router = express.Router();
 var db = require('../model/configDB');
 var multer = require('multer');
+var bcrypt = require('bcrypt');
 
+router.get('/register', function(req, res) {
+  res.render('register');
+  //next();
+});
 
 
 router.post('/register',function(req,res){
@@ -14,7 +19,7 @@ router.post('/register',function(req,res){
     req.checkBody('roll_number','Roll Number error').notEmpty().isNumeric().isLength(9);
     req.checkBody('birth_date','Date of Birth error').notEmpty().isDate();
     req.checkBody('mobile','Mobile number error').notEmpty().isMobilePhone("en-IN");
-    req.file('photo','Photo error').notEmpty();
+   // req.file('photo','Photo error').notEmpty();
     req.checkBody('branch','Branch error').notEmpty();
     req.checkBody('blood','Blood group error').notEmpty();
     req.checkBody('email','E-mail error').notEmpty().isEmail(); 
@@ -25,8 +30,8 @@ router.post('/register',function(req,res){
     req.checkBody('address','Address error').notEmpty(); 
     req.checkBody('landline','Landline error').isNumeric();    
     req.checkBody('share_choice','Share choice error').notEmpty().isAlpha(); 
-    req.checkBody('password','Password error').notEmpty();      
-    req.checkBody('conf_password','Password not same').notEmpty().equals(req.body.password);
+    req.checkBody('password','Password error');      
+    req.checkBody('conf_password','Password not same').equals(req.body.password);
 
 var errors = req.validationErrors();
 //var errors = '';
@@ -59,7 +64,7 @@ var errors = req.validationErrors();
     req.sanitizeBody('conf_password').escape();
 
     
-      console.log(req.file['path']);
+    //  console.log(req.file['path']);
       
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
@@ -80,11 +85,11 @@ var errors = req.validationErrors();
     var landline = req.body.landline;
     var share_choice = req.body.share_choice;
     var password_temp = req.body.password;
-
-    var bcrypt = require('bcrypt');
-   // var salt = bcrypt.genSaltSync(10);
-    var password = bcrypt.hashSync(password_temp /*, salt*/);    
-    
+    var password = null;
+    if(password_temp!=null){
+    var salt = bcrypt.genSaltSync(10);
+        password = bcrypt.hashSync(password_temp , salt);    
+    }
    var student = new db({
                            name      :{
                                 first: first_name,
@@ -114,7 +119,8 @@ var errors = req.validationErrors();
                            address:address,
                            landline: landline,
                            share_choice:share_choice,
-                           pass_word:password
+                           pass_word:password,
+                           comp_pass_key:"onwait"
                        }); 
     
   student.save(function (err) {
@@ -129,8 +135,17 @@ var errors = req.validationErrors();
   }
 });
 
-router.get('/register', function(req, res) {
-  res.render('register');
-  //next();
+/*$(function(){
+var choice = $("#share_choice");
+var pass1 = $("#pass_word");
+var pass2 = $("#pass_word2");  
+if(choice.value=="YES")
+pass1.hide();
+pass2.hide();
+else 
+pass1.show();
+pass2.show();  
 });
+ */
+
 module.exports = router;
