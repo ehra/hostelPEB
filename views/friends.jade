@@ -6,31 +6,38 @@ block content
  
  .container(style="margin-top:5%;margin-bottom:7%;")
   .row
-   .col.s12.m8.offset-m2.l8.offset-l2
-    .card.white
-     .card-content.black-text
-      span.card-title Registration
-
+    .column
       form(action="/friends",method="post")
        .row
-        div.input-field.col.s12.m6
-         input.validate(id="passkey" name="passkey" type="text" required)
-         label(for="passkey") Your Passkey
-
-        div.input-field.col.s12.m6
-         input.validate(id="comp_passkey" name="comp_passkey" type="text" required)
-         label(for="comp_passkey") Friend's Passkey
+         .column
+         .column
+          label(for="passkey") Your Passkey
+          input.validate(id="passkey" name="passkey" type="text" required)
+         .column
 
        .row
-        div.input-field.col.s12
-         input.validate(id="pass_word" name="password" type="password" required)
-         label(for="pass_word") Password
+         .column
+         .column
+          label(for="comp_passkey") Friend's Passkey
+          input.validate(id="comp_passkey" name="comp_passkey" type="text" required)
+         .column
 
        .row
-        div.input-field.col.s12
-         input.validate(id="pass_word2" name="conf_password" type="password" required)
-         label(for="pass_word") Confirm Password
+         .column
+         .column
+          label(for="pass_word") Password
+          input.validate(id="pass_word" name="password" type="password" required)
+         .column
+
+       .row
+         .column
+         .column
+          label(for="pass_word") Confirm Password
+          input.validate(id="pass_word2" name="conf_password" type="password" required)
+         .column
          
        .row
-        div.actions.col.s12
-        input(type="submit", value="add")
+         .column
+         .column
+          input(type="submit", value="add")
+         .column
