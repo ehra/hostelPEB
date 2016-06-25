@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var db = require('../model/configDB');
+var db2 = require('../model/friendsDB')
+var bcrypt = require('bcrypt');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -9,37 +11,55 @@ router.get('/', function(req, res, next) {
 
 router.post('/',function(req,res) {
     
-    req.checkBody('roll_number','Roll number error').notEmpty().isNumeric();
-    req.checkBody('pass_word','Password error').notEmpty();
+    req.checkBody('passkey','Passkey error').notEmpty().isAlphanumeric();
+    req.checkBody('password','Password error').notEmpty();
     
     var error = req.validationErrors();
     
     if(error) return console.log(error);
     
-    req.sanitizeBody('roll_number').escape();
-    req.sanitizeBody('pass_word').escape();
+    req.sanitizeBody('passkey').escape();
+    req.sanitizeBody('password').escape();
     
-    var roll_number = req.body.roll_number;
-    var password = req.body.pass_word;
+    var pass_key = req.body.passkey;
+    var password = req.body.password;
     
-    db.findOne({'roll_number':roll_number},function(err,student){
+    db.findOne({'pass_key':pass_key},function(err,student){
         if(err) return console.log(err);//wrong roll_number or password;
-        var bcrypt = require('bcrypt');
-        var pass_retrieved = student.pass_word;
-          if(bcrypt.compareSync(pass_retrieved, password)){
-              res.redierect('users');
-              console.log("success");
+        if(student.comp_pass_key != "onwait"){
+            db2.findOne({'pass_key1':pass_key},function(err2,friend){
+                var pass_retrieved = friend.pass_word;
+             bcrypt.compare(password, pass_retrieved, function(err3, correct) {
+              if(err3) return console.log(err3);
+              if(correct){
+                  res.redirect('users');
+
+              }
+              else{
+                   console.log(pass_retrieved);
+
+               }       
+             });
+           });
+        }else{
+         var pass_retrieved = student.pass_word;
+         bcrypt.compare(password, pass_retrieved, function(err3, correct) {
+          if(err3) return console.log(err3);          
+          if(correct){
+              res.redirect('users');
+
           }
-          else
+          else{
               console.log(pass_retrieved);
-              console.log("fail");
-              //wrong roll_number or password
-        
+
+          }  
+            
+         });
+        }
+         
     });
     
-    
-    
-})
+});
 
 module.exports = router;
 

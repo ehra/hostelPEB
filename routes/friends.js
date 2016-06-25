@@ -20,10 +20,11 @@ router.post('/friends',function(req,res){
        
        if(error) return console.log(error);
        
-       req.sanitizeBody('passkey').escape();
+      var lull = req.sanitizeBody('passkey').escape();
        req.sanitizeBody('comp_passkey').escape();
        req.sanitizeBody('password').escape();
        req.sanitizeBody('conf_password').escape();
+       
        
        var passkey = req.body.passkey;
        var comp_passkey = req.body.comp_passkey;
@@ -47,17 +48,20 @@ router.post('/friends',function(req,res){
                        if(err4) return console.log("Sorry to friend");
                      
                        var password_temp = req.body.password;
-                       var salt = bcrypt.genSaltSync(10);
-                       var password = bcrypt.hashSync(password_temp ,salt); 
-                     
-                       var friend = new db2({
-                           pass_key1:passkey,
-                           pass_key2:comp_passkey,
-                           pass_word:password
-                            });
-                       friend.save(function(err5){
-                           if(err5) return console.log("Couldn't Register");
-                       }) ;
+                      
+                     bcrypt.hash(password_temp, saltRounds, function(err, hash) {
+                         
+                            if(err) return console.log("Unable to process request");
+                            var friend = new db2({
+                                    pass_key1:passkey,
+                                    pass_key2:comp_passkey,
+                                    pass_word:hash
+                             });
+                            friend.save(function(err5){
+                                    if(err5) return console.log("Couldn't Register");
+                            }) ;
+                     });
+                       
                     });
                  });
                  
