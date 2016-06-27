@@ -1,3 +1,5 @@
+module.exports = function(io){
+    
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -69,4 +71,5 @@ router.post('/friends',function(req,res){
        });
 });
 
-module.exports = router;
+return router;
+}

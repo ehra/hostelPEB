@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
 var multer = require('multer');
+var socket_io    = require( "socket.io" );  
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -13,6 +14,10 @@ var register = require('./routes/register');
 var friends = require('./routes/friends');
 
 var app = express();
+
+// Socket.io
+var io           = socket_io();
+app.io           = io;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +32,18 @@ app.use(validator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('photo'));
+app.use('/', require('./routes/index')(app.io));
+app.use('/users', require('./routes/users')(app.io));
+app.use('/friends',require('./routes/friends')(app.io));
+app.use('/register',require('./routes/register')(app.io));
+
+// socket.io events
+io.on( "connection", function( socket )
+{
+    console.log( "A user connected" );
+});
+
+
 
 //Tells Express what files to use for routing
 app.get('/', routes);

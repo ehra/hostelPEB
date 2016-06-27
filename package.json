@@ -24,6 +24,7 @@
     "node-gyp": "^3.3.1",
     "nodemon": "^1.9.2",
     "rebuild": "^0.1.2",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "socket.io": "^1.4.8"
   }
 }
