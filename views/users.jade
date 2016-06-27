@@ -1,3 +1,10 @@
+script.
+ var socket = io();
+ $(document).ready(function(){
+  $('#tab1').hide();
+  $('#tab2').hide();
+  $('#tab3').hide();   
+ });
 extends home
  
 mixin print(x,y)
@@ -34,9 +41,3 @@ block content
      +rooms(300,317,317,311,314,311)
 
 
-script.
- $(document).ready(function(){
-    $('#tab1').hide();
-    $('#tab2').hide();
-    $('#tab3').hide();   
-  });

@@ -10,7 +10,10 @@ var bcrypt = require('bcrypt');
 router.get('/friends',function(req,res){
    res.render('friends');
 });
-
+io.on( "connection", function( socket )
+{
+    console.log( "A user connected" );
+});
 router.post('/friends',function(req,res){
     
        req.checkBody('passkey','Passkey error').notEmpty().isAlphanumeric();

@@ -32,30 +32,23 @@ app.use(validator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('photo'));
-app.use('/', require('./routes/index')(app.io));
-app.use('/users', require('./routes/users')(app.io));
-app.use('/friends',require('./routes/friends')(app.io));
-app.use('/register',require('./routes/register')(app.io));
 
 // socket.io events
-io.on( "connection", function( socket )
-{
-    console.log( "A user connected" );
-});
+
 
 
 
 //Tells Express what files to use for routing
-app.get('/', routes);
-app.post('/',routes);
+app.get('/', routes(app.io));
+app.post('/',routes(app.io));
 
-app.get('/users', users);
+app.get('/users', users(app.io));
 
-app.get('/register',register);
-app.post('/register',register);
+app.get('/register',register(app.io));
+app.post('/register',register(app.io));
 
-app.get('/friends',friends);
-app.post('/friends',friends);
+app.get('/friends',friends(app.io));
+app.post('/friends',friends(app.io));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
