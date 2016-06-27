@@ -1,0 +1,42 @@
+extends home
+ 
+mixin print(x,y)
+ if x < y
+  .column=x
+ else
+  .column
+
+mixin rooms(n,num,a,b,c,d)
+ while n < num
+  .row(value=n++)
+   +print(n,a)
+   +print(n,b)
+   +print(n,c)
+   +print(n,d)
+
+block content
+
+ .container(style="margin-top:5%;margin-bottom:7%;")
+  div(id="tabs")
+   .row
+    .column
+     a(href="#tab1" onclick="open(this.href)") Ground Floor
+    .column
+     a(href="#tab2" onclick="open(this.href)") Ist Floor
+    .column
+     a(href="#tab3" onclick="open(this.href)") IInd Floor
+    
+    #tab1
+     +rooms(100,111,111,104,111,111) 
+    #tab2 
+     +rooms(200,217,217,211,214,211)
+    #tab3
+     +rooms(300,317,317,311,314,311)
+
+
+script.
+ $(document).ready(function(){
+    $('#tab1').hide();
+    $('#tab2').hide();
+    $('#tab3').hide();   
+  });
