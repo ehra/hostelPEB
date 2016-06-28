@@ -1,27 +1,31 @@
 extends home
  
-mixin print(x,y)
+mixin print(x,y,name)
  if x < y
-  .column=x
+  .column(id = name+x)
+   form
+    fieldset
+     input(type="checkbox")
+     label(class="label-inline") #{name+x}
  else
   .column
 
 mixin rooms(n,num,a,b,c,d)
  while n < num
   .row(value=n++)
-   +print(n,a)
-   +print(n,b)
-   +print(n,c)
-   +print(n,d)
+   +print(n,a,"A")
+   +print(n,b,"B")
+   +print(n,c,"C")
+   +print(n,d,"D")
 
 block content
  .row
-  .column 
-   a(id="#tab1" onclick="open(this.id)") Ground Floor
-  .column
-   a(id="#tab2" onclick="open(this.id)") Ist Floor
-  .column
-   a(id="#tab3" onclick="open(this.id)") IInd Floor 
+  .column.column-25 
+   button(id="link1" href="#") Ground Floor
+  .column.column-25
+   button(id="link2" href="#") First Floor
+  .column.column-50
+   button(id="link3" href="#") Second Floor 
    
  .container(style="margin-top:5%;margin-bottom:7%;")  
     #tab1      
@@ -32,5 +36,3 @@ block content
    
     #tab3
      +rooms(300,317,317,311,314,311)
-
-
