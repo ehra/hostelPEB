@@ -131,22 +131,22 @@ block content
           .column   
             label Want to make a group of 2?
             select.validate.label-inline(id="choice"  name="share_choice")
-              option(value= "YES") YES 
-              option(value= "NO") NO
+              option(value= "YES" ) YES 
+              option(value= "NO" selected = "selected" ) NO
            .column
      
-       .row
+       .row(id="pass_word")
           .column
           .column          
             label(for="pass_word") Password
-            input.validate(id="pass_word" name="password" type="password")
+            input.validate(id="pass_word32" name="password" type="password")
           .column
               
-       .row
+       .row(id="pass_word2")
           .column
           .column
             label(for="pass_word") Confirm Password
-            input.validate(id="pass_word2" name="conf_password" type="password")
+            input.validate(id="pass_word22" name="conf_password" type="password")
           .column  
           
        .row
@@ -165,3 +165,4 @@ script.
     selectYears: 15 
   });
 
+ S

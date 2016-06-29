@@ -137,17 +137,6 @@ var errors = req.validationErrors();
   }
 });
 
-/*$(function(){
-var choice = $("#share_choice");
-var pass1 = $("#pass_word");
-var pass2 = $("#pass_word2");  
-if(choice.value=="YES")
-pass1.hide();
-pass2.hide();
-else 
-pass1.show();
-pass2.show();  
-});
- */
+
 
 module.exports = router;
