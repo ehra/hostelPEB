@@ -8,9 +8,15 @@ router.get('/users', function(req, res, next) {
 });
 
  io.on('connection', function(socket){
-    socket.on('message', function(msg){
-      io.emit('message', msg);
+ 	console.log("This works in users.js");
+    socket.on('chat-message', function(data){
+    	console.log(data);
+    	//var msg = data + "Has been booked!";
+    io.emit('message', data);
   });
+    socket.on('disconnect',function(){
+    	console.log("User gone!");
+    });
 });
 
 return router;

@@ -17,13 +17,17 @@ $(document).ready(function(){
 	});
  
  var  socket = io.connect('//localhost:5000');
+socket.on('connect', function() {
+  console.log('Works!');
+});
 
      function op(){
-      socket.emit('chat message', $('input[name=yolo]:checked', '#myForm').val());
+      socket.emit('chat-message', $('input[name=yolo]:checked', '#myForm').val());
 	 };
 	 
 	 socket.on('message', function(msg){
-		 console.log("oo");
+		 //Prints in browsers console
+		 console.log("Shit:" + msg);
       	 $("input[value=msg]").attr('disabled',true);
 	  	 alert($("input[value=msg]").val());
      });
