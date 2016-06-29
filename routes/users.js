@@ -6,9 +6,12 @@ var router = express.Router();
 router.get('/users', function(req, res, next) {
   res.render('users');
 });
-io.on( "connection", function( socket )
-{
-    console.log( "A user connected" );
+
+ io.on('connection', function(socket){
+    socket.on('message', function(msg){
+      io.emit('message', msg);
+  });
 });
+
 return router;
 }

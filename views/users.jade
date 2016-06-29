@@ -2,10 +2,8 @@ extends home
  
 mixin print(x,y,name)
  if x < y
-  .column(id = name+x)
-   form
-    fieldset
-     input(type="checkbox")
+  .column
+     input(value = name+x type="radio" name='yolo')
      label(class="label-inline") #{name+x}
  else
   .column
@@ -28,6 +26,7 @@ block content
    button(id="link3" href="#") Second Floor 
    
  .container(style="margin-top:5%;margin-bottom:7%;")  
+  form(action='' id="myForm")
     #tab1      
      +rooms(100,111,111,104,111,111) 
    
@@ -36,3 +35,6 @@ block content
    
     #tab3
      +rooms(300,317,317,311,314,311)
+    input(type="submit" value="book" onclick="op()")  
+    
+   ul(id="messages")

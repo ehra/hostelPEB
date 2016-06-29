@@ -1,4 +1,4 @@
-module.exports = function(io){
+
   
 var express = require('express');
 var validator = require('express-validator');
@@ -150,5 +150,4 @@ pass2.show();
 });
  */
 
-return router;
-}
+module.exports = router;

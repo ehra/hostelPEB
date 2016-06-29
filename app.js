@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
 var multer = require('multer');
-var socket_io    = require( "socket.io" );  
+var io    = require( "socket.io" )();  
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -16,8 +16,7 @@ var friends = require('./routes/friends');
 var app = express();
 
 // Socket.io
-var io           = socket_io();
-app.io           = io;
+app.io  = io;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,16 +38,17 @@ app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('phot
 
 
 //Tells Express what files to use for routing
-app.get('/', routes(app.io));
-app.post('/',routes(app.io));
+app.get('/', routes);
+app.post('/',routes);
 
 app.get('/users', users(app.io));
+app.post('/users', users(app.io));
 
-app.get('/register',register(app.io));
-app.post('/register',register(app.io));
+app.get('/register',register);
+app.post('/register',register);
 
-app.get('/friends',friends(app.io));
-app.post('/friends',friends(app.io));
+app.get('/friends',friends);
+app.post('/friends',friends);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -80,7 +80,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
- 
 
 module.exports = app;

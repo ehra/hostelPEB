@@ -1,5 +1,3 @@
-module.exports=function(io){
-
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -12,10 +10,6 @@ var bcrypt = require('bcrypt');
 router.get('/', function(req, res, next) {
   res.render('home')});
 
-io.on( "connection", function( socket )
-{
-    console.log( "A user connected" );
-});
 
 router.post('/',function(req,res) {
     
@@ -70,5 +64,4 @@ router.post('/',function(req,res) {
 });
 
 
- return router;
-}
+ module.exports=router;
