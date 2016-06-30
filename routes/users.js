@@ -4,14 +4,14 @@ var router = express.Router();
 var db = require('../model/configDB');
 var db2 = require('../model/friendsDB');
 var db3 = require('../model/roomsDB');
-var jsdom = require('jsdom');
-var k = require('jquery');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
   res.render('users');
+  console.log(req.user);
 });
-
 
  io.on('connection', function(socket){
     db3.find(function(err1,rooms){

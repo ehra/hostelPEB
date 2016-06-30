@@ -14,11 +14,13 @@ var db2 = require('./model/friendsDB');
 var bcrypt = require('bcrypt');
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user.id);
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
 });
 
 
@@ -26,15 +28,13 @@ passport.use(new LocalStrategy(function(username, password, done) {
   var pass_key = username;
     db.findOne({'pass_key':pass_key},function(err,student){
         if(err) return done(err);//wrong roll_number or password;
-        console.log(student.comp_pass_key);
         if(student.comp_pass_key != "onwait"){
             db2.findOne({'pass_key1':pass_key},function(err2,friend){
                 if(err2) return done(err2);
                 var pass_retrieved = friend.pass_word;
              bcrypt.compare(password, pass_retrieved, function(err3, correct) {
-              if(err3) return done(null, false); //wrong password
+              if(err3) return done(null, false ,{ message: 'Incorrect password.' }); //wrong password
               if(correct){
-                console.log(student.comp_pass_key);
                   return done(null, student);
               }     
              });
@@ -53,7 +53,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 
 
 
-var routes = require('./routes/index');
+
 var users = require('./routes/users');
 var register = require('./routes/register');
 var friends = require('./routes/friends');
@@ -87,11 +87,17 @@ app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('phot
 app.get('/', function(req,res){
    res.render('home');
 });
-app.post('/',passport.authenticate('local', { successRedirect: '/users',failureRedirect: '/' }));
 
 
-app.get('/users',users(app.io) );
-//app.post('/users', users(app.io));
+app.post('/',passport.authenticate('local',{failureRedirect: '/'}),
+function(req,res,next){
+  res.redirect('/users');
+});
+//users(app.io)
+app.get('/users',function(req,res){
+  console.log(req.user);
+});
+//usersap, users(app.io));
 
 app.get('/register',register);
 app.post('/register',register);
