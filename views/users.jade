@@ -3,7 +3,7 @@ extends home
 mixin print(x,y,name)
  if x < y
   .column
-     input(value = name+x type="radio" name='yolo')
+     input(id = name+x type="radio" name='yolo')
      label(class="label-inline") #{name+x}
  else
   .column
@@ -37,4 +37,4 @@ block content
      +rooms(300,317,317,311,314,311)
     input(type="submit" value="book" onclick="op()")  
     
-   ul(id="messages")
+ 

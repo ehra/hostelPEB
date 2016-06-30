@@ -7,6 +7,51 @@ var bodyParser = require('body-parser');
 var validator = require('express-validator');
 var multer = require('multer');
 var io    = require( "socket.io" )();  
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var db = require('./model/configDB');
+var db2 = require('./model/friendsDB');
+var bcrypt = require('bcrypt');
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+
+passport.use(new LocalStrategy(function(username, password, done) {
+  var pass_key = username;
+    db.findOne({'pass_key':pass_key},function(err,student){
+        if(err) return done(err);//wrong roll_number or password;
+        console.log(student.comp_pass_key);
+        if(student.comp_pass_key != "onwait"){
+            db2.findOne({'pass_key1':pass_key},function(err2,friend){
+                if(err2) return done(err2);
+                var pass_retrieved = friend.pass_word;
+             bcrypt.compare(password, pass_retrieved, function(err3, correct) {
+              if(err3) return done(null, false); //wrong password
+              if(correct){
+                console.log(student.comp_pass_key);
+                  return done(null, student);
+              }     
+             });
+           });
+        }else{
+         var pass_retrieved = student.pass_word;
+         bcrypt.compare(password, pass_retrieved, function(err3, correct) {
+          if(err3) return done(null,false);  // wrong password      
+          if(correct){
+              return done(null,user);
+          } 
+         });
+        }
+    });
+}));
+
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -29,20 +74,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());
 app.use(cookieParser());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('photo'));
-
-// socket.io events
-
 
 
 
 //Tells Express what files to use for routing
-app.get('/', routes);
-app.post('/',routes);
+app.get('/', function(req,res){
+   res.render('home');
+});
+app.post('/',passport.authenticate('local', { successRedirect: '/users',failureRedirect: '/' }));
 
-app.get('/users', users(app.io));
-app.post('/users', users(app.io));
+
+app.get('/users',users(app.io) );
+//app.post('/users', users(app.io));
 
 app.get('/register',register);
 app.post('/register',register);

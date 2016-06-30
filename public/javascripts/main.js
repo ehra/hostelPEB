@@ -14,8 +14,7 @@ $(function(){
    });
 }); 
  
-
-
+ 
 $(document).ready(function(){
 		$("#link1").click(function() {
 			$("#tab1").show(0);
@@ -35,18 +34,21 @@ $(document).ready(function(){
 	});
  
  var  socket = io.connect('//localhost:5000');
-socket.on('connect', function() {
-  console.log('Works!');
-});
-
-     function op(){
-      socket.emit('chat-message', $('input[name=yolo]:checked', '#myForm').val());
-	 };
-	 
-	 socket.on('message', function(msg){
+ 
+ socket.on('rooms',function(rooms){
+		for(var i=0;i<rooms.length;i++){
+			$("#"+rooms[i].room_number).hide();
+		}
+	});
+ 
+ function op(){
+      socket.emit('chat-message', $('input[name=yolo]:checked', '#myForm').prop('id'));
+	};
+	
+	 socket.on('chat-message', function(msg){
 		 //Prints in browsers console
-		 console.log("Shit:" + msg);
-      	 $("input[value=msg]").attr('disabled',true);
-	  	 alert($("input[value=msg]").val());
-     });
+		 	console.log("Shit:" + msg);
+		 	$("#"+msg).hide();
+     	 });
     
+	

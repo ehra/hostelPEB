@@ -1,5 +1,3 @@
-
-  
 var express = require('express');
 var validator = require('express-validator');
 var router = express.Router();
