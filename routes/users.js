@@ -9,8 +9,9 @@ var LocalStrategy = require('passport-local').Strategy;
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
-  res.render('users');
   console.log(req.user);
+  res.render('users');
+
 });
 
  io.on('connection', function(socket){

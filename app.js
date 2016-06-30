@@ -12,13 +12,15 @@ var LocalStrategy = require('passport-local').Strategy;
 var db = require('./model/configDB');
 var db2 = require('./model/friendsDB');
 var bcrypt = require('bcrypt');
+var session = require('express-session');
+
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
+  db.findById(id, function(err, user) {
     done(err, user);
   });
 });
@@ -35,6 +37,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
              bcrypt.compare(password, pass_retrieved, function(err3, correct) {
               if(err3) return done(null, false ,{ message: 'Incorrect password.' }); //wrong password
               if(correct){
+                console.log(student.comp_pass_key);
                   return done(null, student);
               }     
              });
@@ -51,15 +54,10 @@ passport.use(new LocalStrategy(function(username, password, done) {
     });
 }));
 
-
-
-
+var app = express();
 var users = require('./routes/users');
 var register = require('./routes/register');
 var friends = require('./routes/friends');
-
-var app = express();
-
 // Socket.io
 app.io  = io;
 
@@ -72,14 +70,19 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('photo'));
 app.use(validator());
 app.use(cookieParser());
-
+app.use(session({
+    secret: 'asdfdxoubjhf2354dyhgdj4635696',
+    cookie: {name: 'cloudCDN', maxAge: 86400000 },
+    resave: true,
+    saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('photo'));
 
 
 
@@ -91,12 +94,11 @@ app.get('/', function(req,res){
 
 app.post('/',passport.authenticate('local',{failureRedirect: '/'}),
 function(req,res,next){
+//  console.log(req.user);
   res.redirect('/users');
 });
-//users(app.io)
-app.get('/users',function(req,res){
-  console.log(req.user);
-});
+
+app.get('/users',users(app.io));
 //usersap, users(app.io));
 
 app.get('/register',register);
