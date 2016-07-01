@@ -18,9 +18,13 @@ router.post('/friends',function(req,res){
        req.checkBody('password','Password error').notEmpty();       
        req.checkBody('conf_password','Password error').notEmpty().equals(req.body.password);       
        
-       var error = req.validationErrors();
+       var errors = req.validationErrors();
        
-       if(error) return console.log(error);
+        if (errors) {
+        //error messages graveyard † 
+          console.log(errors);
+          res.render('friends', { flash: { messages: errors }});
+        }
        
       var lull = req.sanitizeBody('passkey').escape();
        req.sanitizeBody('comp_passkey').escape();
