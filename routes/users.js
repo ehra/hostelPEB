@@ -10,18 +10,21 @@ var session = require('express-session');
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
- if(!req.user){
-   res.redirect('/');
- }else{
+ if(req.user){
   res.render('users');
+ }else{
+  res.redirect('/');
  }
 });
 
 
  io.on('connection', function(socket){
-     var user = io.bliss;
-
-        db3.find(function(err1,rooms){
+   var user = io.bliss;
+  // socket.remoteAddress="::3000:127.0.0.1";
+  // socket.handshake.address = '::3000:127.0.0.1';
+  // console.log(socket.handshake.session);
+   /*     db3.find(function(err1,rooms){
+          
           if(err1) return console.log(err1);    
           if(user.share_choice == "YES"){
             rooms['0'].group=true;
@@ -29,20 +32,27 @@ router.get('/users', function(req, res, next) {
             rooms['0'].group=false;                      
           }  
           io.emit('rooms',rooms);
-        });   
+        });*/   
 
      //can be optimized
-      var vac;
+   /*   var vac;
       if(user.share_choice=="YES"){
         vac = 2;
       }else{
         vac = 1;
-      }      
+      } */     
       
-    socket.on('book', function(data){
-      io.emit('book', data);
+    socket.on('message', function(data){
+      console.log(data);
+      var x = 2 - vac;
+      newData = {
+        room:data,
+        vaccancy:x
+      };
 
-      db3.findOne({room_number:data},function(err3,room){
+      io.emit('message', newData);
+
+     /* db3.findOne({room_number:data},function(err3,room){
           vac = room.vaccancy-vac;
         if(room){
           db3.update({room_number:data},{vaccancy:vac},function(err4){
@@ -69,7 +79,7 @@ router.get('/users', function(req, res, next) {
           //your room is booked bye
         })
       }  
-  });
+  });*/
       
     socket.on('disconnect',function(){
     	console.log("User gone!");
