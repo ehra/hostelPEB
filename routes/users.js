@@ -18,6 +18,7 @@ router.get('/users', function(req, res, next) {
 });
 
  io.on('connection', function(socket){
+     console.log("A user connected")
      //socket.handshake.session=socket.handshake.sessionID;    
      //console.log(io.bliss);
      var user = io.bliss;
@@ -33,6 +34,7 @@ router.get('/users', function(req, res, next) {
     });  
       
     socket.on('chat-message', function(data){
+      //console.log("Shit works!" + data);
       io.emit('chat-message', data);
       var book = new db3({
         room_number:data

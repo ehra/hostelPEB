@@ -34,12 +34,15 @@ $(document).ready(function(){
 	});
  
  var  socket = io.connect('//localhost:3000');
- 
+
+	
  socket.on('rooms',function(rooms){
+ 	console.log("Working2");
 		for(var i=0;i<rooms.length;i++){
 			if(rooms[i].vaccancy == 1){
 				//only one room left
-			}else{
+				$("#"+rooms[i].room_number).css('background-color', 'red');
+			} else{
 				//nothing left go faggot
 				$("#"+rooms[i].room_number).hide();
 			}
@@ -47,15 +50,16 @@ $(document).ready(function(){
 		}
 	});
  
+  
  function op(){
       socket.emit('chat-message', $('input[name=yolo]:checked', '#myForm').prop('id'));
-	};
+  };
 	
-	 socket.on('chat-message', function(msg){
+	 socket.on('chat-message', function(data){
 		 //Prints in browsers console
-		 	console.log("Shit:" + msg);
-		 	$("#"+msg).hide();
+		 	console.log("Room:" + data);
+		 	$("#"+ data).hide();
 		 	//$("#"+msg).css('background-color','red'); 
-     	 });
+     	 }); 
     
 	
