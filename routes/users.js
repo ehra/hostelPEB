@@ -24,6 +24,13 @@ router.get('/users', function(req, res, next) {
      //check group or not
      //if group send message full book
         //check if empty
+     if(user.share_choice == "YES"){
+        db3.find(function(err1,rooms){
+          if(err1) return console.log(err1);
+          rooms.group=true;
+          io.emit('rooms',rooms);
+        });   
+     }
         
      //else keep 1 vaccany
      

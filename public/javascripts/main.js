@@ -37,8 +37,13 @@ $(document).ready(function(){
  
  socket.on('rooms',function(rooms){
 		for(var i=0;i<rooms.length;i++){
+			
 			if(rooms[i].vaccancy == 1){
-				//only one room left
+				if(rooms['0'].group){
+				  $("#"+rooms[i].room_number).hide();
+				}else{
+					//only one room left	
+				}
 			}else{
 				//nothing left go faggot
 				$("#"+rooms[i].room_number).hide();
