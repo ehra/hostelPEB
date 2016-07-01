@@ -11,7 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var db = require('./model/configDB');
 var db2 = require('./model/friendsDB');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var session = require('express-session');
 
 
@@ -28,6 +28,7 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new LocalStrategy(function(username, password, done) {
   var pass_key = username;
+  console.log(username);
     db.findOne({'pass_key':pass_key},function(err,student){
         if(err) return done(err);//wrong roll_number or password;
         if(student.comp_pass_key != "onwait"){

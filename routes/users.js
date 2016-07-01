@@ -1,4 +1,4 @@
-module.exports = function(io,user){
+module.exports = function(io){
 var express = require('express');
 var router = express.Router();
 var db = require('../model/configDB');
@@ -14,7 +14,6 @@ router.get('/users', function(req, res, next) {
    res.redirect('/');
  }else{
   res.render('users');
-
  }
 });
 
@@ -35,7 +34,6 @@ router.get('/users', function(req, res, next) {
       
     socket.on('chat-message', function(data){
       io.emit('chat-message', data);
-      console.log(user);
       var book = new db3({
         room_number:data
       });
