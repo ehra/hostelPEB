@@ -17,7 +17,8 @@ router.get('/users', function(req, res, next) {
  }
 });
 
- io.on('connection', function(socket){ 
+
+ io.on('connection', function(socket){
      var user = io.bliss;
 
         db3.find(function(err1,rooms){
@@ -56,7 +57,6 @@ router.get('/users', function(req, res, next) {
             if(err2) return console.log(err2);
           });
         }
-      });
       
       if(user.share_choice=="YES"){
         db2.update({pass_key1:user.pass_key},{room_number:data},function(err5){
@@ -76,6 +76,6 @@ router.get('/users', function(req, res, next) {
     });
  });
  
-       
+ });  
 return router;
 }

@@ -34,17 +34,15 @@ $(document).ready(function(){
 	});
  
  var  socket = io.connect('//localhost:3000');
- 
+
+	
  socket.on('rooms',function(rooms){
+ 	console.log("Working2");
 		for(var i=0;i<rooms.length;i++){
-			
 			if(rooms[i].vaccancy == 1){
-				if(rooms['0'].group){
-				  $("#"+rooms[i].room_number).hide();
-				}else{
-					//only one room left	
-				}
-			}else{
+				//only one room left
+				$("#"+rooms[i].room_number).css('background-color', 'red');
+			} else{
 				//nothing left go faggot
 				$("#"+rooms[i].room_number).hide();
 			}
@@ -52,15 +50,14 @@ $(document).ready(function(){
 		}
 	});
  
+  
  function op(){
-      socket.emit('book', $('input[name=yolo]:checked', '#myForm').prop('id'));
-	};
+      socket.emit('chat-message', $('input[name=yolo]:checked', '#myForm').prop('id'));
+  };
 	
-	 socket.on('book', function(msg){
+	 socket.on('chat-message', function(data){
 		 //Prints in browsers console
-		 	console.log("Shit:" + msg);
-		 	$("#"+msg).hide();
+		 	console.log("Room:" + data);
+		 	$("#"+ data).hide();
 		 	//$("#"+msg).css('background-color','red'); 
      	 });
-    
-	
