@@ -53,10 +53,10 @@ $(document).ready(function(){
 	});
  
  function op(){
-      socket.emit('chat-message', $('input[name=yolo]:checked', '#myForm').prop('id'));
+      socket.emit('book', $('input[name=yolo]:checked', '#myForm').prop('id'));
 	};
 	
-	 socket.on('chat-message', function(msg){
+	 socket.on('book', function(msg){
 		 //Prints in browsers console
 		 	console.log("Shit:" + msg);
 		 	$("#"+msg).hide();

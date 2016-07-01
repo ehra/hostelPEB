@@ -53,7 +53,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
          bcrypt.compare(password, pass_retrieved, function(err3, correct) {
           if(err3) return done(null,false);  // wrong password      
           if(correct){
-              return done(null,user);
+              return done(null,student);
           } 
          });
         }
