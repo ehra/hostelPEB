@@ -13,7 +13,7 @@ var db = require('./model/configDB');
 var db2 = require('./model/friendsDB');
 var bcrypt = require('bcrypt');
 var session = require('express-session');
-var sharedsession = require("express-socket.io-session");
+
 
 passport.serializeUser(function(user, done) {
   io.bliss = user;
@@ -80,13 +80,6 @@ app.use(session({
     saveUninitialized: false,
         autoSave:true
 }));
-io.use(sharedsession(session({
-    secret: 'asdfdxoubjhf2354dyhgdj4635696',
-    cookie: {maxAge: 86400000 },
-    resave: true,
-    saveUninitialized: false,
-    autoSave:true
-}),cookieParser()));
 
 app.use(passport.initialize());
 app.use(passport.session());
