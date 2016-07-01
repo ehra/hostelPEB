@@ -3,7 +3,12 @@ var schema = mongoose.Schema;
 
 
 var roomSchema = new schema({
-    room_number: String
+    room_number: String,
+    vaccancy: {
+        type: Number,
+        enum:[0,1,2],
+        default:2
+    }
 });
 
 

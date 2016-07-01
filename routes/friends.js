@@ -5,7 +5,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var db = require('../model/configDB');
 var db2 = require('../model/friendsDB')
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 router.get('/friends',function(req,res){
    res.render('friends');

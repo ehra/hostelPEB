@@ -3,7 +3,7 @@ var validator = require('express-validator');
 var router = express.Router();
 var db = require('../model/configDB');
 var multer = require('multer');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 router.get('/register', function(req, res) {
   res.render('register');

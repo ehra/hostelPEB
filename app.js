@@ -11,11 +11,12 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var db = require('./model/configDB');
 var db2 = require('./model/friendsDB');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var session = require('express-session');
 
 
 passport.serializeUser(function(user, done) {
+  io.bliss = user;
   done(null, user.id);
 });
 
@@ -25,9 +26,9 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
 passport.use(new LocalStrategy(function(username, password, done) {
   var pass_key = username;
+  console.log(username);
     db.findOne({'pass_key':pass_key},function(err,student){
         if(err) return done(err);//wrong roll_number or password;
         if(student.comp_pass_key != "onwait"){
@@ -43,7 +44,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
               }
        
               if(correct){
-                console.log(student.comp_pass_key);
                   return done(null, student);
               }     
              });
@@ -64,8 +64,8 @@ var app = express();
 var users = require('./routes/users');
 var register = require('./routes/register');
 var friends = require('./routes/friends');
-// Socket.io
-app.io  = io;
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -82,30 +82,33 @@ app.use(validator());
 app.use(cookieParser());
 app.use(session({
     secret: 'asdfdxoubjhf2354dyhgdj4635696',
-    cookie: {name: 'cloudCDN', maxAge: 86400000 },
+    cookie: {maxAge: 86400000 },
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: false,
+        autoSave:true
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
+// Socket.io
+app.io  = io;
 
 //Tells Express what files to use for routing
 app.get('/', function(req,res){
-   res.render('home');
+  if(req.user){
+    res.redirect('/users');
+  }else{
+    res.render('home');
+  }
 });
-
 
 app.post('/',passport.authenticate('local',{failureRedirect: '/'}),
 function(req,res,next){
-//  console.log(req.user);
   res.redirect('/users');
 });
 
 app.get('/users',users(app.io));
-//usersap, users(app.io));
 
 app.get('/register',register);
 app.post('/register',register);
