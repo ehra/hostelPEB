@@ -55,6 +55,7 @@ $(document).ready(function(){
 		 //Prints in browsers console
 		 	console.log("Shit:" + msg);
 		 	$("#"+msg).hide();
+		 	//$("#"+msg).css('background-color','red'); 
      	 });
     
 	
