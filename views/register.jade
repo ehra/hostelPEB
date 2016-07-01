@@ -4,162 +4,121 @@ block content
  
  include messages
  
- .container(style="margin-top:5%;margin-bottom:7%;")
+ .container(style="margin-top:1%;margin-bottom:3%;")
   .row
-    .column
-      .column         
-        form(action="/register",method="post",enctype="multipart/form-data")
-          .row
-            .column
-            .column
-              label(for="first_name") First Name
-              input.validate(id="first_name" name="first_name" type="text" required)
-            .column
-              label(for="last_name") Last Name            
-              input.validate(id="last_name" name="last_name" type="text" required)
-            .column  
-
-         .row
-            .column
-            .column
-              input.validate.button(type="file" name="photo")
-            .column 
-         .row
-            .column
-            .column         
-              label(for="roll_num") Roll Number
-              input.validate(id="roll_num" name="roll_number" type="text" required)
-            .column
-
-         .row
-            .column
-            .column         
-              label(for="pass_key") Passkey
-              input.validate(id="pass_key" name="pass_key" type="text" required)
-            .column
-            
-         .row
-            .column
-            .column
-              label(for="branch") Select Branch
-              select.validate.label-inline(name="branch" placeholder="Select Branch")
-                option(value="" disabled selected) Choose Your Branch
-                option(value="COE") COE
-                option(value="ECE") ECE
-                option(value="MEE") MEE
-                option(value="EIC") EIC
-                option(value="CIE") CIE
-                option(value="CHE") CHE
-                option(value="MTX") MTX
-                option(value="ELE") ELE
-            .column
-
+    .col-xs-10.col-xs-offset-1.col-md-6.col-md-offset-3.well         
+      h2(style="text-align: center") Registration
+      form(action="/register",method="post",enctype="multipart/form-data") 
+       .form-group
        .row
-          .column
-          .column
-            label(for="dob") Date Of Birth
-            input.validate(id="dob" name="birth_date" type="date" required)
-          .column
-          
-       .row
-          .column
-          .column
-            label(for="email_id") Email-ID
-            input.validate(id="email_id" name="email" type="email" required)
-          .column
-          
-       .row
-          .column
-          .column   
-            label(for="mob_num") Mobile Number
-            input.validate(id="mob_num" name="mobile" type="tel" required)
-          .column   
+        .col-xs-6
+         label(for="first_name") First Name
+         input.validate.form-control(id="first_name" name="first_name" type="text" required)
+        .col-xs-6
+         label(for="last_name") Last Name            
+         input.validate.form-control(id="last_name" name="last_name" type="text" required)
        
-       .row
-          .column
-          .column     
-            label(for="land_num") Landline          
-            input.validate(id="land_num" name="landline" type="tel" required )
-          .column
+       br
+       .form-group   
+        input.validate.form-control(type="file" name="photo")
              
-       .row
-          .column
-          .column
-            label(for="p_address") Permanent Address                
-            textarea.validate(id="p_address" name="address" required)
-          .column
+       .form-group
+        label(for="roll_num") Roll Number
+        input.validate.form-control(id="roll_num" name="roll_number" type="text" required)
+
+
+       .form-group
+        label(for="pass_key") Passkey
+        input.validate.form-control(id="pass_key" name="pass_key" type="text" required)
+
+       .form-group
+        label(for="branch") Select Branch
+        select.validate.form-control.label-inline(name="branch" placeholder="Select Branch")
+         option(value="" disabled selected) Choose Your Branch
+         option(value="COE") COE
+         option(value="ECE") ECE
+         option(value="MEE") MEE
+         option(value="EIC") EIC
+         option(value="CIE") CIE
+         option(value="CHE") CHE
+         option(value="MTX") MTX
+         option(value="ELE") ELE
+
+       .form-group
+        label(for="dob") Date Of Birth
+        input.validate.form-control(id="dob" name="birth_date" type="date" required)
           
-       .row
-          .column
-          .column  
-            label(for="blood") Blood Group 
-            select.validate.label-inline(name="blood")
-              option(value="" disabled) Choose Your Blood Group
-              option(value="A+") A+
-              option(value="A-") A-
-              option(value="B+") B+
-              option(value="B-") B-
-              option(value="O+") O+
-              option(value="O-") O-
-              option(value="AB+") AB+
-              option(value="AB-") AB-
-              option(value="DONT KNOW" selected) DON'T KNOW
-           .column
-           
-       .row
-          .column
-          .column             
-            label(for="father_name") Father's Name
-            input.validate(id="father_name" name="father_name" type="text" required data-required-msg="First Name Is Required")
-          .column   
-            label(for="father_num") Father's Mobile 
-            input.validate(id="father_num" name="father_number" type="text" required)
-          .column
-              
-       .row
-          .column
-          .column   
-            label(for="father_name") Mother's Name             
-            input.validate(id="mother_name" name="mother_name" type="text" required)
-          .column
-            label(for="father_num") Mother's Mobile   
-            input.validate(id="mother_num" name="mother_number" type="text" required)
-          .column  
+       .form-group    
+        label(for="email_id") Email-ID
+        input.validate.form-control(id="email_id" name="email" type="email" required)
+          
+       .form-group
+        label(for="mob_num") Mobile Number
+        input.validate.form-control(id="mob_num" name="mobile" type="tel" required)
        
-       .row
-          .column
-          .column   
-            label Want to make a group of 2?
-            select.validate.label-inline(id="choice"  name="share_choice")
-              option(value= "YES" ) YES 
-              option(value= "NO" selected = "selected" ) NO
-           .column
-     
-       .row(id="pass_word")
-          .column
-          .column          
-            label(for="pass_word") Password
-            input.validate(id="pass_word32" name="password" type="password")
-          .column
-              
-       .row(id="pass_word2")
-          .column
-          .column
-            label(for="pass_word") Confirm Password
-            input.validate(id="pass_word22" name="conf_password" type="password")
-          .column  
+       .form-group 
+        label(for="land_num") Landline          
+        input.validate.form-control(id="land_num" name="landline" type="tel" required )
+             
+
+       .form-group
+        label(for="p_address") Permanent Address                
+        textarea.validate.form-control(id="p_address" name="address" required)
           
+
+       .form-group
+        label(for="blood") Blood Group 
+        select.validate.form-control.label-inline(name="blood")
+         option(value="" disabled) Choose Your Blood Group
+         option(value="A+") A+
+         option(value="A-") A-
+         option(value="B+") B+
+         option(value="B-") B-
+         option(value="O+") O+
+         option(value="O-") O-
+         option(value="AB+") AB+
+         option(value="AB-") AB-
+         option(value="DONT KNOW" selected) DON'T KNOW
+           
+     
+       .form-group
        .row
-          .column
-          .column
-            input.button(type="submit", value="add")
-          .column
+        .col-xs-6  
+            label(for="father_name") Father's Name
+            input.form-control.validate(id="father_name" name="father_name" type="text" required data-required-msg="First Name Is Required")
+        .col-xs-6   
+            label(for="father_num") Father's Mobile 
+            input.form-control.validate(id="father_num" name="father_number" type="text" required)
+              
+
+       .form-group
+       .row 
+        .col-xs-6
+         label(for="mother_name") Mother's Name             
+         input.form-control.validate(id="mother_name" name="mother_name" type="text" required)
+        .col-xs-6
+          label(for="mother_num") Mother's Mobile   
+          input.form-control.validate(id="mother_num" name="mother_number" type="text" required)
+       
+               
+       .form-group      
+        label Want to make a group of 2?
+        select.form-control.validate.label-inline(id="choice"  name="share_choice")
+         option(value= "YES" ) YES 
+         option(value= "NO" selected = "selected" ) NO
+     
+       .form-group(id="pass_word")             
+            label(for="pass_word") Password
+            input.form-control.validate(id="pass_word32" name="password" type="password")
+                        
+       .form-group(id="pass_word2")
+            label(for="pass_word") Confirm Password
+            input.form-control.validate(id="pass_word22" name="conf_password" type="password")
+                  
+       input.btn.btn-success(type="submit", value="Submit" style="float:right")
+          
             
 script. 
- $(document).ready(function() {
-    $('select').material_select();
-  });
-
  $('.datepicker').pickadate({
     selectMonths: true, 
     selectYears: 15 

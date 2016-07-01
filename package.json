@@ -6,7 +6,6 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "bcrypt": "^0.8.7",
     "bcryptjs": "^2.3.0",
     "body-parser": "~1.13.2",
     "bootstrap": "4.0.0-alpha.2",
@@ -24,7 +23,6 @@
     "monk": "^1.0.1",
     "morgan": "~1.6.1",
     "multer": "^1.1.0",
-    "node-gyp": "^3.3.1",
     "nodemon": "^1.9.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

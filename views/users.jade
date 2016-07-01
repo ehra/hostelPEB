@@ -2,11 +2,12 @@ extends home
  
 mixin print(x,y,name)
  if x < y
-  .column
-     input(id = name+x type="radio" name='yolo')
-     label(class="label-inline") #{name+x}
+  .col-xs-3.form-group(id = name+x)  
+    input(type="radio" name='yolo')
+    label(class="label label-default" style="margin-left: 5px; padding:5px") #{name+x}
+     span(class="badge") !
  else
-  .column
+   .col-xs-3
 
 mixin rooms(n,num,a,b,c,d)
  while n < num
@@ -17,24 +18,28 @@ mixin rooms(n,num,a,b,c,d)
    +print(n,d,"D")
 
 block content
- .row
-  .column.column-25 
-   button(id="link1" href="#") Ground Floor
-  .column.column-25
-   button(id="link2" href="#") First Floor
-  .column.column-50
-   button(id="link3" href="#") Second Floor 
+ .container
+  .row
+   ul.nav.nav-tabs.nav-justified
+    li
+     button.btn(id="link1" href="#") Ground Floor
+    li
+     button.btn(id="link2" href="#") First Floor
+    li
+     button.btn(id="link3" href="#") Second Floor 
    
  .container(style="margin-top:5%;margin-bottom:7%;")  
-  form(action='' id="myForm")
-    #tab1      
+  .row
+   form(action='post',id="myForm")
+    div#tab1.col-xs-12.well
      +rooms(100,111,111,104,111,111) 
    
-    #tab2 
+    div#tab2.col-xs-12.well 
      +rooms(200,217,217,211,214,211)
    
-    #tab3
+    div#tab3.col-xs-12.well
      +rooms(300,317,317,311,314,311)
-    input(type="submit" value="book" onclick="op()")  
+
+   input.btn(type="submit" value="Book" onclick="op()") 
     
  
