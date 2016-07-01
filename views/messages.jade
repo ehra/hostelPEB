@@ -1,7 +1,7 @@
 if flash
  .container
   .row
-   div(id="error").col.s12.offset-m3.m6
+   div(id="error").col-xs-12.col-md-4.col-md-offset-4.alert.alert-danger
     ul()
     - for (var i = 0; i < flash.messages.length; i++) {
         li(class="error z-depth-1"  style="list-style-type: none;") #{flash.messages[i].msg}

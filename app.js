@@ -36,7 +36,13 @@ passport.use(new LocalStrategy(function(username, password, done) {
                 if(err2) return done(err2);
                 var pass_retrieved = friend.pass_word;
              bcrypt.compare(password, pass_retrieved, function(err3, correct) {
-              if(err3) return done(null, false ,{ message: 'Incorrect password.' }); //wrong password
+              //Adding alert messages
+              //if(err3) return done(null, false ,{ message: 'Incorrect password.' }); //wrong password
+              if (err3) {
+              console.log(err3);
+              res.render('friends', { flash: { messages: 'Incorrect password!' }});
+              }
+       
               if(correct){
                   return done(null, student);
               }     
