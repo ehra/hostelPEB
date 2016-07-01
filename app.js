@@ -13,9 +13,10 @@ var db = require('./model/configDB');
 var db2 = require('./model/friendsDB');
 var bcrypt = require('bcrypt');
 var session = require('express-session');
-
+var sharedsession = require("express-socket.io-session");
 
 passport.serializeUser(function(user, done) {
+  io.bliss = user;
   done(null, user.id);
 });
 
@@ -24,7 +25,6 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
-
 
 passport.use(new LocalStrategy(function(username, password, done) {
   var pass_key = username;
@@ -37,7 +37,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
              bcrypt.compare(password, pass_retrieved, function(err3, correct) {
               if(err3) return done(null, false ,{ message: 'Incorrect password.' }); //wrong password
               if(correct){
-                console.log(student.comp_pass_key);
                   return done(null, student);
               }     
              });
@@ -58,8 +57,8 @@ var app = express();
 var users = require('./routes/users');
 var register = require('./routes/register');
 var friends = require('./routes/friends');
-// Socket.io
-app.io  = io;
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -76,30 +75,40 @@ app.use(validator());
 app.use(cookieParser());
 app.use(session({
     secret: 'asdfdxoubjhf2354dyhgdj4635696',
-    cookie: {name: 'cloudCDN', maxAge: 86400000 },
+    cookie: {maxAge: 86400000 },
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: false,
+        autoSave:true
 }));
+io.use(sharedsession(session({
+    secret: 'asdfdxoubjhf2354dyhgdj4635696',
+    cookie: {maxAge: 86400000 },
+    resave: true,
+    saveUninitialized: false,
+    autoSave:true
+}),cookieParser()));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
+// Socket.io
+app.io  = io;
 
 //Tells Express what files to use for routing
 app.get('/', function(req,res){
-   res.render('home');
+  if(req.user){
+    res.redirect('/users');
+  }else{
+    res.render('home');
+  }
 });
-
 
 app.post('/',passport.authenticate('local',{failureRedirect: '/'}),
 function(req,res,next){
-//  console.log(req.user);
   res.redirect('/users');
 });
 
 app.get('/users',users(app.io));
-//usersap, users(app.io));
 
 app.get('/register',register);
 app.post('/register',register);

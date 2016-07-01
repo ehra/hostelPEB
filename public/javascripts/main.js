@@ -33,11 +33,17 @@ $(document).ready(function(){
 		});
 	});
  
- var  socket = io.connect('//localhost:5000');
+ var  socket = io.connect('//localhost:3000');
  
  socket.on('rooms',function(rooms){
 		for(var i=0;i<rooms.length;i++){
-			$("#"+rooms[i].room_number).hide();
+			if(rooms[i].vaccancy == 1){
+				//only one room left
+			}else{
+				//nothing left go faggot
+				$("#"+rooms[i].room_number).hide();
+			}
+
 		}
 	});
  

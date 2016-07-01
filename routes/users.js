@@ -1,4 +1,4 @@
-module.exports = function(io){
+module.exports = function(io,user){
 var express = require('express');
 var router = express.Router();
 var db = require('../model/configDB');
@@ -6,15 +6,28 @@ var db2 = require('../model/friendsDB');
 var db3 = require('../model/roomsDB');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var session = require('express-session');
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
-  console.log(req.user);
+ if(!req.user){
+   res.redirect('/');
+ }else{
   res.render('users');
 
+ }
 });
 
  io.on('connection', function(socket){
+     //socket.handshake.session=socket.handshake.sessionID;    
+     //console.log(io.bliss);
+     var user = io.bliss;
+     //check group or not
+     //if group send message full book
+        //check if empty
+        
+     //else keep 1 vaccany
+     
     db3.find(function(err1,rooms){
       if(err1) return console.log(err1);
       io.emit('rooms',rooms);
@@ -22,6 +35,7 @@ router.get('/users', function(req, res, next) {
       
     socket.on('chat-message', function(data){
       io.emit('chat-message', data);
+      console.log(user);
       var book = new db3({
         room_number:data
       });
