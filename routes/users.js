@@ -26,7 +26,7 @@ var user_sock = io.of('/users');
    console.log("Server check");
    
 //For testing
-   var vac = 2;
+   var vac = 1;
   // socket.remoteAddress="::3000:127.0.0.1";
   // socket.handshake.address = '::3000:127.0.0.1';
   // console.log(socket.handshake.session);

@@ -1,15 +1,24 @@
 $(document).ready(function(){
 		$("#link1").click(function() {
+			$(this).addClass("active");
+			$("#link2").removeClass("active");
+			$("#link3").removeClass("active");
 			$("#tab1").show(0);
 			$("#tab2").hide(0);
 			$("#tab3").hide(0);
 		});
 		$("#link2").click(function() {
+			$(this).addClass("active");
+			$("#link1").removeClass("active");
+			$("#link3").removeClass("active");
 			$("#tab2").show(0);
 			$("#tab1").hide(0);
 			$("#tab3").hide(0);
 		});
 		$("#link3").click(function() {
+			$(this).addClass("active");
+			$("#link1").removeClass("active");
+			$("#link2").removeClass("active");
 			$("#tab3").show(0);
 			$("#tab1").hide(0);
 			$("#tab2").hide(0);

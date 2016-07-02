@@ -11,9 +11,9 @@ html(lang='en')
 
     link(href="stylesheets/style.css" rel="stylesheet")
   body
-    nav.navbar.navbar-inverse.navbar-default(role="navigation")
-      .container-fluid
-         a.navbar-brand(href='#') HostelPEB
+    nav.myNav.navbar.navbar-inverse.navbar-default(role="navigation")
+     .container-fluid
+      h4 HostelPEB
     
     block content
 
@@ -33,7 +33,7 @@ html(lang='en')
           label(for='password') Password:
           input(id="password" name="password" class="form-control" type='password' required)
          br 
-         button.btn.btn-success(type='submit' style="float:right") Submit
+         button.myBtn(type='submit' style="float:right;background-color:#00C853; color:#f5f5f5;border-radius:2px;") Submit
         h5 Or  
          a(href="#") Register Here, 
          h5 if you haven't.
