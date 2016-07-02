@@ -2,10 +2,9 @@ extends home
  
 mixin print(x,y,name)
  if x < y
-  .col-xs-3.form-group(id = name+x )  
+  .col-xs-3.form-group  
     input(type="radio" name='yolo' id = name+x)
-    label(class="label label-default" style="margin-left: 5px; padding:5px") #{name+x}
-     span(class="badge") !
+    label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5") #{name+x}
  else
    .col-xs-3
 

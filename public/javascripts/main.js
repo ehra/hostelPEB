@@ -41,7 +41,7 @@ $(document).ready(function(){
 		for(var i=0;i<rooms.length;i++){
 			if(rooms[i].vaccancy == 1){
 				//only one room left
-				$("#"+rooms[i].room_number).css('background-color', 'red');
+				$(div).after("<span class='badge' style='background-color:#E53935'>(1)</span>");
 			} else{
 				//nothing left go faggot
 				$("#"+rooms[i].room_number).hide();
@@ -57,9 +57,12 @@ $(document).ready(function(){
 	
 	 socket.on('chat-message', function(data){
 		 //Prints in browsers console
+
+		 //Need vacancy here too. 
 		 	console.log("Room:" + data);
-		 	$("#"+ data).hide();
-		 	//$("#"+msg).css('background-color','red'); 
+		 	var div ="#" + data;
+		 	$(div).after("<span class='badge' style='background-color:#E53935'>(1)</span>");
+		 	$(div).hide(); 
      	 }); 
     
 	
