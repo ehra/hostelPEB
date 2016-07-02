@@ -36,7 +36,7 @@ router.post('/friends',function(req,res){
        var comp_passkey = req.body.comp_passkey;
        
        db.findOne({'pass_key':passkey},function(err,student){
-           
+           if(student.share_choice=="YES"){
            if(err) return console.log(err);//you are not registered
            if(student.comp_pass_key != "onwait") return console.log('You are already locked with another user');
            
@@ -72,6 +72,9 @@ router.post('/friends',function(req,res){
                  });
                  
            }); 
+           }else{
+             //you chose to be alone
+           }
        });
 });
 

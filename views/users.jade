@@ -1,5 +1,20 @@
-extends home
- 
+doctype html
+html(lang='en')
+ head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1.0')
+    title Starter Template - Materialize
+    <!-- Google Fonts -->
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic")
+    
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+
+    link(href="stylesheets/style.css" rel="stylesheet")
+  body
+    nav.navbar.navbar-inverse.navbar-default(role="navigation")
+      .container-fluid
+         a.navbar-brand(href='#') HostelPEB
+
 mixin print(x,y,name)
  if x < y
   .col-xs-3.form-group  
@@ -29,16 +44,20 @@ block content
    
  .container(style="margin-top:5%;margin-bottom:7%;")  
   .row
-   form(action='post',id="myForm")
-    div#tab1.col-xs-12.well
+   form(action='',id="myForm")
+    #tab1.col-xs-12.well
      +rooms(100,111,111,104,111,111) 
    
-    div#tab2.col-xs-12.well 
+    #tab2.col-xs-12.well 
      +rooms(200,217,217,211,214,211)
    
-    div#tab3.col-xs-12.well
+    #tab3.col-xs-12.well
      +rooms(300,317,317,311,314,311)
 
-   input.btn(type="submit" value="Book" onclick="op()") 
-    
+    input.btn(type="submit" value="Book" onclick="op()") 
+
+
+script(src='https://code.jquery.com/jquery-2.2.0.min.js')
+script(src="https://cdn.socket.io/socket.io-1.4.5.js")
+script(src = "/javascripts/socket.js")
  

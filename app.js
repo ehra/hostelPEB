@@ -14,9 +14,13 @@ var db2 = require('./model/friendsDB');
 var bcrypt = require('bcryptjs');
 var session = require('express-session');
 
+var app = express();
+
+// Socket.io
+app.io  = io;
 
 passport.serializeUser(function(user, done) {
-  io.bliss = user;
+ // io.bliss = user;
   done(null, user.id);
 });
 
@@ -28,7 +32,6 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new LocalStrategy(function(username, password, done) {
   var pass_key = username;
-  console.log(username);
     db.findOne({'pass_key':pass_key},function(err,student){
         if(err) return done(err);//wrong roll_number or password;
         if(student.comp_pass_key != "onwait"){
@@ -42,7 +45,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
               console.log(err3);
               res.render('friends', { flash: { messages: 'Incorrect password!' }});
               }
-       
               if(correct){
                   return done(null, student);
               }     
@@ -60,7 +62,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
     });
 }));
 
-var app = express();
+
 var users = require('./routes/users');
 var register = require('./routes/register');
 var friends = require('./routes/friends');
@@ -91,8 +93,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Socket.io
-app.io  = io;
+
 
 //Tells Express what files to use for routing
 app.get('/', function(req,res){
