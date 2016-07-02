@@ -20,7 +20,7 @@ var app = express();
 app.io  = io;
 
 passport.serializeUser(function(user, done) {
- // io.bliss = user;
+  io.bliss = user;
   done(null, user.id);
 });
 

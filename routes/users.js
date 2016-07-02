@@ -26,73 +26,82 @@ var user_sock = io.of('/users');
    console.log("Server check");
    
 //For testing
-   var vac = 2;
-  // socket.remoteAddress="::3000:127.0.0.1";
-  // socket.handshake.address = '::3000:127.0.0.1';
-  // console.log(socket.handshake.session);
-      /* db3.find(function(err1,rooms){
-          
+   var people = 2;
+       db3.find(function(err1,rooms){
           if(err1) return console.log(err1);    
           if(user.share_choice == "YES"){
-            rooms['0'].group=true;
+            var newRooms = {
+              'rooms':rooms,
+              'group':true
+            };
+            user_sock.emit('rooms',newRooms);
+            people=2;
           }else{
-            rooms['0'].group=false;                      
+            var newRooms = {
+              'rooms':rooms,
+              'group':false
+            };
+            user_sock.emit('rooms',newRooms);            
+            people=1;
+            
           }  
-          io.emit('rooms',rooms);
-        }); */ 
-
-     //can be optimized
-   /*   var vac;
-      if(user.share_choice=="YES"){
-        vac = 2;
-      }else{
-        vac = 1;
-      } */     
+        }); 
+      
       
     socket.on('message', function(data){
       console.log(data);
-      var x = 2 - vac;
-      newData = {
+      var x = 2 - people;
+     var newData = {
         room:data,
-        vaccancy:x
+        vaccancy:x,
+        group:people
       };
 
       user_sock.emit('message', newData);
 
-     /* db3.findOne({room_number:data},function(err3,room){
-          vac = room.vaccancy-vac;
+      db3.findOne({'room_number':data},function(err3,room){
         if(room){
-          db3.update({room_number:data},{vaccancy:vac},function(err4){
+          db3.update({'room_number':data},{'vaccancy':0},function(err4){
             if(err4) return console.log(err4);
           });
         }else{
-          var book = new db3({
+         var x = 2 - people;
+          var room = new db3({
               room_number:data,
-              vaccancy:vac
+              vaccancy:x
           });
-          book.save(function(err2){
+          room.save(function(err2){
             if(err2) return console.log(err2);
           });
         }
       
-      if(user.share_choice=="YES"){
-        db2.update({pass_key1:user.pass_key},{room_number:data},function(err5){
+      if(people==2){
+      /* Not important
+        db2.update({'pass_key1':user.pass_key},{'room_number':data},function(err5){
           if(err5) return console.log(err5);//couldn't book your room
           //your room is booked bye
-        })
-      }else{
-        db.update({pass_key:user.pass_key},{room_number:data},function(err6){
+        });*/
+        db.update({'pass_key':user.comp_pass_key},{'room_number':data},function(err6){
           if(err6) return console.log(err6);//couldn't book your room
+          //your room is booked bye
+        });
+        db.update({'pass_key':user.pass_key},{'room_number':data},function(err7){
+          if(err7) return console.log(err7);//couldn't book your room
+          //your room is booked bye
+        });
+      }else if(people == 1){
+        db.update({'pass_key':user.pass_key},{'room_number':data},function(err8){
+          if(err8) return console.log(err8);//couldn't book your room
           //your room is booked bye
         })
       }  
-  });*/
+  });
       
     socket.on('disconnect',function(){
     	console.log("User gone!");
     });
  });
  
- });  
+});  
 return router;
 }
