@@ -11,15 +11,15 @@ html(lang='en')
 
     link(href="stylesheets/style.css" rel="stylesheet")
   body
-    nav.navbar.navbar-inverse.navbar-default(role="navigation")
-      .container-fluid
-         a.navbar-brand(href='#') HostelPEB
+    nav.myNav.navbar(role="navigation")
+     .container-fluid
+      h4 HostelPEB
 
 mixin print(x,y,name)
  if x < y
   .col-xs-3.form-group  
     input(type="radio" name='yolo' id = name+x)
-    label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5") #{name+x}
+    label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5; font-size: 1em") #{name+x}
  else
    .col-xs-3
 
@@ -34,13 +34,27 @@ mixin rooms(n,num,a,b,c,d)
 block content
  .container
   .row
-   ul.nav.nav-tabs.nav-justified
-    li
-     button.btn(id="link1" href="#") Ground Floor
-    li
-     button.btn(id="link2" href="#") First Floor
-    li
-     button.btn(id="link3" href="#") Second Floor 
+   .col-xs-12
+    h3 Book Your Room 
+    p
+     ul.list-group KEY
+      li Room Vacancy is 2:
+       label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5;") Room No.
+      li Room Vacancy is 1 :
+       input(type="radio" disabled style="margin-left:5px;")
+       span(class='badge' style='background-color:#E53935; margin-left: 3px;') ( 1 )
+       label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5;") Room No.
+      li Room is fully vacant :
+       input(type="radio" disabled style="margin-left:5px;")
+       label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5;") Room No. 
+
+    br
+   .col-xs-4
+     button.myBtn.active(id="link1" href="#") Ground Floor
+   .col-xs-4
+     button.myBtn(id="link2" href="#") First Floor
+   .col-xs-4
+     button.myBtn(id="link3" href="#") Second Floor 
    
  .container(style="margin-top:5%;margin-bottom:7%;")  
   .row
@@ -54,7 +68,7 @@ block content
     #tab3.col-xs-12.well
      +rooms(300,317,317,311,314,311)
 
-    input.btn(type="submit" value="Book" onclick="op()") 
+    input.myBtn(style="float:right; margin-right:10px;background-color:#00C853; color:#f5f5f5;border-radius:2px;" type="submit" value="Book" onclick="op()") 
 
 
 script(src='https://code.jquery.com/jquery-2.2.0.min.js')

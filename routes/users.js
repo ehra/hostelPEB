@@ -22,11 +22,10 @@ router.get('/users', function(req, res, next) {
 //--Will connect to only localhost/users
 var user_sock = io.of('/users');
  user_sock.on('connection', function(socket){
-   var user = io.bliss;
-   console.log("Server check");
-   
-//For testing
-   var people = 2;
+   var user = io.bliss; 
+   var people;
+       db3.find(function(err1,rooms){
+
        db3.find(function(err1,rooms){
           if(err1) return console.log(err1);    
           if(user.share_choice == "YES"){

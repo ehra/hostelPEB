@@ -40,11 +40,11 @@ passport.use(new LocalStrategy(function(username, password, done) {
                 var pass_retrieved = friend.pass_word;
              bcrypt.compare(password, pass_retrieved, function(err3, correct) {
               //Adding alert messages
-              //if(err3) return done(null, false ,{ message: 'Incorrect password.' }); //wrong password
-              if (err3) {
-              console.log(err3);
-              res.render('friends', { flash: { messages: 'Incorrect password!' }});
-              }
+              if(err3) return done(null, false ,{ message: 'Incorrect password.' }); //wrong password
+              //if (err3) {
+              //console.log(err3);
+              //res.render('home', { flash: { messages: 'Incorrect password!' }});
+              //}
               if(correct){
                   return done(null, student);
               }     
