@@ -17,13 +17,20 @@ router.get('/users', function(req, res, next) {
  }
 });
 
-
- io.on('connection', function(socket){
+//Custom namespace
+//Use user_sock everywhere instead of io. User_sock is the users.js instance of the socket io connection.-- 
+//--Will connect to only localhost/users
+var user_sock = io.of('/users');
+ user_sock.on('connection', function(socket){
    var user = io.bliss;
+   console.log("Server check");
+   
+//For testing
+   var vac = 2;
   // socket.remoteAddress="::3000:127.0.0.1";
   // socket.handshake.address = '::3000:127.0.0.1';
   // console.log(socket.handshake.session);
-   /*     db3.find(function(err1,rooms){
+      /* db3.find(function(err1,rooms){
           
           if(err1) return console.log(err1);    
           if(user.share_choice == "YES"){
@@ -32,7 +39,7 @@ router.get('/users', function(req, res, next) {
             rooms['0'].group=false;                      
           }  
           io.emit('rooms',rooms);
-        });*/   
+        }); */ 
 
      //can be optimized
    /*   var vac;
@@ -50,7 +57,7 @@ router.get('/users', function(req, res, next) {
         vaccancy:x
       };
 
-      io.emit('message', newData);
+      user_sock.emit('message', newData);
 
      /* db3.findOne({room_number:data},function(err3,room){
           vac = room.vaccancy-vac;

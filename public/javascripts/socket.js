@@ -16,10 +16,14 @@ $(document).ready(function(){
 		});
 	});
 
-var  socket = io.connect('//localhost:3000/users');
+//Connection to users page only
+var socket = io('//localhost:3000/users');
+socket.on('connect',function(){
+	console.log("Client check");
+});
   
  function op(){
-	  //	console.log("Working2");
+	  console.log("Working2");
       socket.emit('message', $('input[name=yolo]:checked', '#myForm').prop('id'));
 	//  alert($('input[name=yolo]:checked', '#myForm').prop('id'));
   };
@@ -28,16 +32,16 @@ var  socket = io.connect('//localhost:3000/users');
 		 if(data.vaccancy==1){
 			 console.log(data.vaccancy);
 			 //show 1 room
-			$(div).after("<span class='badge' style='background-color:#E53935'>(1)</span>");
+			$("#"+ data.room).after("<span class='badge' style='background-color:#E53935'>(1)</span>");
 		 }else if(data.vaccancy == 0){
-		 	$("#"+ data).hide();			 
-		 }
+		 	$("#"+ data.room).hide();			 
+		 }else
 		 //Prints in browsers console
 		 	console.log("Room:" + data);
      	 });
 
 socket.on('rooms',function(rooms){
- 	console.log("Working2");
+ 	console.log("Working1");
 		for(var i=0;i<rooms.length;i++){
 			if(rooms[i].vaccancy == 1){
 				//only one room left
