@@ -24,7 +24,6 @@ var user_sock = io.of('/users');
  user_sock.on('connection', function(socket){
    var user = io.bliss; 
    var people;
-       db3.find(function(err1,rooms){
 
        db3.find(function(err1,rooms){
           if(err1) return console.log(err1);    
@@ -50,13 +49,14 @@ var user_sock = io.of('/users');
     socket.on('message', function(data){
       console.log(data);
       var x = 2 - people;
-     var newData = {
+      var newData = {
         room:data,
         vaccancy:x,
-        group:people
+        group:people,
       };
 
-      user_sock.emit('message', newData);
+      user_sock.emit('message',newData);
+
 
       db3.findOne({'room_number':data},function(err3,room){
         if(room){

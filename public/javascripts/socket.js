@@ -34,17 +34,25 @@ function op(){
 	
 	socket.on('message', function(data){
 		 if(data.group == 1 && data.vaccancy==1){
-			$("#"+ data.room).after("<span class='badge' style='background-color:#E53935'>(1)</span>");
+		 		$(".vac_alert").css('display','none');
+		 		$("#"+ data.room).after("<span class='badge vac_alert'style='background-color:#E53935'>(1)</span>");
 		 }else{
 		 	$("#"+ data.room).hide();			 
-		 }
+		 } 
 		});
 
 	socket.on('rooms',function(newRooms){
 		for(var i=0;i<newRooms.rooms.length;i++){
 			if(!newRooms.group && newRooms.rooms[i].vaccancy == 1){
-				//only one room left
-			  $("#"+newRooms.rooms[i].room_number).after("<span class='badge' style='background-color:#E53935'>(1)</span>");
+				//var rN = newRooms.rooms[i].room_number;
+				if(($("#"+newRooms.rooms[i].room_number).has(".vac_alert")))
+				{
+			     $(".vac_alert").css('display','none');
+			     $("#"+newRooms.rooms[i].room_number).after("<span class='badge vac_alert' style='background-color:#E53935'>(1)</span>");
+				}
+				else{
+				 $("#"+newRooms.rooms[i].room_number).after("<span class='badge vac_alert' style='background-color:#E53935'>(1)</span>");
+				}
 			}else{
 				//nothing left go faggot
 			  $("#"+newRooms.rooms[i].room_number).hide();
