@@ -110,6 +110,8 @@ function(req,res,next){
 });
 
 app.get('/users',users(app.io));
+//For posting
+app.post('/users',users(app.io));
 
 app.get('/register',register);
 app.post('/register',register);

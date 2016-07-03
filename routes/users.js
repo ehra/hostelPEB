@@ -24,6 +24,7 @@ var user_sock = io.of('/users');
  user_sock.on('connection', function(socket){
    var user = io.bliss; 
    var people;
+   var final_message;
 
        db3.find(function(err1,rooms){
           if(err1) return console.log(err1);    
@@ -63,41 +64,54 @@ var user_sock = io.of('/users');
           db3.update({'room_number':data},{'vaccancy':0},function(err4){
             if(err4) return console.log(err4);
           });
-        }else{
+         }else{
          var x = 2 - people;
           var room = new db3({
               room_number:data,
               vaccancy:x
           });
           room.save(function(err2){
-            if(err2) return console.log(err2);
+            if(err2){
+              final_message = "Error in booking your room. Please contact the administration!"; 
+              return console.log(err2);
+            }
+            //final_message = "Your room :" + room.room_number + ", has been booked! Success!";
           });
         }
       
-      if(people==2){
-      /* Not important
+        if(people==2){
+        /* Not important
         db2.update({'pass_key1':user.pass_key},{'room_number':data},function(err5){
           if(err5) return console.log(err5);//couldn't book your room
           //your room is booked bye
         });*/
         db.update({'pass_key':user.comp_pass_key},{'room_number':data},function(err6){
           if(err6) return console.log(err6);//couldn't book your room
-          //your room is booked bye
+           final_message = "Your room" + room.room_number + ", has been booked for the group!";
         });
         db.update({'pass_key':user.pass_key},{'room_number':data},function(err7){
           if(err7) return console.log(err7);//couldn't book your room
           //your room is booked bye
+           final_message = "Your room" + room.room_number + ", has been booked for the group!";
         });
-      }else if(people == 1){
+         }else if(people == 1){
         db.update({'pass_key':user.pass_key},{'room_number':data},function(err8){
           if(err8) return console.log(err8);//couldn't book your room
           //your room is booked bye
+           final_message = "Your room" + room.room_number + ", has been booked!";     
         })
-      }  
+         }
+   //For success and error messages
+     //Everything is again running twice  
+       router.post('/users',function(req,res){
+        res.render('success', { flash :{ message: final_message }});  
+       });  
   });
       
     socket.on('disconnect',function(){
     	console.log("User gone!");
+     //Disconnection here
+      socket.disconnect(true); 
     });
  });
  

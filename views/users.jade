@@ -58,7 +58,8 @@ block content
    
  .container(style="margin-top:5%;margin-bottom:7%;")  
   .row
-   form(action='',id="myForm")
+   //Added method attribute and action is here.
+   form(action='/users', method="post",id="myForm")
     #tab1.col-xs-12.well
      +rooms(100,111,111,104,111,111) 
    
