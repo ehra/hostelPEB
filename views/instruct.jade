@@ -1,0 +1,31 @@
+extends home
+
+block content 
+ .container
+  .row
+   br
+   br  
+   .col-xs-12.col-md-8.col-md-offset-2.well
+    h3(style="text-align:center") Instructions!
+    ul
+      li Your first step is to register yourself on the registration page,filling up all the necessary details.
+       br 
+       Make sure to enter your correct details as these can't be changed later on.
+      li If you choose to book a room as a part of a group of two people, you will be redirected to a new page to fill up the details of your group member accordingly as asked. Both members need to be registered seperately first, with the group option chosen as YES.
+      li After your registration is completed, individual members will be able to log in through their own passkeys, while the groups will be provided with their special passkeys at the time of group formation.
+      li When the room allotment starts, Log In will be allowed, and upon successful log in, you will be directed to a page where you will be able to choose your room of choice. 
+       br 
+       The rooms are divided in three floors, and you will be able to change tabs to access different floors. Each floor has rooms in four sections A,B,C and D. You just need to choose the room and click on the Book button. If booking is succesful, you will be redirected to a page displaying the status of booking and the room number you chose. If the booking doesn't complete, contact the administration.
+      li The status of each room will be displayed live on the Booking screen, and the key for the same is as follows:	     
+      li
+       ul.list-group KEY
+        li Room Vacancy is 2:
+         label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5;") Room No.
+        li Room Vacancy is 1 :
+         input(type="radio" disabled style="margin-left:5px;")
+         span(class='badge' style='background-color:#E53935; margin-left: 3px;') ( 1 )
+         label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5;") Room No.
+        li Room is fully vacant :
+         input(type="radio" disabled style="margin-left:5px;")
+         label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5;") Room No. 
+  

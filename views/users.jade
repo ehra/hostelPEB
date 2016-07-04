@@ -8,7 +8,6 @@ html(lang='en')
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic")
     
     link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
-
     link(href="stylesheets/style.css" rel="stylesheet")
   body
     nav.myNav.navbar(role="navigation")
@@ -36,19 +35,7 @@ block content
   .row
    .col-xs-12
     h3 Book Your Room 
-    p
-     ul.list-group KEY
-      li Room Vacancy is 2:
-       label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5;") Room No.
-      li Room Vacancy is 1 :
-       input(type="radio" disabled style="margin-left:5px;")
-       span(class='badge' style='background-color:#E53935; margin-left: 3px;') ( 1 )
-       label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5;") Room No.
-      li Room is fully vacant :
-       input(type="radio" disabled style="margin-left:5px;")
-       label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5;") Room No. 
-
-    br
+   
    .col-xs-4
      button.myBtn.active(id="link1" href="#") Ground Floor
    .col-xs-4
@@ -75,4 +62,3 @@ block content
 script(src='https://code.jquery.com/jquery-2.2.0.min.js')
 script(src="https://cdn.socket.io/socket.io-1.4.5.js")
 script(src = "/javascripts/socket.js")
- 
