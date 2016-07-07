@@ -12,21 +12,18 @@ var LocalStrategy = require('passport-local').Strategy;
 var db = require('./model/configDB');
 var db2 = require('./model/friendsDB');
 var bcrypt = require('bcryptjs');
-var session = require('express-session');
+var session = require('cookie-session')
+var cookieParser1 = require('socket.io-cookie');
 
 var app = express();
 
-// Socket.io
-app.io  = io;
-
 passport.serializeUser(function(user, done) {
-  io.bliss = user;
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
   db.findById(id, function(err, user) {
-    done(err, user);
+    done(err, user.id);
   });
 });
 
@@ -62,10 +59,14 @@ passport.use(new LocalStrategy(function(username, password, done) {
     });
 }));
 
+// Socket.io
+app.io  = io;
+
 
 var users = require('./routes/users');
 var register = require('./routes/register');
 var friends = require('./routes/friends');
+var success = require('./routes/friends');
 
 
 
@@ -82,17 +83,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('photo'));
 app.use(validator());
 app.use(cookieParser());
+io.use(cookieParser1);
 app.use(session({
     secret: 'asdfdxoubjhf2354dyhgdj4635696',
-    cookie: {maxAge: 86400000 },
     resave: true,
     saveUninitialized: false,
-        autoSave:true
+    autoSave:true
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 
 //Tells Express what files to use for routing
@@ -106,12 +106,13 @@ app.get('/', function(req,res){
 
 app.post('/',passport.authenticate('local',{failureRedirect: '/'}),
 function(req,res,next){
+  res.cookie('cpn',req.user.id);
   res.redirect('/users');
 });
 
 app.get('/users',users(app.io));
 //For posting
-app.post('/users',users(app.io));
+app.post('/success',success);
 
 app.get('/register',register);
 app.post('/register',register);

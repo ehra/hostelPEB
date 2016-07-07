@@ -6,7 +6,6 @@ var db2 = require('../model/friendsDB');
 var db3 = require('../model/roomsDB');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var session = require('express-session');
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
@@ -22,9 +21,12 @@ router.get('/users', function(req, res, next) {
 //--Will connect to only localhost/users
 var user_sock = io.of('/users');
  user_sock.on('connection', function(socket){
-   var user = io.bliss; 
+
+   var id = socket.handshake.headers.cookie.cpn;
    var people;
    var final_message;
+   var user;
+   db.findById(id,function(err0,user){
 
        db3.find(function(err1,rooms){
           if(err1) return console.log(err1);    
@@ -61,9 +63,13 @@ var user_sock = io.of('/users');
 
       db3.findOne({'room_number':data},function(err3,room){
         if(room){
+          if(room.vaccancy!=0){
           db3.update({'room_number':data},{'vaccancy':0},function(err4){
             if(err4) return console.log(err4);
           });
+          }else{
+            //this room is already booked
+          }
          }else{
          var x = 2 - people;
           var room = new db3({
@@ -75,9 +81,11 @@ var user_sock = io.of('/users');
               final_message = "Error in booking your room. Please contact the administration!"; 
               return console.log(err2);
             }
-            //final_message = "Your room :" + room.room_number + ", has been booked! Success!";
+            //final_message = "Your room :" + data + ", has been booked! Success!";
           });
         }
+      });
+
       
         if(people==2){
         /* Not important
@@ -85,26 +93,29 @@ var user_sock = io.of('/users');
           if(err5) return console.log(err5);//couldn't book your room
           //your room is booked bye
         });*/
+
         db.update({'pass_key':user.comp_pass_key},{'room_number':data},function(err6){
           if(err6) return console.log(err6);//couldn't book your room
-           final_message = "Your room" + room.room_number + ", has been booked for the group!";
+           final_message = "Your room" + data + ", has been booked for the group!";
         });
         db.update({'pass_key':user.pass_key},{'room_number':data},function(err7){
           if(err7) return console.log(err7);//couldn't book your room
           //your room is booked bye
-           final_message = "Your room" + room.room_number + ", has been booked for the group!";
+           final_message = "Your room" + data + ", has been booked for the group!";
         });
          }else if(people == 1){
         db.update({'pass_key':user.pass_key},{'room_number':data},function(err8){
           if(err8) return console.log(err8);//couldn't book your room
           //your room is booked bye
-           final_message = "Your room" + room.room_number + ", has been booked!";     
-        })
+           final_message = "Your room" + data + ", has been booked!";     
+        });
          }
    //For success and error messages
      //Everything is again running twice  
-       router.post('/users',function(req,res){
-        res.render('success', { flash :{ message: final_message }});  
+       router.post('/success',function(req,res){
+         req.session=null;
+         res.cookie('cpn',null);
+        res.finale = final_message;  
        });  
   });
       
@@ -113,8 +124,9 @@ var user_sock = io.of('/users');
      //Disconnection here
       socket.disconnect(true); 
     });
- });
+
  
-});  
+  });  
+});
 return router;
 }
