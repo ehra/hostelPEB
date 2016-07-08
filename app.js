@@ -65,7 +65,6 @@ app.io  = io;
 var users = require('./routes/users');
 var register = require('./routes/register');
 var friends = require('./routes/friends');
-//var success = require('./routes/friends');
 
 
 
@@ -109,8 +108,11 @@ function(req,res,next){
 });
 
 app.get('/users',users(app.io));
-//For posting
-//app.post('/success',success);
+
+app.get('/lastpage', function(req,res){
+  res.render('success', {
+    flash: { message: "Your room has been booked!" } } );
+});
 
 app.get('/register',register);
 app.post('/register',register);

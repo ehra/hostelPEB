@@ -110,13 +110,11 @@ var user_sock = io.of('/users');
            final_message = "Your room" + data + ", has been booked!";     
         });
          }
-   //For success and error messages
-     //Everything is again running twice  
-       router.post('/success',function(req,res){
-         req.session=null;
-         res.cookie('cpn',null);
-        res.finale = final_message;  
-       });  
+       var last = {
+        url:'/lastpage',
+        text : final_message,
+      };  
+      socket.emit('end',last);   
   });
       
     socket.on('disconnect',function(){

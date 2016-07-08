@@ -59,5 +59,12 @@ function op(){
 			}
 		}
 	});
+
+	socket.on('end',function(last){
+		window.location.href = last.url;
+		//Need to pass this to the get request in app.js
+		var messages = last.text;
+
+	});
 			  
 		  
