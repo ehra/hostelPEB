@@ -4,6 +4,16 @@ var router = express.Router();
 var db = require('../model/configDB');
 var multer = require('multer');
 var bcrypt = require('bcryptjs');
+var upload = multer({dest:'./photos/',
+             limits:{files:1,fileSize:500000},//~500kb
+             fileFilter: function (req,file,cb) {
+             if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg') {
+              return cb(null, false); //image upload kar be!***error***
+             }else{
+               return cb(null, true);
+             }
+            }
+           }).single('photo');
 
 router.get('/register', function(req, res) {
   res.render('register');
@@ -11,7 +21,7 @@ router.get('/register', function(req, res) {
 });
 
 
-router.post('/register',function(req,res){
+router.post('/register',upload,function(req,res){
 
     req.checkBody('first_name','First Name error').notEmpty().isAlpha();
     req.checkBody('last_name','Last Name error').notEmpty().isAlpha();

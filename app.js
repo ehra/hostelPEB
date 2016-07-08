@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
-var multer = require('multer');
 var io    = require( "socket.io" )();  
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -66,7 +65,7 @@ app.io  = io;
 var users = require('./routes/users');
 var register = require('./routes/register');
 var friends = require('./routes/friends');
-var success = require('./routes/friends');
+//var success = require('./routes/friends');
 
 
 
@@ -80,7 +79,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(multer({dest:'./photos/',limits:{files:1,fileSize:500000}}).single('photo'));
 app.use(validator());
 app.use(cookieParser());
 io.use(cookieParser1);
@@ -112,7 +110,7 @@ function(req,res,next){
 
 app.get('/users',users(app.io));
 //For posting
-app.post('/success',success);
+//app.post('/success',success);
 
 app.get('/register',register);
 app.post('/register',register);
