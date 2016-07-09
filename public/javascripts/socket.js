@@ -48,7 +48,6 @@ function op(){
 	socket.on('rooms',function(newRooms){
 		for(var i=0;i<newRooms.rooms.length;i++){
 			if(!newRooms.group && newRooms.rooms[i].vaccancy == 1){
-				//var rN = newRooms.rooms[i].room_number;
 				if(($("#"+newRooms.rooms[i].room_number).has(".vac_alert")))
 				{
 			     $(".vac_alert").css('display','none');
@@ -66,8 +65,12 @@ function op(){
 
 	socket.on('end',function(last){
 		if(last){
-			if(last.text===null) return window.location.href = "/users";
-			window.location.href = last.url+'?room='+last.text;
+			if(last.text==null){ 
+				window.location.href = "/users";
+			}
+			else{
+				window.location.href = last.url+'?room='+last.text;
+			}
 		}else{
 			window.location.href = "/";
 		}	

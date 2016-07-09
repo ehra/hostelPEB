@@ -25,7 +25,7 @@ var user_sock = io.of('/users');
    var id = socket.handshake.headers.cookie.cpn;
    if(id === "dafa3442"){
      var last = false;
-     return user_sock.emit('end',last);
+     return socket.emit('end',last);
    }
    var people;
    var final_message;
@@ -48,7 +48,6 @@ var user_sock = io.of('/users');
             };
             user_sock.emit('rooms',newRooms);            
             people=1;
-            
           }  
         }); 
       
@@ -67,14 +66,23 @@ var user_sock = io.of('/users');
 
       db3.findOne({'room_number':data},function(err3,room){
         if(room){
-          if(room.vaccancy!=0){
+          if(room.vaccancy!=0 && people !=2){
           db3.update({'room_number':data},{'vaccancy':0},function(err4){
             if(err4) return console.log(err4);
           });
+          db.update({'pass_key':user.pass_key},{'room_number':data},function(err8){
+          if(err8) return console.log(err8);//couldn't book your room
+          //your room is booked bye
+          final_message = "Your room" + data + ", has been booked!";     
+          });
+            data = null;
           }else{
+            data = null;
             //this room is already booked
           }
-         }else{
+        
+       }else{
+           //new rooom entry
          var x = 2 - people;
           var room = new db3({
               room_number:data,
@@ -87,11 +95,7 @@ var user_sock = io.of('/users');
             }
             //final_message = "Your room :" + data + ", has been booked! Success!";
           });
-        }
-      });
-
-      
-        if(people==2){
+         if(people==2){
         /* Not important
         db2.update({'pass_key1':user.pass_key},{'room_number':data},function(err5){
           if(err5) return console.log(err5);//couldn't book your room
@@ -113,12 +117,15 @@ var user_sock = io.of('/users');
           //your room is booked bye
            final_message = "Your room" + data + ", has been booked!";     
         });
-         }
+         }  
+        }
+      });
+
        var last = {
         url:'/lastpage',
         text : data,
-      };  
-      user_sock.emit('end',last);   
+       };  
+       socket.emit('end',last);   
   });
       
     socket.on('disconnect',function(){
