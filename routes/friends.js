@@ -53,17 +53,19 @@ router.post('/friends',function(req,res){
                      
                        var password_temp = req.body.password;
                       
-                     bcrypt.hash(password_temp, saltRounds, function(err, hash) {
-                         
-                            if(err) return console.log("Unable to process request");
+                       bcrypt.genSalt(10,function(err5,saltRounds){
+                         if(err5) return console.log("sorry");
+                       bcrypt.hash(password_temp, saltRounds, function(err6, hash) {
+                            if(err6) return console.log("Unable to process request");
                             var friend = new db2({
                                     pass_key1:passkey,
                                     pass_key2:comp_passkey,
                                     pass_word:hash
                              });
-                            friend.save(function(err5){
-                                    if(err5) return console.log("Couldn't Register");
+                            friend.save(function(err7){
+                                    if(err7) return console.log("Couldn't Register");
                             }) ;
+                            });
                      });
                        
                     });
