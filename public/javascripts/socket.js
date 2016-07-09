@@ -28,11 +28,15 @@ $(document).ready(function(){
 //Connection to users page only
 var socket = io('//localhost:3000/users');
   
+  socket.on('connection',function(){
+	  
+  });
+  
 function op(){
-      socket.emit('message', $('input[name=yolo]:checked', '#myForm').prop('id'));
+      socket.emit('book_req', $('input[name=yolo]:checked', '#myForm').prop('id'));
 };
 	
-	socket.on('message', function(data){
+	socket.on('booked', function(data){
 		 if(data.group == 1 && data.vaccancy==1){
 		 		$(".vac_alert").css('display','none');
 		 		$("#"+ data.room).after("<span class='badge vac_alert'style='background-color:#E53935'>(1)</span>");
@@ -61,10 +65,12 @@ function op(){
 	});
 
 	socket.on('end',function(last){
-		window.location.href = last.url;
-		//Need to pass this to the get request in app.js
-		var messages = last.text;
-
-	});
+		if(last){
+			if(last.text===null) return window.location.href = "/users";
+			window.location.href = last.url+'?room='+last.text;
+		}else{
+			window.location.href = "/";
+		}	
+});
 			  
 		  

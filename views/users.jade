@@ -15,7 +15,7 @@ html(lang='en')
       h4 HostelPEB
 
 mixin print(x,y,name)
- if x < y
+ if x <= y
   .col-xs-3.form-group  
     input(type="radio" name='yolo' id = name+x)
     label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5; font-size: 1em") #{name+x}
@@ -23,7 +23,7 @@ mixin print(x,y,name)
    .col-xs-3
 
 mixin rooms(n,num,a,b,c,d)
- while n < num
+ while n <= num
   .row(value=n++)
    +print(n,a,"A")
    +print(n,b,"B")
@@ -48,7 +48,7 @@ block content
    //Added method attribute and action is here.
    form(action='/users', method="post",id="myForm")
     #tab1.col-xs-12.well
-     +rooms(100,111,111,104,111,111) 
+     +rooms(100,111,111,110,111,111) 
    
     #tab2.col-xs-12.well 
      +rooms(200,217,217,211,214,211)

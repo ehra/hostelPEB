@@ -21,8 +21,12 @@ router.get('/users', function(req, res, next) {
 //--Will connect to only localhost/users
 var user_sock = io.of('/users');
  user_sock.on('connection', function(socket){
-
+   
    var id = socket.handshake.headers.cookie.cpn;
+   if(id === "dafa3442"){
+     var last = false;
+     return user_sock.emit('end',last);
+   }
    var people;
    var final_message;
    var user;
@@ -49,7 +53,7 @@ var user_sock = io.of('/users');
         }); 
       
       
-    socket.on('message', function(data){
+    socket.on('book_req', function(data){
       console.log(data);
       var x = 2 - people;
       var newData = {
@@ -58,7 +62,7 @@ var user_sock = io.of('/users');
         group:people,
       };
 
-      user_sock.emit('message',newData);
+      user_sock.emit('booked',newData);
 
 
       db3.findOne({'room_number':data},function(err3,room){
@@ -112,14 +116,13 @@ var user_sock = io.of('/users');
          }
        var last = {
         url:'/lastpage',
-        text : final_message,
+        text : data,
       };  
-      socket.emit('end',last);   
+      user_sock.emit('end',last);   
   });
       
     socket.on('disconnect',function(){
-    	console.log("User gone!");
-     //Disconnection here
+      console.log("User gone!");
       socket.disconnect(true); 
     });
 

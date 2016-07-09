@@ -110,8 +110,12 @@ function(req,res,next){
 app.get('/users',users(app.io));
 
 app.get('/lastpage', function(req,res){
+  req.session=null;
+  req.user=false;
+  var cpn = "dafa3442";
+  res.cookie('cpn',cpn);
   res.render('success', {
-    flash: { message: "Your room has been booked!" } } );
+    flash: { message: "Your room has been booked! "+req.query.room } } );
 });
 
 app.get('/register',register);
