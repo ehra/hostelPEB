@@ -16,7 +16,7 @@ html(lang='en')
 
 mixin print(x,y,name)
  if x <= y
-  .col-xs-3.form-group  
+  .col-xs-3.form-group(id = name+x+"div")  
     input(type="radio" name='yolo' id = name+x)
     label(class="label label-default" style="margin-left: 5px; padding:5px; background-color:#3F51B5; font-size: 1em") #{name+x}
  else

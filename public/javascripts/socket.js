@@ -37,27 +37,28 @@ function op(){
 };
 	
 	socket.on('booked', function(data){
+		 var kamra = "#" + data.room;
 		 if(data.group == 1 && data.vaccancy==1){
-		 		$(".vac_alert").css('display','none');
-		 		$("#"+ data.room).after("<span class='badge vac_alert'style='background-color:#E53935'>(1)</span>");
-		 }else{
-		 	$("#"+ data.room).hide();			 
+		 	    console.log(kamra+"div");
+		 		//$(kamra).siblings("span").css({'display':'none'});
+		 		$(kamra).after("<span class='badge' style='background-color:#E53935'>(1)</span>");
+		 }
+		 else{
+		 	console.log("Removing shit");
+		 	$(kamra).siblings("span").css({'display':'none'});
+		 	$(kamra).hide();		 
 		 } 
 		});
 
 	socket.on('rooms',function(newRooms){
-		for(var i=0;i<newRooms.rooms.length;i++){
+		console.log("Rooms:" + newRooms.rooms.length);
+		for(var i=0; i < newRooms.rooms.length; i++){
 			if(!newRooms.group && newRooms.rooms[i].vaccancy == 1){
-				if(($("#"+newRooms.rooms[i].room_number).has(".vac_alert")))
-				{
-			     $(".vac_alert").css('display','none');
-			     $("#"+newRooms.rooms[i].room_number).after("<span class='badge vac_alert' style='background-color:#E53935'>(1)</span>");
-				}
-				else{
-				 $("#"+newRooms.rooms[i].room_number).after("<span class='badge vac_alert' style='background-color:#E53935'>(1)</span>");
-				}
-			}else{
+				 $("#"+newRooms.rooms[i].room_number+"div").find("span").css({'display':'none'});
+			     $("#"+newRooms.rooms[i].room_number).after("<span class='badge' style='background-color:#E53935'>(1)</span>");		
+ 			}else{
 				//nothing left go faggot
+			  console.log("Removing");
 			  $("#"+newRooms.rooms[i].room_number).hide();
 			}
 		}
