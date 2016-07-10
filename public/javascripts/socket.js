@@ -29,7 +29,7 @@ $(document).ready(function(){
 var socket = io('//localhost:3000/users');
   
   socket.on('connection',function(){
-	  
+	  //****add You are connected now @ front end****
   });
   
 function op(){

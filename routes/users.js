@@ -30,7 +30,7 @@ var user_sock = io.of('/users');
    var people;
    var final_message;
    var user;
-   var x;
+
    db.findById(id,function(err0,user){
 
        db3.find(function(err1,rooms){
@@ -57,86 +57,84 @@ var user_sock = io.of('/users');
       
  
     socket.on('book_req', function(data){
-
-      var status = db3.find({'room_number': data}).limit(1).size();
-      console.log(data);
-      console.log(status);
-      if (status == 1) {
-        x = 1 - people;
-        console.log(x); 
-      }
-      else{
-        x = 2 - people;
-        console.log(x);
+    //to avoid conflicts sending as soon as possible
+    //need to send both
+    
+    db3.find({'room_number': data},function(err,status) {
+    var x;
+      if(status && people===1) {
+        x = 0;
+      }else if(!status && people===2) {
+        return console.log("Cant accomodate group");
+      }else if(!status && people===1){
+        x=1;
+      }else{
+        x=0;
       }
       var newData = {
-        room:data,
+        room:    data,
         vaccancy:x,
-        group:people,
+        group:   people
       };
       console.log("vaccancy is"+newData.vaccancy);
       user_sock.emit('booked',newData);
-
+    });
 
       db3.findOne({'room_number':data},function(err3,room){
         if(room){
           if(room.vaccancy!=0 && people !=2){
           db3.update({'room_number':data},{'vaccancy':0},function(err4){
             if(err4) return console.log(err4);
-          });
-          db.update({'pass_key':user.pass_key},{'room_number':data},function(err8){
-          if(err8) return console.log(err8);//couldn't book your room
-          //your room is booked bye
-          final_message = "Your room" + data + ", has been booked!";     
-          });
-            data = null;
-          }else{
+            
+            db.update({'pass_key':user.pass_key},{'room_number':data},function(err8){
+              if(err8) return console.log(err8);//couldn't book your room
+              //your room is booked bye
+              final_message = "Your room" + data + ", has been booked!";     
+            });
+          
+         });
+         }else{
             data = null;
             //this room is already booked
           }
-        
        }
        else{
-           //new rooom entry
+         //new rooom entry
          var x = 2 - people;
-          var room = new db3({
-              room_number:data,
-              vaccancy:x
-          });
-          room.save(function(err2){
+         var room = new db3({
+             room_number:data,
+             vaccancy:x
+            });
+         room.save(function(err2){
             if(err2){
               final_message = "Error in booking your room. Please contact the administration!"; 
               return console.log(err2);
             }
-            //final_message = "Your room :" + data + ", has been booked! Success!";
           });
          if(people==2){
-         /* Not important
-         db2.update({'pass_key1':user.pass_key},{'room_number':data},function(err5){
-          if(err5) return console.log(err5);//couldn't book your room
-          //your room is booked bye
-         });*/
-
+          db2.update({'pass_key1':user.pass_key},{'room_number':data},function(err5){
+           if(err5) return console.log(err5);//couldn't book your room
+            //your room is booked bye
+          });
           db.update({'pass_key':user.comp_pass_key},{'room_number':data},function(err6){
-          if(err6) return console.log(err6);//couldn't book your room
-           final_message = "Your room" + data + ", has been booked for the group!";
-           });
+            if(err6) return console.log(err6);//couldn't book your room
+             final_message = "Your room" + data + ", has been booked for the group!";
+          });
           db.update({'pass_key':user.pass_key},{'room_number':data},function(err7){
-          if(err7) return console.log(err7);//couldn't book your room
-          //your room is booked bye
-           final_message = "Your room" + data + ", has been booked for the group!";
-           });
+            if(err7) return console.log(err7);//couldn't book your room
+            //your room is booked bye
+            final_message = "Your room" + data + ", has been booked for the group!";
+          });
         }
-         else if(people == 1){
+        else if(people == 1){
         db.update({'pass_key':user.pass_key},{'room_number':data},function(err8){
           if(err8) return console.log(err8);//couldn't book your room
           //your room is booked bye
            final_message = "Your room" + data + ", has been booked!";     
         });
-
-         }  
-        }
-      });
+       }  
+      }
+    });
 
        var last = {
         url:'/lastpage',
