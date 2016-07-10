@@ -59,7 +59,7 @@ var user_sock = io.of('/users');
     socket.on('book_req', function(data){
     //to avoid conflicts sending as soon as possible
     //need to send both
-    
+
     db3.find({'room_number': data},function(err,status) {
     var x;
       if(status && people===1) {
@@ -99,6 +99,7 @@ var user_sock = io.of('/users');
           }
        }
        else{
+         if(data === null) return;
          //new rooom entry
          var x = 2 - people;
          var room = new db3({
