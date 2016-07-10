@@ -60,8 +60,8 @@ var user_sock = io.of('/users');
     //to avoid conflicts sending as soon as possible
     //need to send both
 
-    db3.find({'room_number': data},function(err,status) {
-    var x;
+    db3.count({'room_number': data},function(err,status) {
+     var x;
       if(status && people===1) {
         x = 0;
       }else if(!status && people===2) {
