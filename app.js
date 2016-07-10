@@ -115,9 +115,11 @@ app.get('/lastpage', function(req,res){
   var cpn = "dafa3442";
   res.cookie('cpn',cpn);
   res.render('success', {
-    flash: { message: "Your room has been booked! "+req.query.room } } );
+    flash: { message: "Congratulations! Your room "+req.query.room +", has been booked!"} } );
 });
-
+app.get('/rules', function(req,res){
+  res.render('instruct');
+});
 app.get('/register',register);
 app.post('/register',register);
 

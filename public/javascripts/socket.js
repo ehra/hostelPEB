@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 		$("#link1").click(function() {
 			$(this).addClass("active");
@@ -26,10 +27,11 @@ $(document).ready(function(){
 	});
 
 //Connection to users page only
-var socket = io('//localhost:3000/users');
+var socket = io.connect('//localhost:3000/users');
   
-  socket.on('connection',function(){
-	  //****add You are connected now @ front end****
+  socket.on('connect',function(socket){
+  	$("#room_book").css({'display':'block'});
+  	console.log("Client connection");
   });
   
 function op(){
@@ -39,12 +41,10 @@ function op(){
 	socket.on('booked', function(data){
 		 var kamra = "#" + data.room;
 		 if(data.group == 1 && data.vaccancy==1){
-		 	    console.log(kamra+"div");
 		 		$(kamra).siblings("span").css({'display':'none'});
 		 		$(kamra).after("<span class='badge' style='background-color:#E53935'>(1)</span>");
 		 }
 		 else{
-		 	console.log("Removing shit");
 		 	$(kamra).siblings("span").css({'display':'none'});
 		 	$(kamra).hide();		 
 		 } 
@@ -58,7 +58,6 @@ function op(){
 			     $("#"+newRooms.rooms[i].room_number).after("<span class='badge' style='background-color:#E53935'>(1)</span>");		
  			}else{
 				//nothing left go faggot
-			  console.log("Removing");
 			  $("#"+newRooms.rooms[i].room_number).hide();
 			}
 		}

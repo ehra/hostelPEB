@@ -24,4 +24,7 @@ $(function(){
   $("#frnds-link").click(function(){
     window.location.href = "/friends";
   });
+  $("#intr-link").click(function(){
+    window.location.href = "/rules";
+  });
 });

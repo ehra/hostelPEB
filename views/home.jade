@@ -3,14 +3,14 @@ html(lang='en')
  head
     meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1.0')
-    title Starter Template - Materialize
+    title Hostel K
     <!-- Google Fonts -->
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic")
     
     link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
     link(href="stylesheets/style.css" rel="stylesheet")
   body
-    nav.myNav.navbar.navbar-inverse.navbar-default(role="navigation")
+    nav.myNav.navbar.navbar-default(role="navigation")
      .container-fluid
       h4
        a(href="/" id = "index_link") Hostel K
@@ -33,16 +33,20 @@ html(lang='en')
           label(for='password') Password:
           input(id="password" name="password" class="form-control" type='password' required)
          br 
-         button.myBtn(type='submit' style="float:right;background-color:#00C853; color:#f5f5f5;border-radius:2px;") Submit
+         input.myBtn(type='submit' style="float:right;border-radius:2px;" value="Submit") 
         h5 Or  
          a(href = "/register" id = "rgstr_link") 
           b Register Here, 
          h5 if you haven't.
           
-        a(href = "/friends" id = "frnds_link" style="font-weight:bold") 
+        a(href = "/friends" id = "frnds_link") 
          b Form a Group, 
-        h5 if applying for twin booking. 
-  
+        h5 if applying for twin booking.
+
+     .clearfix
+     .footer.nav.navbar.navbar-default
+      h4(style="float:left") Copyright @Thapar University Pvt. Ltd.
+      a(href="/rules" id="intr_link" style="float:right") Instructions Page
 
 script(src='https://code.jquery.com/jquery-2.2.0.min.js')
 script(src = "/javascripts/main.js")
