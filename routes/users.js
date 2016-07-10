@@ -30,6 +30,7 @@ var user_sock = io.of('/users');
    var people;
    var final_message;
    var user;
+   var x;
    db.findById(id,function(err0,user){
 
        db3.find(function(err1,rooms){
@@ -54,22 +55,26 @@ var user_sock = io.of('/users');
           }  
         }); 
       
-      var x;
+ 
     socket.on('book_req', function(data){
-      //var status = db3.find({'room_number': data}).limit(1).size();
+
+      var status = db3.find({'room_number': data}).limit(1).size();
       console.log(data);
-      if (status.length > 0) {
-        x = 1 - people; 
+      console.log(status);
+      if (status == 1) {
+        x = 1 - people;
+        console.log(x); 
       }
-        else{
+      else{
         x = 2 - people;
+        console.log(x);
       }
       var newData = {
         room:data,
         vaccancy:x,
         group:people,
       };
-
+      console.log("vaccancy is"+newData.vaccancy);
       user_sock.emit('booked',newData);
 
 

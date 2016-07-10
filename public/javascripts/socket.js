@@ -40,7 +40,7 @@ function op(){
 		 var kamra = "#" + data.room;
 		 if(data.group == 1 && data.vaccancy==1){
 		 	    console.log(kamra+"div");
-		 		//$(kamra).siblings("span").css({'display':'none'});
+		 		$(kamra).siblings("span").css({'display':'none'});
 		 		$(kamra).after("<span class='badge' style='background-color:#E53935'>(1)</span>");
 		 }
 		 else{
