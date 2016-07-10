@@ -27,7 +27,7 @@ $(document).ready(function(){
 	});
 
 //Connection to users page only
-var socket = io.connect('//localhost:3000/users');
+var socket = io.connect('//localhost:/users');
   
   socket.on('connect',function(socket){
   	$("#room_book").css({'display':'block'});
