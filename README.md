@@ -11,9 +11,7 @@ MongoDb,
 
 Socket IO, 
 
-Jade,
+Jade and
 
-Bootstrap and 
-
-Milligram CSS.
+Bootstrap.
 
