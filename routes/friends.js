@@ -71,7 +71,8 @@ router.post('/friends',function(req,res){
                     });
                  });
                  
-           }); 
+           });
+           res.render('friends', { flash : { messages: "Group Formation successful!"}}); 
            }else{
              //you chose to be alone
            }

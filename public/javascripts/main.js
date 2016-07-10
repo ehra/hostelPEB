@@ -13,3 +13,15 @@ $(function(){
     }
    });
 }); 
+
+$(function(){
+  $("#index-link").click(function(){
+    window.location.href = "/";
+  });
+  $("#rgstr-link").click(function(){
+    window.location.href = "/register";
+  });
+  $("#frnds-link").click(function(){
+    window.location.href = "/friends";
+  });
+});

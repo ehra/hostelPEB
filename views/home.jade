@@ -12,7 +12,8 @@ html(lang='en')
   body
     nav.myNav.navbar.navbar-inverse.navbar-default(role="navigation")
      .container-fluid
-      h4 Hostel K
+      h4
+       a(href="/" id = "index_link") Hostel K
     
     block content
 
@@ -34,8 +35,13 @@ html(lang='en')
          br 
          button.myBtn(type='submit' style="float:right;background-color:#00C853; color:#f5f5f5;border-radius:2px;") Submit
         h5 Or  
-         a(href="/register") Register Here, 
+         a(href = "/register" id = "rgstr_link") 
+          b Register Here, 
          h5 if you haven't.
+          
+        a(href = "/friends" id = "frnds_link" style="font-weight:bold") 
+         b Form a Group, 
+        h5 if applying for twin booking. 
   
 
 script(src='https://code.jquery.com/jquery-2.2.0.min.js')

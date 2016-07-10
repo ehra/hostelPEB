@@ -18,12 +18,16 @@ ul li{
 	border: 0px;
 	margin-bottom: 15px;	
 }
-.myNav h4{
+#brand,.myNav h4 a{
 	color: #fff;
 	font-size: 2em;
 	margin-top: 2%;
 	margin-left: 1%;
 	text-transform: uppercase;
+}
+.myNav h4 a:hover{
+	color: #f5f5f5;
+	text-decoration: none;
 }
 .myBtn{
 	color: #424242;

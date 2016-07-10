@@ -16,7 +16,6 @@ var studentSchema = new Schema({
 	pass_key: { type: String, required: true, unique:true /*,minlength: x*/ },
 	
 	pass_word: String,
-//Note: Add password hashing here or in register.js using pre function before saving to database
 
 	branch: {
 				type:String,
@@ -26,11 +25,6 @@ var studentSchema = new Schema({
 	
 	birth_date: { 
 		type: Date, 
-/*<<<<<<< HEAD
-	//	min: Date('1990-01-01'),
-=======
-		//min: Date('1990-01-01'),
->>>>>>> bd9a5e40c472975a0f0ce75124bbbca92a14bdef */
 		required: true	
 	},
 	
