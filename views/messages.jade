@@ -4,7 +4,7 @@ if flash
    div(id="error").col-xs-12.col-md-4.col-md-offset-4.alert.alert-danger
     ul()
     - for (var i = 0; i < flash.messages.length; i++) {
-        li(class="error z-depth-1"  style="list-style-type: none;") #{flash.messages[i].msg}
+        li(style="list-style-type: none;") #{flash.messages[i].msg}
     -}
 
 script(src='https://code.jquery.com/jquery-2.1.1.min.js')

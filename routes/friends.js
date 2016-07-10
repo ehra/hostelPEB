@@ -32,16 +32,25 @@ router.post('/friends',function(req,res){
        
        var passkey = req.body.passkey;
        var comp_passkey = req.body.comp_passkey;
+
+       var message;
        
        db.findOne({'pass_key':passkey},function(err,student){
            if(student.share_choice=="YES"){
            if(err) return console.log(err);//you are not registered
-           if(student.comp_pass_key != "onwait") return console.log('You are already locked with another user');
+           if(student.comp_pass_key != "onwait"){
+            //return console.log('You are already locked with another user');
+            message = [{"msg":'Sorry! You are already locked with another user.'}];
+            res.render('friends',{flash: {messages:message}});
+           } 
            
            db.findOne({'pass_key':comp_passkey},function(err2,friend){
                
                if(err2) return console.log(err2);
-               if(friend.comp_pass_key != "onwait") return console.log('Your friend is already locked with another user');
+               if(friend.comp_pass_key != "onwait"){
+                message = [{"msg":'Sorry! Your friend is already locked with another user.'}]
+                return console.log('Your friend is already locked with another user');
+               } 
                 
                  db.update({'pass_key':passkey},{'comp_pass_key':comp_passkey},function(err3){
                    
@@ -72,9 +81,11 @@ router.post('/friends',function(req,res){
                  });
                  
            });
-           res.render('friends', { flash : { messages: "Group Formation successful!"}}); 
+           var message = [{"msg":"Group Formation successful!"}];
+           res.render('home', { flash : { messages: message}}); 
            }else{
-             //you chose to be alone
+           var message = [{"msg":"You have chosen to apply individually. Contact admin for group Formation."}]
+            res.render('friends',{flash:{messages:message}});
            }
        });
 });

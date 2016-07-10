@@ -16,6 +16,8 @@ var cookieParser1 = require('socket.io-cookie');
 
 var app = express();
 
+//var message=[];
+
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
@@ -29,27 +31,32 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy(function(username, password, done) {
   var pass_key = username;
     db.findOne({'pass_key':pass_key},function(err,student){
-        if(err) return done(err);//wrong roll_number or password;
+        if(err){
+          //message = [{"msg": "Incorrect Passkey or Password!"}];
+          return done(err,{message:message});//wrong roll_number or password;
+        } 
         if(student.comp_pass_key != "onwait"){
             db2.findOne({'pass_key1':pass_key},function(err2,friend){
                 if(err2) return done(err2);
                 var pass_retrieved = friend.pass_word;
-             bcrypt.compare(password, pass_retrieved, function(err3, correct) {
-              //Adding alert messages
-              if(err3) return done(null, false ,{ message: 'Incorrect password.' }); //wrong password
-              //if (err3) {
-              //console.log(err3);
-              //res.render('home', { flash: { messages: 'Incorrect password!' }});
-              //}
-              if(correct){
+                bcrypt.compare(password, pass_retrieved, function(err3, correct) {
+              //if(err3) return done(null, false ,{ message: 'Incorrect password.' }); //wrong password
+                if(err3){
+                  //message = [{"msg": "Incorrect Password!"}];
+                  return done(null, false); 
+                  }
+                if(correct){
                   return done(null, student);
-              }     
-             });
-           });
+                  }     
+               });
+          });
         }else{
          var pass_retrieved = student.pass_word;
          bcrypt.compare(password, pass_retrieved, function(err3, correct) {
-          if(err3) return done(null,false);  // wrong password      
+          if(err3){
+            //message = [{"msg": "Incorrect Password!"}];
+            return done(null,false,{message:message});  // wrong password
+          }       
           if(correct){
               return done(null,student);
           } 
@@ -97,11 +104,12 @@ app.get('/', function(req,res){
   if(req.user){
     res.redirect('/users');
   }else{
-    res.render('home');
+    res.render('home')
+    //res.render('home',{ flash: { messages: message}});
   }
 });
 
-app.post('/',passport.authenticate('local',{failureRedirect: '/'}),
+app.post('/',passport.authenticate('local',{ failureRedirect: '/'}),
 function(req,res,next){
   res.cookie('cpn',req.user.id);
   res.redirect('/users');

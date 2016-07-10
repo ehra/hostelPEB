@@ -139,7 +139,14 @@ var errors = req.validationErrors();
   }
   else {
   	console.log("Student saved");
-    res.send('Done!');
+    message = [
+                {
+                  "param": "success",
+                  "msg": "You have been successfully registered!",
+                  "value": ""
+                }
+              ];
+    res.render('home', {flash:{ messages: message} });
   }
 });
   }
