@@ -78,7 +78,7 @@ var studentSchema = new Schema({
 });
 
 
-mongoose.connect('mongodb://heroku_k:tunewhostelmongoose5999@ds013024.mlab.com:13024/heroku_9h01qsh1');
+mongoose.connect('mongodb://heroku_k1947:tunewhostel1947@ds023475.mlab.com:23475/heroku_krk04x67');
 module.exports = mongoose.model('student',studentSchema);
 
 
