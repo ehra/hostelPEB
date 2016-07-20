@@ -77,8 +77,8 @@ var studentSchema = new Schema({
 
 });
 
-
-mongoose.connect(process.env.MONGOLAB_URI, function (error) {
+var urifields = process.env.MONGOLAB_URI || process.env.MONGOHQ_URI ;
+mongoose.connect(urifields, function (error) {
     if (error) console.error(error);
     else console.log('mongo connected');
 });
