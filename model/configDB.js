@@ -77,7 +77,7 @@ var studentSchema = new Schema({
 
 });
 
-var urifields = process.env.MONGOLAB_URI || process.env.MONGOHQ_URI ;
+var urifields = process.env.MONGOLAB_URI || 'mongodb://heroku_k1947:tunewhostel1947@ds023475.mlab.com:23475/heroku_krk04x67' ;
 mongoose.connect(urifields, function (error) {
     if (error) console.error(error);
     else console.log('mongo connected');
