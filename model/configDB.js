@@ -77,7 +77,7 @@ var studentSchema = new Schema({
 
 });
 
-var urifields = 'mongodb://shrey:shrey@ds023475.mlab.com:23475/heroku_krk04x67' ;
+var urifields = 'mongodb://localhost/hostelpeb' ;
 mongoose.connect(urifields, function (error) {
     if (error) console.error(error);
     else console.log('mongo connected');

@@ -71,6 +71,7 @@ app.io  = io;
 
 var users = require('./routes/users');
 var register = require('./routes/register');
+var registerP = require('./routes/registerP');
 var friends = require('./routes/friends');
 
 
@@ -128,8 +129,8 @@ app.get('/lastpage', function(req,res){
 app.get('/rules', function(req,res){
   res.render('instruct');
 });
-app.get('/register',register);
-app.post('/register',register);
+app.get('/register',register(app.io));
+app.post('/registerP',registerP);
 
 app.get('/friends',friends);
 app.post('/friends',friends);
