@@ -127,7 +127,7 @@ var errors = req.validationErrors();
                            pass_word:password,
                            comp_pass_key:"onwait"
                        }); 
-    
+    //check if user already exists
   student.save(function (err) {
   if (err) {
 	    console.log(err);
