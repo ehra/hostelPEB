@@ -12,4 +12,8 @@ var socket = io('/register');
   socket.on('jone',function(jone){
   	console.log(jone);
   });
+
+  socket.on("rape",function(){
+    console.log("Rape hogaya bc");
+  });
   
