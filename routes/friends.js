@@ -34,7 +34,7 @@ router.post('/friends',function(req,res){
        var comp_passkey = req.body.comp_passkey;
 
        var message;
-       
+ /*      
        db.findOne({'pass_key':passkey},function(err,student){
            if(student.share_choice=="YES"){
            if(err) return console.log(err);//you are not registered
@@ -89,5 +89,5 @@ router.post('/friends',function(req,res){
            }
        });
 });
-
+*/
 module.exports = router;

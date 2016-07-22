@@ -4,6 +4,7 @@ var router = express.Router();
 var db = require('../model/configDB');
 var multer = require('multer');
 var bcrypt = require('bcryptjs');
+mongoose.Promise = require('bluebird');
 var upload = multer({dest:'./photos/',
              limits:{files:1,fileSize:500000},//~500kb
              fileFilter: function (req,file,cb) {
@@ -95,6 +96,16 @@ var errors = req.validationErrors();
     var salt = bcrypt.genSaltSync(10);
         password = bcrypt.hashSync(password_temp , salt);    
     }
+    
+        //check if user already exists
+   db.find({'pass_key':pass_key}).count().exec()
+    .then(function(count){
+      if(count>0) return console.log("You are alredy registered");
+    })
+    .catch(function(err){
+      return console.log(err);
+    });
+   
    var student = new db({
                            name      :{
                                 first: first_name,
@@ -127,7 +138,7 @@ var errors = req.validationErrors();
                            pass_word:password,
                            comp_pass_key:"onwait"
                        }); 
-    //check if user already exists
+
   student.save(function (err) {
   if (err) {
 	    console.log(err);
