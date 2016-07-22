@@ -4,6 +4,7 @@ var router = express.Router();
 var db = require('../model/configDB');
 var multer = require('multer');
 var bcrypt = require('bcryptjs');
+var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 var upload = multer({dest:'./photos/',
              limits:{files:1,fileSize:500000},//~500kb
@@ -16,17 +17,13 @@ var upload = multer({dest:'./photos/',
             }
            }).single('photo');
 
-
 router.post('/register',upload,function(req,res){
+  var student = require('./register');
+  console.log(student.jone);
 
- //   req.checkBody('first_name','First Name error').notEmpty().isAlpha();
- //   req.checkBody('last_name','Last Name error').notEmpty().isAlpha();
- //   req.checkBody('pass_key','Pass Key error').notEmpty().isAlphanumeric();
-    req.checkBody('roll_number','Roll Number error').notEmpty().isNumeric().isLength(9);
+    req.checkBody('pass_key','Pass Key error').notEmpty().isAlphanumeric();
     req.checkBody('birth_date','Date of Birth error').notEmpty().isDate();
     req.checkBody('mobile','Mobile number error').notEmpty().isMobilePhone("en-IN");
-   // req.file('photo','Photo error').notEmpty();
- //   req.checkBody('branch','Branch error').notEmpty();
     req.checkBody('blood','Blood group error').notEmpty();
     req.checkBody('email','E-mail error').notEmpty().isEmail(); 
     req.checkBody('father_name','Father name error').notEmpty().isAlpha();    
@@ -49,14 +46,9 @@ var errors = req.validationErrors();
   }
 
   else {
-  //  req.sanitizeBody('first_name').escape().trim();
-  //  req.sanitizeBody('last_name').escape().trim();
-  //  req.sanitizeBody('pass_key').escape();
-    req.sanitizeBody('roll_number' ).escape();
+    req.sanitizeBody('pass_key').escape();
     req.sanitizeBody('birth_date').escape();
     req.sanitizeBody('mobile' ).escape();
-   // req.file('photo' ).escape();
-  //  req.sanitizeBody('branch').escape();
     req.sanitizeBody('blood' ).escape();
     req.sanitizeBody('email').escape(); 
     req.sanitizeBody('father_name').escape();    
@@ -69,18 +61,13 @@ var errors = req.validationErrors();
     req.sanitizeBody('password').escape();      
     req.sanitizeBody('conf_password').escape();
 
-    //getting info from db
-    
-      
-    var first_name = req.body.first_name;
-    var last_name = req.body.last_name;
-    var pass_key = req.body.pass_key;
-    var roll_number = req.body.roll_number;
+    var name = student.jone.name;
+    var pass_key = student.jone.pass_key;
+    var roll_number = student.jone.roll_number;
     var birth_date = req.body.birth_date;
-
     var mobile = req.body.mobile;
     var photo =   req.file['path'];
-    var branch = req.body.branch;
+    var branch = student.jone.branch;
     var blood = req.body.blood;
     var email = req.body.email;
     var father_name = req.body.father_name;
@@ -90,13 +77,19 @@ var errors = req.validationErrors();
     var address = req.body.address;
     var landline = req.body.landline;
     var share_choice = req.body.share_choice;
+    var ac = student.jone.ac;
     var password_temp = req.body.password;
     var password = null;
     if(password_temp!=null){
-    var salt = bcrypt.genSaltSync(10);
-        password = bcrypt.hashSync(password_temp , salt);    
+      bcrypt.genSalt(10, function(errx, salt) {
+        if(errx) return console.log(errx);
+       bcrypt.hash(password_temp, salt, function(erry, hash) {
+        if(erry) return console.log(erry);
+         password=hash;
+       });
+      });
     }
-    
+          
         //check if user already exists
    db.find({'pass_key':pass_key}).count().exec()
     .then(function(count){
@@ -136,7 +129,8 @@ var errors = req.validationErrors();
                            landline: landline,
                            share_choice:share_choice,
                            pass_word:password,
-                           comp_pass_key:"onwait"
+                           comp_pass_key:"onwait",
+                           ac:ac
                        }); 
 
   student.save(function (err) {

@@ -88,6 +88,7 @@ router.post('/friends',function(req,res){
             res.render('friends',{flash:{messages:message}});
            }
        });
-});
 */
+});
+
 module.exports = router;
