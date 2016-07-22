@@ -39,12 +39,12 @@ block content
              
        .form-group
         label(for="roll_num") Roll Number
-        input.validate.form-control(id="roll_num" name="roll_number" type="text" onblur="verify(this.value)" required)
+        input.validate.form-control(id="roll_num" name="roll_number" type="text" required)
 
 
        .form-group
         label(for="pass_key") Passkey
-        input.validate.form-control(id="pass_key" name="pass_key" type="text"  required)
+        input.validate.form-control(id="pass_key" name="pass_key" type="text" onblur="verify(this.value)" required)
 
        .form-group
         label(for="branch") Select Branch
