@@ -25,39 +25,23 @@ block content
       h2(style="text-align: center") Registration
       form(action="/registerP",method="post",enctype="multipart/form-data") 
        .form-group
-       .row
-        .col-xs-6
-         label(for="first_name") First Name
-         input.validate.form-control(id="first_name" name="first_name" type="text" required)
-        .col-xs-6
-         label(for="last_name") Last Name            
-         input.validate.form-control(id="last_name" name="last_name" type="text" required)
-       
-       br
-       .form-group   
-        input.validate.form-control(type="file" name="photo")
-             
-       .form-group
-        label(for="roll_num") Roll Number
-        input.validate.form-control(id="roll_num" name="roll_number" type="text" required)
-
-
-       .form-group
         label(for="pass_key") Passkey
         input.validate.form-control(id="pass_key" name="pass_key" type="text" onblur="verify(this.value)" required)
 
        .form-group
+        label(for="first_name") First Name
+         input.validate.form-control(id="first_name" name="first_name" type="text" required disabled)
+             
+       .form-group
+        label(for="roll_num") Roll Number
+        input.validate.form-control(id="roll_num" name="roll_number" type="text" required disabled)
+       
+       .form-group
         label(for="branch") Select Branch
-        select.validate.form-control.label-inline(name="branch" placeholder="Select Branch")
-         option(value="" disabled selected) Choose Your Branch
-         option(value="COE") COE
-         option(value="ECE") ECE
-         option(value="MEE") MEE
-         option(value="EIC") EIC
-         option(value="CIE") CIE
-         option(value="CHE") CHE
-         option(value="MTX") MTX
-         option(value="ELE") ELE
+        input.form-control.validate(id="branch" type = "text" disabled)
+      
+       .form-group   
+        input.validate.form-control(type="file" name="photo")
 
        .form-group
         label(for="dob") Date Of Birth

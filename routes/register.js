@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
-//mongoose.Promise = require('bluebird')
+mongoose.Promise = require('bluebird')
 Promise.promisifyAll(mongoose);
 var schema = mongoose.Schema;
 var verify_ac = mongoose.model('ac', new schema({ roll_num: Number, name: String, Course : String, Branch: String,Passkey:String}, { collection : 'verify_ac' }));
@@ -20,7 +20,7 @@ var reg_sock = io.of('/register');
  reg_sock.on('connection', function(socket){
   socket.on('verify',function(passkey){
     Promise.props({
-       jone_ac : verify_ac.findOne({"Paskey":passkey}).exec(),
+       jone_ac : verify_ac.findOne({"Passkey":passkey}).exec(),
        jone_nac : verify_nac.findOne({"Passkey":passkey}).exec()
     })
     .then(function(results){

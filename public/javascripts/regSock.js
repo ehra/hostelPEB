@@ -7,13 +7,13 @@ var socket = io('/register');
   function verify(val){
     console.log(val);
     socket.emit('verify',val);
-  };
+      };
   
   socket.on('jone',function(jone){
   	console.log(jone);
+    $("#first_name").val(jone.name);
+    $("#roll_num").val(jone.roll_num);
+    $("#branch").val(jone.Branch);
   });
 
-  socket.on("rape",function(){
-    console.log("Rape hogaya bc");
-  });
   
