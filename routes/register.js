@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird')
 Promise.promisifyAll(mongoose);
 
 var schema = mongoose.Schema;
