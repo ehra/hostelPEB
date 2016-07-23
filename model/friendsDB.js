@@ -23,8 +23,12 @@ var friendSchema = new schema({
         required: true
     },
 
-    room_ac: Boolean,  // true if AC group
-
+    room_type:{
+        type: String,
+        enum: ['AC','NAC'],
+        default: 'AC'
+    },
+    
     room_number: String
 });
 

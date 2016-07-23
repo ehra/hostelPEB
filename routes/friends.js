@@ -41,7 +41,6 @@ router.post('/friends',function(req,res){
        db.findOne({'pass_key':passkey}).exec()
         .then(function(student){
           if(student.share_choice == "YES" && student.comp_pass_key == "onwait"){
-            //Check for AC/Non AC in ConfigDB. If no property present, add property for this.
             return  db.findOne({'pass_key': comp_passkey}).exec()
           }
           else if(student.share_choice != "YES"){
@@ -57,8 +56,7 @@ router.post('/friends',function(req,res){
         })
         .then(function(friend){
           if(friend === undefined) return console.log("nope");
-          var ac_check2;
-            if(friend.share_choice === "YES" && friend.comp_pass_key === "onwait" && friend.ac === student.ac){
+            if(friend.share_choice === "YES" && friend.comp_pass_key === "onwait" && friend.room_type === student.room_type){
                db.update({'pass_key':passkey},{'comp_pass_key':comp_passkey}).exec()
                .then(function(student){
                 console.log(student.first_name + "Updated");
@@ -77,7 +75,8 @@ router.post('/friends',function(req,res){
                     pass_key:new_passkey,
                     pass_key1:passkey,
                     pass_key2:comp_passkey,
-                    pass_word:hash
+                    pass_word:hash,
+                    room_type: friend.room_type
                   });
       friend.save(function(err7){
         //Registration Unsuccessful.
@@ -94,9 +93,9 @@ router.post('/friends',function(req,res){
                 console.log("Runtime error:" + error);
                }); 
             }
-            else if(friend.ac != student.ac){
+            else if(friend.room_type != student.room_type){
               //Can't make group together
-              message = [{"msg":"Group Formation Not possible because of different Room Choices."}]
+              message = [{"msg":"Group Formation Not possible because of different Room Types."}]
               res.render('friends',{flash:{messages:message}});
             }
             else if(friend.share_choice != "YES"){
