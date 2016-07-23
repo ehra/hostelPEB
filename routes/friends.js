@@ -7,6 +7,7 @@ Promise.promisifyAll(mongoose);
 var db = require('../model/configDB');
 var db2 = require('../model/friendsDB')
 var bcrypt = require('bcrypt-as-promised');
+
 router.get('/friends',function(req,res){
    res.render('friends');
 });
@@ -74,7 +75,7 @@ router.post('/friends',function(req,res){
                 else {
   	                console.log("Student saved");
                     var new_passkey = Math.floor(Math.random() * (10000 - 1000)) + 1000;
-                    return db2.update({'pass_key1':passkey},{'room_type':friend.room_type,'passkey':new_passkey}).exec()
+                    return db2.update({'pass_key1':passkey},{'room_type':friend.room_type,'pass_key':new_passkey}).exec()
                           .then(function(lul){
                            console.log(lul);
                           res.send("done");
