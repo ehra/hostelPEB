@@ -5,6 +5,7 @@ var Promise = require('bluebird');
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird')
 Promise.promisifyAll(mongoose);
+
 var schema = mongoose.Schema;
 var verify_ac = mongoose.model('ac', new schema({ roll_num: Number, name: String, Course : String, Branch: String,Passkey:String}, { collection : 'verify_ac' }));
 var verify_nac = mongoose.model('nac', new schema({ roll_num: Number, name: String, Course : String, Branch: String,Passkey:String}, { collection : 'verify_nac' }));
@@ -14,10 +15,9 @@ router.get('/register', function(req, res) {
   //next();
 });
 
-var jone_ac,
-    jone_nac;
 var reg_sock = io.of('/register');
  reg_sock.on('connection', function(socket){
+   console.log("yolo");
   socket.on('verify',function(passkey){
     Promise.props({
        jone_ac : verify_ac.findOne({"Passkey":passkey}).exec(),
@@ -27,9 +27,13 @@ var reg_sock = io.of('/register');
       if(results.jone_ac!=null){
         console.log("AC");
         socket.emit("jone",results.jone_ac);
+        jone.ac = true;
+        router.jone = results.jone_ac;
       }else if(results.jone_nac!=null){
         console.log("NAC");
         socket.emit("jone",results.jone_nac);
+        jone.ac = false;
+        router.jone = results.jone_nac;
       }else{
         //Doesnt exist in database
         console.log("User not found");
@@ -39,31 +43,7 @@ var reg_sock = io.of('/register');
       console.log(err);
     });
 
-  /*   
-  verify_ac.findOne({'Passkey':'passkey'}).exec()
-    .then(function(jone){
-      if(jone != null){
-        return socket.emit('jone',jone);
-      }
-    }).then(verify_nac.findOne({'Passkey':passkey}).exec()
-        function(jone){
-          if(jone != null){
-            return socket.emit('jone',jone);
-          }
-        }
-      //passkey not in db (clear value in input box)
-        console.log("Passkey not found");    
-      )
-  .catch(function(err){
-    console.error(error+"shit");        
-  })*/
   })
  });  
-
-
- 
-
-
-
 return router;
 }

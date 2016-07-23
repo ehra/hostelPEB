@@ -7,8 +7,8 @@ require('mongoose-type-email');
 
 var studentSchema = new Schema({
 	name: {
-		first: {type:String,required:true},
-		last : {type:String,required:true}
+		type:String,
+		required:true
 	},
 	
 	roll_number: { type:Number, required: true, unique:true },
@@ -70,6 +70,12 @@ var studentSchema = new Schema({
 		enum : ['YES','NO'],
 		default : 'NO'
 	},   
+	
+	room_type:{
+		type: String,
+		enum:['AC','NAC'],
+		default:'AC'
+	},
 	
 	comp_pass_key: String,
 	
