@@ -6,8 +6,7 @@ mongoose.Promise = require('bluebird')
 Promise.promisifyAll(mongoose);
 var db = require('../model/configDB');
 var db2 = require('../model/friendsDB')
-var bcrypt = require('bcryptjs');
-
+var bcrypt = require('bcrypt-as-promised');
 router.get('/friends',function(req,res){
    res.render('friends');
 });
@@ -44,41 +43,56 @@ router.post('/friends',function(req,res){
        db.findOne({'pass_key':passkey}).exec()
         .then(function(student){
           if(student.share_choice == "YES" && student.comp_pass_key == "onwait"){
-           return  db.findOne({'pass_key': comp_passkey}).exec() 
+           return  db.findOne({'pass_key': comp_passkey}).exec()
                   .then(function(friend){
           if(friend === undefined) return console.log("nope");
             if(friend.share_choice === "YES" && friend.comp_pass_key === "onwait" && friend.room_type === student.room_type){
                db.update({'pass_key':passkey},{'comp_pass_key':comp_passkey}).exec()
                .then(function(student){
-                console.log(student.name + "Updated");
+                console.log("Student Updated");
                 return db.update({'pass_key':comp_passkey},{'comp_pass_key':passkey}).exec()
                })
                .then(function(friend){
-                console.log(friend.name + "Updated");
+                console.log("Friend Updated");
                 //New Passkey Generation
-                var new_passkey  = passkey + comp_passkey;   // Just for the sake of an example
-                 var password_temp = req.body.password;
-  bcrypt.genSalt(10,function(err5,saltRounds){
-    if(err5) return console.log("sorry");
-    bcrypt.hash(password_temp, saltRounds, function(err6, hash) {
-      if(err6) return console.log("Unable to process request");
-      var friend = new db2({
-                    pass_key:new_passkey,
-                    pass_key1:passkey,
-                    pass_key2:comp_passkey,
-                    pass_word:hash,
-                    room_type: friend.room_type
-                  });
-      friend.save(function(err7){
-        //Registration Unsuccessful.
-        if(err7) return console.log("Couldn't Register");
-      }) ;
-    });
-  });  
+                var password_temp = req.body.password;
+
+          bcrypt.genSalt(10).then(function(saltRounds){
+            bcrypt.hash(password_temp, saltRounds).then(function(hash) {
+
+              var friends = new db2({
+                            pass_key1:passkey,
+                            pass_key2:comp_passkey,
+                            pass_word:hash
+                          });
+              friends.save(function(err7){
+                //Registration Unsuccessful.
+                if(err7){
+                  return console.log("Couldn't Register");
+                  }
+                else {
+  	                console.log("Student saved");
+                    var new_passkey = Math.floor(Math.random() * (10000 - 1000)) + 1000;
+                    return db2.update({'pass_key1':passkey},{'room_type':friend.room_type,'passkey':new_passkey}).exec()
+                          .then(function(lul){
+                           console.log(lul);
+                          res.send("done");
+              })
+                    //res.render('friends', {flash:{ messages: message} });
+                 }
+              })              
+            })         
+              .catch(function(error){
+                console.log("Shite fuck"+error);
+              })
+          });  
+  
+  
   //Registration successfull.
-  message = [{"msg":"Registration successfull. Your Group Passkey is :" + new_passkey}]
-  res.render('friends',{flash:{message:message}});
+  //message = [{"msg":"Registration successfull. Your Group Passkey is :"}]
+  //res.render('friends',{flash:{message:message}});
                 //return new_passkey;
+                console.log("Hogaya");
                })
                .catch(function(error){
                 console.log("Runtime error:" + error);
@@ -118,6 +132,5 @@ router.post('/friends',function(req,res){
         });
 });
 
-       
        
 module.exports = router;

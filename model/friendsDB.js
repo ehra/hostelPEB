@@ -5,7 +5,6 @@ var schema = mongoose.Schema;
 var friendSchema = new schema({
     pass_key :{
         type: String,
-        required: true,
         unique: true
     },
     pass_key1:{
@@ -26,7 +25,7 @@ var friendSchema = new schema({
     room_type:{
         type: String,
         enum: ['AC','NAC'],
-        default: 'AC'
+        default: 'NAC'
     },
     
     room_number: String
