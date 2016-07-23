@@ -44,7 +44,7 @@ router.post('/friends',function(req,res){
         .then(function(student){
           if(student.share_choice == "YES" && student.comp_pass_key == "onwait"){
            return  db.findOne({'pass_key': comp_passkey}).exec()
-                  .then(function(friend){
+            .then(function(friend){
           if(friend === undefined) return console.log("nope");
             if(friend.share_choice === "YES" && friend.comp_pass_key === "onwait" && friend.room_type === student.room_type){
                db.update({'pass_key':passkey},{'comp_pass_key':comp_passkey}).exec()
@@ -52,13 +52,14 @@ router.post('/friends',function(req,res){
                 console.log("Student Updated");
                 return db.update({'pass_key':comp_passkey},{'comp_pass_key':passkey}).exec()
                })
-               .then(function(friend){
+               .then(function(fri){
                 console.log("Friend Updated");
+                })
                 //New Passkey Generation
                 var password_temp = req.body.password;
 
           bcrypt.genSalt(10).then(function(saltRounds){
-            bcrypt.hash(password_temp, saltRounds).then(function(hash) {
+            bcrypt.hash(password_temp, saltRounds).then(function(hash){
 
               var friends = new db2({
                             pass_key1:passkey,
@@ -77,14 +78,13 @@ router.post('/friends',function(req,res){
                           .then(function(lul){
                            console.log(lul);
                           res.send("done");
-              })
-                    //res.render('friends', {flash:{ messages: message} });
-                 }
+                            })
+                    }
               })              
-            })         
-              .catch(function(error){
+          })         
+           .catch(function(error){
                 console.log("Shite fuck"+error);
-              })
+            })
           });  
   
   
@@ -93,10 +93,8 @@ router.post('/friends',function(req,res){
   //res.render('friends',{flash:{message:message}});
                 //return new_passkey;
                 console.log("Hogaya");
-               })
-               .catch(function(error){
-                console.log("Runtime error:" + error);
-               }); 
+               
+              
             }
             else if(friend.room_type != student.room_type){
               //Can't make group together
@@ -114,7 +112,9 @@ router.post('/friends',function(req,res){
               res.render('friends',{flash: {messages:message}});
             }
           })
-         
+         .catch(function(error){
+                console.log("Runtime error:" + error);
+              }); 
           }
           else if(student.share_choice != "YES"){
             //Share choice is no or not registered
