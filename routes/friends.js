@@ -37,33 +37,24 @@ router.post('/friends',function(req,res){
        var comp_passkey = req.body.comp_passkey;
 
        var message;
+       function compfind(err,comp_passkey){
+        if(err) return console.log(err)
+       }
 
        db.findOne({'pass_key':passkey}).exec()
         .then(function(student){
           if(student.share_choice == "YES" && student.comp_pass_key == "onwait"){
-            return  db.findOne({'pass_key': comp_passkey}).exec()
-          }
-          else if(student.share_choice != "YES"){
-            //Share choice is no or not registered
-            message = [{"msg":"You have chosen to apply individually."}]
-            res.render('friends',{flash:{messages:message}});
-          }
-          else{
-            //Already locked with another user
-            message = [{"msg":'Sorry! You are already locked with another user.'}];
-            res.render('friends',{flash: {messages:message}});
-          }
-        })
-        .then(function(friend){
+           return  db.findOne({'pass_key': comp_passkey}).exec() 
+                  .then(function(friend){
           if(friend === undefined) return console.log("nope");
             if(friend.share_choice === "YES" && friend.comp_pass_key === "onwait" && friend.room_type === student.room_type){
                db.update({'pass_key':passkey},{'comp_pass_key':comp_passkey}).exec()
                .then(function(student){
-                console.log(student.first_name + "Updated");
+                console.log(student.name + "Updated");
                 return db.update({'pass_key':comp_passkey},{'comp_pass_key':passkey}).exec()
                })
                .then(function(friend){
-                console.log(friend.first_name + "Updated");
+                console.log(friend.name + "Updated");
                 //New Passkey Generation
                 var new_passkey  = passkey + comp_passkey;   // Just for the sake of an example
                  var password_temp = req.body.password;
@@ -109,6 +100,19 @@ router.post('/friends',function(req,res){
               res.render('friends',{flash: {messages:message}});
             }
           })
+         
+          }
+          else if(student.share_choice != "YES"){
+            //Share choice is no or not registered
+            message = [{"msg":"You have chosen to apply individually."}]
+            res.render('friends',{flash:{messages:message}});
+          }
+          else{
+            //Already locked with another user
+            message = [{"msg":'Sorry! You are already locked with another user.'}];
+            res.render('friends',{flash: {messages:message}});
+          }
+        })
         .catch(function(err){
           console.log("Runtime error 2:" + err);
         });
