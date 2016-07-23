@@ -3,6 +3,11 @@ var schema = mongoose.Schema;
 
 
 var friendSchema = new schema({
+    pass_key :{
+        type: String,
+        required: true,
+        unique: true
+    },
     pass_key1:{
         type: String,
         required: true,
@@ -17,6 +22,9 @@ var friendSchema = new schema({
         type:String,
         required: true
     },
+
+    room_ac: Boolean,  // true if AC group
+
     room_number: String
 });
 
