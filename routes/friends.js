@@ -42,7 +42,6 @@ router.post('/friends',function(req,res){
         .then(function(student){
           if(student.share_choice == "YES" && student.comp_pass_key == "onwait"){
             //Check for AC/Non AC in ConfigDB. If no property present, add property for this.
-            var ac_check1; //return this along with result of query
             return  db.findOne({'pass_key': comp_passkey}).exec()
           }
           else if(student.share_choice != "YES"){
@@ -59,7 +58,7 @@ router.post('/friends',function(req,res){
         .then(function(friend){
           if(friend === undefined) return console.log("nope");
           var ac_check2;
-            if(friend.share_choice === "YES" && friend.comp_pass_key === "onwait" /*&& ac_check2 == ac_check1*/){
+            if(friend.share_choice === "YES" && friend.comp_pass_key === "onwait" && friend.ac === student.ac){
                db.update({'pass_key':passkey},{'comp_pass_key':comp_passkey}).exec()
                .then(function(student){
                 console.log(student.first_name + "Updated");
@@ -95,8 +94,10 @@ router.post('/friends',function(req,res){
                 console.log("Runtime error:" + error);
                }); 
             }
-            else if(ac_check2 != ac_check1){
+            else if(friend.ac != student.ac){
               //Can't make group together
+              message = [{"msg":"Group Formation Not possible because of different Room Choices."}]
+              res.render('friends',{flash:{messages:message}});
             }
             else if(friend.share_choice != "YES"){
               //friend is not registered or individual
