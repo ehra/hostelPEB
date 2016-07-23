@@ -37,7 +37,6 @@ router.post('/friends',function(req,res){
        var comp_passkey = req.body.comp_passkey;
 
        var message;
-<<<<<<< HEAD
 
        db.findOne({'pass_key':passkey}).exec()
         .then(function(student){
