@@ -71,7 +71,11 @@ var studentSchema = new Schema({
 		default : 'NO'
 	},   
 	
-	ac:[Boolean],
+	room_type:{
+		type: String,
+		enum:['AC','NAC'],
+		default:'AC'
+	},
 	
 	comp_pass_key: String,
 	
