@@ -4,8 +4,12 @@ var router = express.Router();
 var db = require('../model/configDB');
 var multer = require('multer');
 var bcrypt = require('bcryptjs');
+var Promise = require('bluebird');
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
+Promise.promisifyAll(mongoose);
+var verify = require('../model/verify');
+
 var upload = multer({dest:'./photos/',
              limits:{files:1,fileSize:500000},//~500kb
              fileFilter: function (req,file,cb) {
@@ -17,10 +21,9 @@ var upload = multer({dest:'./photos/',
             }
            }).single('photo');
 
-router.post('/register',upload,function(req,res){
-  var student = require('./register');
-  console.log(student.jone);
+router.post('/registerP',upload,function(req,res){
 
+ 
     req.checkBody('pass_key','Pass Key error').notEmpty().isAlphanumeric();
     req.checkBody('birth_date','Date of Birth error').notEmpty().isDate();
     req.checkBody('mobile','Mobile number error').notEmpty().isMobilePhone("en-IN");
@@ -61,13 +64,18 @@ var errors = req.validationErrors();
     req.sanitizeBody('password').escape();      
     req.sanitizeBody('conf_password').escape();
 
-    var name = student.jone.name;
-    var pass_key = student.jone.pass_key;
-    var roll_number = student.jone.roll_number;
+    var pass_key = req.body.pass_key;
+    
+  verify.findOne({"Passkey":pass_key}).exec()
+  .then(function(results){
+    if(results != null){
+    var name = results.name;
+    var roll_number = results.roll_num;
+
     var birth_date = req.body.birth_date;
     var mobile = req.body.mobile;
     var photo =   req.file['path'];
-    var branch = student.jone.branch;
+    var branch = results.branch;
     var blood = req.body.blood;
     var email = req.body.email;
     var father_name = req.body.father_name;
@@ -77,7 +85,7 @@ var errors = req.validationErrors();
     var address = req.body.address;
     var landline = req.body.landline;
     var share_choice = req.body.share_choice;
-    var ac = student.jone.ac;
+    var room_type = results.room_type;
     var password_temp = req.body.password;
     var password = null;
     if(password_temp!=null){
@@ -100,10 +108,7 @@ var errors = req.validationErrors();
     });
    
    var student = new db({
-                           name      :{
-                                first: first_name,
-                                last :last_name 
-                            },
+                           name      :name,
                            pass_key  :pass_key,
                            roll_number  :roll_number,
                            birth_date       :birth_date,
@@ -130,7 +135,7 @@ var errors = req.validationErrors();
                            share_choice:share_choice,
                            pass_word:password,
                            comp_pass_key:"onwait",
-                           ac:ac
+                           room_type:room_type
                        }); 
 
   student.save(function (err) {
@@ -149,7 +154,20 @@ var errors = req.validationErrors();
     res.render('home', {flash:{ messages: message} });
   }
 });
-  }
+  
+}
+      else{
+        //Doesnt exist in database
+       return console.log("User not found");
+      }
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+
+
+
+}
 });
 
 module.exports = router;
