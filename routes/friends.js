@@ -7,7 +7,7 @@ Promise.promisifyAll(mongoose);
 var db = require('../model/configDB');
 var db2 = require('../model/friendsDB')
 
-var bcrypt = require('bcrypt-as-promised');
+var bcrypt = require('bcryptjs);
 
 router.get('/friends',function(req,res){
    res.render('friends');
@@ -56,7 +56,7 @@ router.post('/friends',function(req,res){
                 //New Passkey Generation
                 var password_temp = req.body.password;
 
-         /* bcrypt.genSalt(10,function(err1,saltRounds){
+          bcrypt.genSalt(10,function(err1,saltRounds){
             if(err1) return console.log("Sorry");
             bcrypt.hash(password_temp, saltRounds,function(err2,hash){
               if(err2) return console.log("Unable to process request");
@@ -91,7 +91,7 @@ router.post('/friends',function(req,res){
               })         
            
             })
-        });  */    
+        });     
   
   
   //Registration successfull.
