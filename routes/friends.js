@@ -54,7 +54,7 @@ router.post('/friends',function(req,res){
                 //New Passkey Generation
                 var password_temp = req.body.password;
 
-          bcrypt.genSalt(10,function(err1,saltRounds){
+         /* bcrypt.genSalt(10,function(err1,saltRounds){
             if(err1) return console.log("Sorry");
             bcrypt.hash(password_temp, saltRounds,function(err2,hash){
               if(err2) return console.log("Unable to process request");
@@ -89,7 +89,7 @@ router.post('/friends',function(req,res){
               })         
            
             })
-        });      
+        });  */    
   
   
   //Registration successfull.
