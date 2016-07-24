@@ -6,9 +6,18 @@ if flash
     - for (var i = 0; i < flash.messages.length; i++) {
         li(style="list-style-type: none;") #{flash.messages[i].msg}
     -}
+if success
+ .container
+  .row
+   div(id="good").col-xs-12.col-md-4.col-md-offset-4.alert.alert-success
+    ul()
+    - for (var i = 0; i < success.messages.length; i++) {
+        li(style="list-style-type: none; text-align:center; font-size:1.5em; font-weight: bold;") #{success.messages[i].msg}
+    -}    
 
 script(src='https://code.jquery.com/jquery-2.1.1.min.js')
 script.
   $(document).ready(function() {
      $("#error").delay(5000).fadeOut();
+     $("#good").delay(15000).fadeOut();
    });     

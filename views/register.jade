@@ -29,16 +29,16 @@ block content
         input.validate.form-control(id="pass_key" name="pass_key" type="text" onblur="verify(this.value)" required)
 
        .form-group
-        label(for="first_name") First Name
-         input.validate.form-control(id="first_name" name="first_name" type="text" required disabled)
+        label(for="first_name") First Name : &nbsp
+        span(id="first_name")
              
        .form-group
-        label(for="roll_num") Roll Number
-        input.validate.form-control(id="roll_num" name="roll_number" type="text" required disabled)
+        label(for="roll_num") Roll Number : &nbsp
+        span(id="roll_num")
        
        .form-group
-        label(for="branch") Select Branch
-        input.form-control.validate(id="branch" type = "text" disabled)
+        label(for="branch") Branch : &nbsp
+        span(id="branch")
       
        .form-group   
         input.validate.form-control(type="file" name="photo")
@@ -114,7 +114,7 @@ block content
             label(for="pass_word") Confirm Password
             input.form-control.validate(id="pass_word22" name="conf_password" type="password")
                   
-       input.btn.btn-success(type="submit", value="Submit" style="float:right")
+       input.btn.myBtn.btn-success(type="submit", value="Submit" style="float:right")
           
 script(src='https://code.jquery.com/jquery-2.2.0.min.js')
 script(src="https://cdn.socket.io/socket.io-1.4.5.js")

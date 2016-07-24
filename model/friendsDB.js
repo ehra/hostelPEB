@@ -4,7 +4,7 @@ var schema = mongoose.Schema;
 
 var friendSchema = new schema({
     pass_key :{
-        type: String,
+        type: Number,
         unique: true
     },
     pass_key1:{

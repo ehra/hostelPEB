@@ -9,11 +9,14 @@ var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 Promise.promisifyAll(mongoose);
 var verify = require('../model/verify');
-
+var messages =[];
+var errors = []
 var upload = multer({dest:'./photos/',
              limits:{files:1,fileSize:500000},//~500kb
              fileFilter: function (req,file,cb) {
              if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg') {
+              
+               //res.render('register',{flash:{messages:errors}}); 
               return cb(null, false); //image upload kar be!***error***
              }else{
                return cb(null, true);
@@ -38,9 +41,15 @@ router.post('/registerP',upload,function(req,res){
     req.checkBody('share_choice','Share choice error').notEmpty().isAlpha(); 
     req.checkBody('password','Password error');      
     req.checkBody('conf_password','Password not same').equals(req.body.password);
+    if(req.file['path']!=null){
+      req.file['path']; 
+    }
+    else(
+      // add to error array 
+      errors += {msg: "Please Upload A Correct Image file, size less than 500Kb."}; 
+      )
 
-var errors = req.validationErrors();
-//var errors = '';
+    errors += req.validationErrors();
 
   if (errors) {
   //error messages graveyard † 
@@ -74,6 +83,7 @@ var errors = req.validationErrors();
 
     var birth_date = req.body.birth_date;
     var mobile = req.body.mobile;
+    //path variable should not be null
     var photo =   req.file['path'];
     var branch = results.branch;
     var blood = req.body.blood;
@@ -101,7 +111,11 @@ var errors = req.validationErrors();
         //check if user already exists
    db.find({'pass_key':pass_key}).count().exec()
     .then(function(count){
-      if(count>0) return console.log("You are alredy registered");
+      if(count>0){
+        var message = [{msg:"You have registered previously. No need to try again."}]
+        res.render('home',{flash:{messages:message}});
+        //return console.log("You are already registered");
+      } 
     })
     .catch(function(err){
       return console.log(err);
@@ -151,7 +165,7 @@ var errors = req.validationErrors();
                   "value": ""
                 }
               ];
-    res.render('home', {flash:{ messages: message} });
+    res.render('home', {success:{ messages: message} });
   }
 });
   

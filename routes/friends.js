@@ -6,7 +6,7 @@ mongoose.Promise = require('bluebird')
 Promise.promisifyAll(mongoose);
 var db = require('../model/configDB');
 var db2 = require('../model/friendsDB')
-var bcrypt = require('bcrypt-as-promised');
+var bcrypt = require('bcryptjs');
 router.get('/friends',function(req,res){
    res.render('friends');
 });
@@ -36,10 +36,6 @@ router.post('/friends',function(req,res){
        var comp_passkey = req.body.comp_passkey;
 
        var message;
-       function compfind(err,comp_passkey){
-        if(err) return console.log(err)
-       }
-
        db.findOne({'pass_key':passkey}).exec()
         .then(function(student){
           if(student.share_choice == "YES" && student.comp_pass_key == "onwait"){
@@ -58,8 +54,10 @@ router.post('/friends',function(req,res){
                 //New Passkey Generation
                 var password_temp = req.body.password;
 
-          bcrypt.genSalt(10).then(function(saltRounds){
-            bcrypt.hash(password_temp, saltRounds).then(function(hash){
+          bcrypt.genSalt(10,function(err1,saltRounds){
+            if(err1) return console.log("Sorry");
+            bcrypt.hash(password_temp, saltRounds,function(err2,hash){
+              if(err2) return console.log("Unable to process request");
 
               var friends = new db2({
                             pass_key1:passkey,
@@ -74,18 +72,24 @@ router.post('/friends',function(req,res){
                 else {
   	                console.log("Student saved");
                     var new_passkey = Math.floor(Math.random() * (10000 - 1000)) + 1000;
-                    return db2.update({'pass_key1':passkey},{'room_type':friend.room_type,'passkey':new_passkey}).exec()
+                    return db2.update({'pass_key1':passkey},{'room_type':friend.room_type,'pass_key':new_passkey}).exec()
                           .then(function(lul){
                            console.log(lul);
-                          res.send("done");
+                           var passkey_msg = "Done. Your Group Passkey is : " + new_passkey;
+                           message = [{
+                                        param: "success",
+                                        msg : passkey_msg
+                                      }];
+                           res.render('home',{success:{messages:message}});
                             })
-                    }
-              })              
-          })         
-           .catch(function(error){
-                console.log("Shite fuck"+error);
+                           .catch(function(error){
+                            console.log("Shite fuck"+error);
+                            });
+                }               
+              })         
+           
             })
-          });  
+        });      
   
   
   //Registration successfull.
