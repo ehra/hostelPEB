@@ -6,7 +6,9 @@ mongoose.Promise = require('bluebird')
 Promise.promisifyAll(mongoose);
 var db = require('../model/configDB');
 var db2 = require('../model/friendsDB')
-var bcrypt = require('bcryptjs');
+
+var bcrypt = require('bcrypt-as-promised');
+
 router.get('/friends',function(req,res){
    res.render('friends');
 });
