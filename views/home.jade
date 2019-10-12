@@ -1,0 +1,71 @@
+doctype html
+html(lang='en')
+ head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1.0')
+    meta(name="theme-color" content="#333333")
+    title Hostel L
+    <!-- Google Fonts -->
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic")
+    
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+    link(href="stylesheets/style.css" rel="stylesheet")
+  body
+    nav.myNav.navbar.navbar-default(role="navigation")
+     .container-fluid
+      h4
+       a(href="/" id = "index_link") Hostel L
+    
+    block content
+
+     include messages
+     br
+     br
+     .container
+      .row
+        h5(style="text-align:center; font-size:1.4em; font-weight: bold; color:red") ROOM BOOKING HAS STARTED. SORRY FOR THE DELAY! 
+        h5(style="text-align:center; font-size:1.3em; font-weight: bold;") 
+         a( href="https://drive.google.com/open?id=0BwghpxjganIIZXd0Qk43bjdiSUgxQzN1RVRCNnJIb0FrNTA4" target="_blank") Link to the Maps
+        h5(style="text-align:center; font-size:1.3em; font-weight: bold;") 
+         a( href="https://drive.google.com/open?id=0BwghpxjganIIWkdaZkpsc0tmV1U" target="_blank") IMPORTANT NOTICE PLEASE READ! 
+        br 
+       .col-xs-10.col-xs-offset-1.col-md-4.col-md-offset-4.well
+         h3(style="text-align:center") Forgot Group Passkey
+         
+         .form-group
+          label(for='forgot') Your Passkey:
+          input(id="forgot" name="forgot" class="form-control" type='text' onblur="forgot(this.value)")
+
+         .form-group
+          label(for='groupKey') Your Group Passkey : &nbsp
+          span(id="groupKey")
+           
+          input.btn.myBtn( type="submit" style="float:right;border-radius:2px;" value="Submit" )
+       
+       .col-xs-10.col-xs-offset-1.col-md-4.col-md-offset-4.well
+        h3(style="text-align:center") Log In (Starts on 1st August)
+        form(role="form" method="post" action="/")
+         .form-group
+          label(for='username') Passkey:
+          input(id="username" name="username" class="form-control" type='text' required)
+         .form-group
+          label(for='password') Password:
+          input(id="password" name="password" class="form-control" type='password' required)
+         br 
+
+         input.myBtn(type='submit' style="float:right;border-radius:2px;" value="Submit") 
+        
+
+     h5(style="text-align:center; font-size:1.2em; font-weight: bold; color:#3949AB") If anyone is having any problem related to the site, feel free to drop us mail at hostelsthapar@gmail.com. Happy to help :)
+     h5(style="text-align:center; font-size:1.2em; font-weight: bold; color:red") For info regarding the hostel itself,and other such queries, contact wardenl@thapar.edu !
+     br
+     br
+     .footer.nav.navbar.navbar-default
+      h4(style="float:left") Copyright @Thapar University Pvt. Ltd.
+      a(href="/rules" id="intr_link" style="float:right") Instructions Page
+
+script(src='https://code.jquery.com/jquery-2.2.0.min.js')
+script(src="https://cdn.socket.io/socket.io-1.4.5.js")
+script(src = "/javascripts/main.js")
+script(src = "/javascripts/forgot.js")
+  

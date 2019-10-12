@@ -1,0 +1,63 @@
+doctype html
+html(lang='en')
+ head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1.0')
+    title Hostel L
+    <!-- Google Fonts -->
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic")
+    
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+    link(href="stylesheets/style.css" rel="stylesheet")
+  body
+    nav.myNav.navbar.navbar-default(role="navigation")
+     .container-fluid
+      h4(id="brand") Hostel L
+
+mixin print(x,y)
+ if x <= y 
+   .col-xs-3.form-group(id = x+"div")  
+     input(type="radio" name='yolo' id = x style="margin:10px;")
+     label(class="label label-default" style=" padding:10px; background-color:#3F51B5; font-size: 1.2em") #{x}
+ else
+  .col-xs-3
+
+mixin rooms(n,num)
+ while n <= num
+   +print(n++,num)
+
+block content
+ .container
+  .row
+   .col-xs-12
+    div(id="error" style="display:none").col-xs-12.col-md-4.col-md-offset-4.alert.alert-danger
+     ul
+      li(style="list-style-type: none; text-align:center; font-size:1.2em; text-transform: uppercase; margin-bottom: 2px;") Some error occured, please try again!
+    h3 Book Your Room 
+    br
+   .col-xs-4
+     button.myBtn.active(id="link1" href="#") Ground Floor
+   .col-xs-4
+     button.myBtn(id="link2" href="#") First Floor
+   .col-xs-4
+     button.myBtn(id="link3" href="#") Second Floor 
+   
+ .container(style="margin-top:5%;margin-bottom:7%;")  
+  .row
+   //Added method attribute and action is here.
+   form(method="" id="myForm")
+    #tab1.col-xs-12.well
+     +rooms(101,143) 
+   
+    #tab2.col-xs-12.well 
+     +rooms(201,253)
+   
+    #tab3.col-xs-12.well
+     +rooms(301,353)
+
+    input.myBtn(style="float:right; margin-right:10px; border-radius:2px; display:none" type="submit" value="Book" id="room_book" onclick="op()") 
+
+
+script(src='https://code.jquery.com/jquery-2.2.0.min.js')
+script(src="https://cdn.socket.io/socket.io-1.4.5.js")
+script(src = "/javascripts/socket.js")

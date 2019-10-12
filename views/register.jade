@@ -1,0 +1,119 @@
+doctype html
+html(lang='en')
+ head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1.0')
+    title Hostel L
+    <!-- Google Fonts -->
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic")
+    
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+    link(href="stylesheets/style.css" rel="stylesheet")
+  body
+    nav.myNav.navbar.navbar-default(role="navigation")
+     .container-fluid
+      h4(id="brand") Hostel L
+
+
+block content	
+ 
+ include messages
+ 
+ .container(style="margin-top:1%;margin-bottom:3%;")
+  .row
+    .col-xs-10.col-xs-offset-1.col-md-6.col-md-offset-3.well         
+      h2(style="text-align: center") Registration
+      h5(style="text-align:center; font-size: 1.2em;")
+       span(style="color:red; font-weight: bold") Important Note :
+       Some  Some passkeys have been updated. Please make sure to use the updated passkeys displayed below in the future.
+      form(action="/registerP",method="post") 
+       .form-group
+        label(for="roll_num") Roll Number
+        input.validate.form-control(id="roll_num" name="roll_num" onblur="verify(this.value)" required)
+      
+       .form-group
+        label(for="pass_key") Passkey : &nbsp
+        span(id="pass_key" style="color:#3F51B5; font-weight:bold; font-size:1.1em")
+
+       .form-group
+        label(for="first_name") First Name : &nbsp
+        span(id="first_name")      
+             
+       .form-group
+        label(for="branch") Branch : &nbsp
+        span(id="branch")
+      
+       .form-group
+        label(for="dob") Date Of Birth
+        input.validate.form-control(id="dob" name="birth_date" type="date" required)
+          
+       .form-group    
+        label(for="email_id") Email-ID
+        input.validate.form-control(id="email_id" name="email" type="email" required)
+          
+       .form-group
+        label(for="mob_num") Mobile Number
+        input.validate.form-control(id="mob_num" name="mobile" type="tel" required)
+       
+             
+
+       .form-group
+        label(for="p_address") Permanent Address                
+        textarea.validate.form-control(id="p_address" name="address" required)
+          
+
+       .form-group
+        label(for="blood") Blood Group 
+        select.validate.form-control.label-inline(name="blood")
+         option(value="" disabled selected) Choose Your Blood Group
+         option(value="A+") A+
+         option(value="A-") A-
+         option(value="B+") B+
+         option(value="B-") B-
+         option(value="O+") O+
+         option(value="O-") O-
+         option(value="AB+") AB+
+         option(value="AB-") AB-
+
+           
+     
+       .form-group
+       .row
+        .col-xs-6  
+            label(for="father_name") Father's Name
+            input.form-control.validate(id="father_name" name="father_name" type="text" required data-required-msg="First Name Is Required")
+        .col-xs-6   
+            label(for="father_num") Father's Mobile 
+            input.form-control.validate(id="father_num" name="father_number" type="text" required)
+              
+
+       .form-group
+       .row 
+        .col-xs-6
+         label(for="mother_name") Mother's Name             
+         input.form-control.validate(id="mother_name" name="mother_name" type="text" required)
+        .col-xs-6
+          label(for="mother_num") Mother's Mobile   
+          input.form-control.validate(id="mother_num" name="mother_number" type="text" required)
+       
+               
+       .form-group      
+        label Want to make a group of 2?
+        select.form-control.validate.label-inline(id="choice"  name="share_choice")
+         option(value= "YES" ) YES 
+         option(value= "NO" selected = "selected" ) NO
+     
+       .form-group(id="pass_word22")             
+            label(for="password") Password (Length of password should be greater then 6)
+            input.form-control.validate(id="password" name="password" type="password")
+                        
+       .form-group(id="pass_word32")
+            label(for="conf_password") Confirm Password
+            input.form-control.validate(id="conf_password" name="conf_password" type="password" )
+                  
+       input.btn.myBtn.btn-success(type="submit", value="Submit" style="float:right")
+          
+script(src='https://code.jquery.com/jquery-2.2.0.min.js')
+script(src="https://cdn.socket.io/socket.io-1.4.5.js")
+script(src = "/javascripts/regSock.js")
+script(src = "/javascripts/main.js")
